@@ -5,11 +5,13 @@ namespace Caixa_Central
 {
     public static class Auxiliar
     {
-        public static string urlLogon = "http://srcdymw896.execute-api.us-east-1.amazonaws.com/api-login/logon";
-        public static string urlAssinatura = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/planos";
-        public static string urlAssinaturaNova = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/novaassinatura";
-        public static string urlAssinaturas = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/assinaturas";
-        public static string urlMesa = "https://rr2fat3qw6.execute-api.us-east-1.amazonaws.com/api-mesas/mesa";
+        public const string urlLogon = "http://srcdymw896.execute-api.us-east-1.amazonaws.com/api-login/logon";
+        public const string urlAssinatura = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/planos";
+        public const string urlAssinaturaNova = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/novaassinatura";
+        public const string urlAssinaturas = "http://h6sdpd5uhc.execute-api.us-east-1.amazonaws.com/assinatura/assinaturas";
+        public const string urlMesa = "https://x23svpb7h1.execute-api.us-east-1.amazonaws.com/api-mesas/mesa";
+        public const string urlMesas = "https://x23svpb7h1.execute-api.us-east-1.amazonaws.com/api-mesas/mesas";
+        public const string urlCardapio = "https://x23svpb7h1.execute-api.us-east-1.amazonaws.com/api-mesas/cardapio";
         public static async Task<string> Login(string n, string s)
         {
             var data = new { nome = n, senha = s };

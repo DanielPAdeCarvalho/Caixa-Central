@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Enums;
-using System.Collections;
 using System.Globalization;
-using System.Security.Policy;
 using System.Text;
 
-#pragma warning disable CS8604 // Possible null reference argument.
 namespace Caixa_Central
 {
     public partial class JanelaCentral : Form
@@ -16,6 +12,7 @@ namespace Caixa_Central
         private readonly HttpClient httpClient;
         List<Assinante>? assinantes;
         List<Mesa>? mesasOcupadas;
+        List<Item>? cardapio;
 
         public JanelaCentral(string nome)
         {
@@ -27,15 +24,63 @@ namespace Caixa_Central
             mesasOcupadas = new List<Mesa>();
             GetAllAssinantes();
             GetAllMesasAsync();
+            UpdateCardapio();
+
+            //Inicializa o DataGrid de Pedidos
+            sfDataGridClientePedidos.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
+            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
+            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Quantidade" });
+            sfDataGridClientePedidos.Columns["Nome"].HeaderText = "Item";
+            sfDataGridClientePedidos.Columns["Valor"].HeaderText = "Valor";
+            sfDataGridClientePedidos.Columns["Quantidade"].HeaderText = "Quantidade";
+            sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
+            sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
+
+            //Inicializa o DataGrid do Cardapio
+            sfDataGridClienteCardapio.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
+            sfDataGridClienteCardapio.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
+            sfDataGridClienteCardapio.Columns["Nome"].HeaderText = "Item";
+            sfDataGridClienteCardapio.Columns["Valor"].HeaderText = "Valor";
+            sfDataGridClienteCardapio.Columns["Valor"].Format = "C2";
+            sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
+            sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
+            sfDataGridClienteCardapio.SelectionMode = GridSelectionMode.Single;
+        }
+
+
+        private void JanelaCentral_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
+        
+        //
+        private async void UpdateCardapio()
+        {
+            try
+            {
+                // Send GET request to API
+                HttpResponseMessage response = await httpClient.GetAsync(Auxiliar.urlCardapio);
+                // Check if response is successful
+                response.EnsureSuccessStatusCode();
+                // Read response content
+                string responseContent = await response.Content.ReadAsStringAsync();
+                // Parse response content
+                cardapio = JsonConvert.DeserializeObject<List<Item>>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+                return;
+            }
+            if (cardapio != null)
+            {
+                sfDataGridClienteCardapio.DataSource = cardapio;
+            }
         }
 
         private async void GetAllMesasAsync()
         {
-            string url = "https://rr2fat3qw6.execute-api.us-east-1.amazonaws.com/api-mesas/mesas";
             try
             {
                 // Send GET request to API
-                HttpResponseMessage response = await httpClient.GetAsync(url);
+                HttpResponseMessage response = await httpClient.GetAsync(Auxiliar.urlMesas);
                 // Check if response is successful
                 response.EnsureSuccessStatusCode();
                 // Read response content
@@ -73,7 +118,6 @@ namespace Caixa_Central
             }
         }
 
-        private void JanelaCentral_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
 
         private void TextBoxCadastroAssinantesSobreNome_TextChanged(object sender, EventArgs e)
         {
@@ -216,6 +260,7 @@ namespace Caixa_Central
             };
             string responseContent = await PostNewAssinante(assinante);
             MessageBox.Show(responseContent);
+
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
         }
@@ -225,7 +270,7 @@ namespace Caixa_Central
             var json = JsonConvert.SerializeObject(assinante);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-           
+
             var response = await httpClient.PostAsync(Auxiliar.urlAssinaturaNova, content);
             if (response.IsSuccessStatusCode)
             {
@@ -277,7 +322,7 @@ namespace Caixa_Central
             return decimal.Parse(valor, NumberStyles.Currency);
         }
 
-        private void CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged(object sender, EventArgs e)
+        private void CurrencyTextBoxCadastroAssinante_TextChanged(object sender, EventArgs e)
         {
             CalcularTotal();
         }
@@ -287,9 +332,8 @@ namespace Caixa_Central
             // Atualizar a lista de clientes q são assinantes
             GetAllAssinantes();
 
-
-
             // atualizar o array de mesas ocupadas
+            GetAllMesasAsync();
         }
 
         private async void GetAllAssinantes()
@@ -298,7 +342,7 @@ namespace Caixa_Central
             string responseContent;
 
             //Preencher a URL com o plano escolhido
-            
+
             try
             {
                 // Send GET request to API
@@ -332,33 +376,34 @@ namespace Caixa_Central
             {
                 string buttonName = clickedButton.Name; // Get the name of the clicked button
                 string nrMesa = buttonName[^2..]; // Get the number of the clicked button
-                Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                if (mesa != null)
+                if (mesasOcupadas != null)
                 {
-                    if (mesa.Ocupada)
-                   {
-                        mesa.UpdatePedidos();
-                            Pedido[] temp = new Pedido[0];
-                        if (mesa.Pedidos != null)
+                    Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                    if (mesa != null)
+                    {
+                        if (mesa.Ocupada)
                         {
-                           temp = mesa.Pedidos.Values.ToArray(); 
+                            mesa.UpdatePedidos();
+                            Pedido[] temp = Array.Empty<Pedido>();
+                            if (mesa.Pedidos != null)
+                            {
+                                temp = mesa.Pedidos.Values.ToArray();
+                            }
+
+                            //Atualizar o datagrid de pedidos da mesa
+                            sfDataGridClientePedidos.AutoGenerateColumns = false;
+                            sfDataGridClientePedidos.DataSource = temp;
+                            sfDataGridClientePedidos.Refresh();
+
+                            //Nome do cliente na mesa
+                            groupBoxClientesMesaAddPedidos.Visible = true;
+                            groupBoxClientesMesaAddPedidos.Text = $"Mesa {nrMesa} - {mesa.Cliente}";
                         }
-                        sfDataGridClientePedidos.AutoGenerateColumns = false;
-                        sfDataGridClientePedidos.DataSource = temp;
-                        sfDataGridClientePedidos.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
-                        sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
-                        sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Quantidade" });
-                        sfDataGridClientePedidos.Columns["Nome"].HeaderText = "Item";
-                        sfDataGridClientePedidos.Columns["Valor"].HeaderText = "Valor";
-                        sfDataGridClientePedidos.Columns["Quantidade"].HeaderText = "Quantidade";
-
-                        sfDataGridClientePedidos.Refresh();
                     }
-                }
-                else
-                {
-                    IniciarMesa(nrMesa);
-
+                    else
+                    {
+                        IniciarMesa(nrMesa);
+                    }
                 }
             }
         }
@@ -411,12 +456,12 @@ namespace Caixa_Central
             await httpClient.PutAsync(Auxiliar.urlMesa, content);
             MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
             GetAllMesasAsync();
-            groupBoxClientesMesaAdd.Visible = true;
+            groupBoxClientesMesaAddPedidos.Visible = true;
 
             if (!checkBoxClienteUsarPassaporteAssinante.Checked)
             {
                 //Adicionar o pedido passaporte na lista de pedidos da mesa
-                Pedido pedido = new("Passaporte", 10,1);
+                Pedido pedido = new("Passaporte", 10, 1);
                 pedido.AdicionarPedido(nrMesa);
             }
 
@@ -426,4 +471,3 @@ namespace Caixa_Central
         }
     }
 }
-#pragma warning restore CS8604 // Possible null reference argument.

@@ -32,7 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaCentral));
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
-            groupBoxClientesMesaAdd = new GroupBox();
+            groupBoxClientesMesaAddPedidos = new GroupBox();
+            sfDataGridClientePedidos = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             groupBoxClientes = new GroupBox();
             groupBoxClientesNovaMesa = new GroupBox();
             labelClienteNrMesa = new Label();
@@ -107,10 +108,13 @@
             label2 = new Label();
             label1 = new Label();
             Nome = new DataGridViewTextBoxColumn();
-            sfDataGridClientePedidos = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            sfDataGridClienteCardapio = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            label14 = new Label();
+            textBoxClientesMesaAddPedidos = new TextBox();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
-            groupBoxClientesMesaAdd.SuspendLayout();
+            groupBoxClientesMesaAddPedidos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).BeginInit();
             groupBoxClientes.SuspendLayout();
             groupBoxClientesNovaMesa.SuspendLayout();
             CadastroAssinantes.SuspendLayout();
@@ -123,7 +127,7 @@
             ((System.ComponentModel.ISupportInitialize)currencyTextBoxCadastroAssinantePersyCoins).BeginInit();
             groupBoxCadastroAssinantesTempoPlano.SuspendLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridClienteCardapio).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -140,7 +144,7 @@
             // tabPageClientes
             // 
             tabPageClientes.BackColor = Color.DarkGray;
-            tabPageClientes.Controls.Add(groupBoxClientesMesaAdd);
+            tabPageClientes.Controls.Add(groupBoxClientesMesaAddPedidos);
             tabPageClientes.Controls.Add(groupBoxClientes);
             tabPageClientes.Location = new Point(4, 24);
             tabPageClientes.Name = "tabPageClientes";
@@ -150,16 +154,34 @@
             tabPageClientes.Text = "Clientes";
             tabPageClientes.Enter += TabPageClientes_EnterAsync;
             // 
-            // groupBoxClientesMesaAdd
+            // groupBoxClientesMesaAddPedidos
             // 
-            groupBoxClientesMesaAdd.Controls.Add(sfDataGridClientePedidos);
-            groupBoxClientesMesaAdd.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBoxClientesMesaAdd.Location = new Point(884, 3);
-            groupBoxClientesMesaAdd.Name = "groupBoxClientesMesaAdd";
-            groupBoxClientesMesaAdd.Size = new Size(514, 663);
-            groupBoxClientesMesaAdd.TabIndex = 22;
-            groupBoxClientesMesaAdd.TabStop = false;
-            groupBoxClientesMesaAdd.Text = "NOME CLIENTE";
+            groupBoxClientesMesaAddPedidos.Controls.Add(textBoxClientesMesaAddPedidos);
+            groupBoxClientesMesaAddPedidos.Controls.Add(label14);
+            groupBoxClientesMesaAddPedidos.Controls.Add(sfDataGridClienteCardapio);
+            groupBoxClientesMesaAddPedidos.Controls.Add(sfDataGridClientePedidos);
+            groupBoxClientesMesaAddPedidos.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBoxClientesMesaAddPedidos.Location = new Point(884, 3);
+            groupBoxClientesMesaAddPedidos.Name = "groupBoxClientesMesaAddPedidos";
+            groupBoxClientesMesaAddPedidos.Size = new Size(514, 663);
+            groupBoxClientesMesaAddPedidos.TabIndex = 22;
+            groupBoxClientesMesaAddPedidos.TabStop = false;
+            groupBoxClientesMesaAddPedidos.Text = "NOME CLIENTE";
+            groupBoxClientesMesaAddPedidos.Visible = false;
+            // 
+            // sfDataGridClientePedidos
+            // 
+            sfDataGridClientePedidos.AccessibleName = "Table";
+            sfDataGridClientePedidos.Location = new Point(6, 34);
+            sfDataGridClientePedidos.Name = "sfDataGridClientePedidos";
+            sfDataGridClientePedidos.Size = new Size(372, 245);
+            sfDataGridClientePedidos.Style.BorderColor = Color.FromArgb(100, 100, 100);
+            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClientePedidos.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClientePedidos.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClientePedidos.TabIndex = 0;
+            sfDataGridClientePedidos.Text = "sfDataGrid1";
             // 
             // groupBoxClientes
             // 
@@ -731,7 +753,7 @@
             currencyTextBoxCadastroAssinantePicpay.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinantePicpay.TabIndex = 18;
             currencyTextBoxCadastroAssinantePicpay.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinantePicpay.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinantePicpay.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // label8
             // 
@@ -752,7 +774,7 @@
             currencyTextBoxCadastroAssinanteDebito.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinanteDebito.TabIndex = 16;
             currencyTextBoxCadastroAssinanteDebito.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinanteDebito.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinanteDebito.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // label7
             // 
@@ -773,7 +795,7 @@
             currencyTextBoxCadastroAssinanteCredito.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinanteCredito.TabIndex = 14;
             currencyTextBoxCadastroAssinanteCredito.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinanteCredito.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinanteCredito.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // label6
             // 
@@ -794,7 +816,7 @@
             currencyTextBoxCadastroAssinanteDinheiro.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinanteDinheiro.TabIndex = 12;
             currencyTextBoxCadastroAssinanteDinheiro.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinanteDinheiro.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinanteDinheiro.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // label5
             // 
@@ -815,7 +837,7 @@
             currencyTextBoxCadastroAssinantePix.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinantePix.TabIndex = 10;
             currencyTextBoxCadastroAssinantePix.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinantePix.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinantePix.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // label4
             // 
@@ -856,7 +878,7 @@
             currencyTextBoxCadastroAssinantePersyCoins.Size = new Size(100, 29);
             currencyTextBoxCadastroAssinantePersyCoins.TabIndex = 0;
             currencyTextBoxCadastroAssinantePersyCoins.Text = "R$ 0,00";
-            currencyTextBoxCadastroAssinantePersyCoins.TextChanged += CurrencyTextBoxCadastroAssinantePersyCoins_TextChanged;
+            currencyTextBoxCadastroAssinantePersyCoins.TextChanged += CurrencyTextBoxCadastroAssinante_TextChanged;
             // 
             // labelCadastroAssinantesValorTotalTexto
             // 
@@ -1023,19 +1045,37 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // sfDataGridClientePedidos
+            // sfDataGridClienteCardapio
             // 
-            sfDataGridClientePedidos.AccessibleName = "Table";
-            sfDataGridClientePedidos.Location = new Point(6, 34);
-            sfDataGridClientePedidos.Name = "sfDataGridClientePedidos";
-            sfDataGridClientePedidos.Size = new Size(300, 622);
-            sfDataGridClientePedidos.Style.BorderColor = Color.FromArgb(100, 100, 100);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.TabIndex = 0;
-            sfDataGridClientePedidos.Text = "sfDataGrid1";
+            sfDataGridClienteCardapio.AccessibleName = "Table";
+            sfDataGridClienteCardapio.Location = new Point(6, 327);
+            sfDataGridClienteCardapio.Name = "sfDataGridClienteCardapio";
+            sfDataGridClienteCardapio.Size = new Size(372, 329);
+            sfDataGridClienteCardapio.Style.BorderColor = Color.FromArgb(100, 100, 100);
+            sfDataGridClienteCardapio.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClienteCardapio.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClienteCardapio.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClienteCardapio.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
+            sfDataGridClienteCardapio.TabIndex = 1;
+            sfDataGridClienteCardapio.Text = "sfDataGrid1";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.Location = new Point(6, 300);
+            label14.Name = "label14";
+            label14.Size = new Size(98, 24);
+            label14.TabIndex = 3;
+            label14.Text = "Pesquisar:";
+            // 
+            // textBoxClientesMesaAddPedidos
+            // 
+            textBoxClientesMesaAddPedidos.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxClientesMesaAddPedidos.Location = new Point(110, 295);
+            textBoxClientesMesaAddPedidos.Name = "textBoxClientesMesaAddPedidos";
+            textBoxClientesMesaAddPedidos.Size = new Size(200, 29);
+            textBoxClientesMesaAddPedidos.TabIndex = 49;
             // 
             // JanelaCentral
             // 
@@ -1050,7 +1090,9 @@
             FormClosed += JanelaCentral_FormClosed;
             tabControl1.ResumeLayout(false);
             tabPageClientes.ResumeLayout(false);
-            groupBoxClientesMesaAdd.ResumeLayout(false);
+            groupBoxClientesMesaAddPedidos.ResumeLayout(false);
+            groupBoxClientesMesaAddPedidos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).EndInit();
             groupBoxClientes.ResumeLayout(false);
             groupBoxClientesNovaMesa.ResumeLayout(false);
             groupBoxClientesNovaMesa.PerformLayout();
@@ -1068,7 +1110,7 @@
             groupBoxCadastroAssinantesTempoPlano.PerformLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.ResumeLayout(false);
             groupBoxCadastroAssinantesPlanoEscolhido.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridClienteCardapio).EndInit();
             ResumeLayout(false);
         }
 
@@ -1117,7 +1159,7 @@
         private Label label11;
         private Syncfusion.Windows.Forms.Tools.CalculatorControl calculatorControl1;
         private CheckBox checkBoxCadastroAssinantesTrocoEmPersyCoins;
-        private GroupBox groupBoxClientesMesaAdd;
+        private GroupBox groupBoxClientesMesaAddPedidos;
         private Button buttonCliente25;
         private Button buttonCliente21;
         private Button buttonCliente24;
@@ -1152,5 +1194,8 @@
         private Label labelClienteNrMesa;
         private DataGridViewTextBoxColumn Nome;
         private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridClientePedidos;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridClienteCardapio;
+        private TextBox textBoxClientesMesaAddPedidos;
+        private Label label14;
     }
 }
