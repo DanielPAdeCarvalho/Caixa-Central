@@ -30,9 +30,14 @@ namespace Caixa_Central
             sfDataGridClientePedidos.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
             sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
             sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Quantidade" });
+            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "ValorTotal" });
             sfDataGridClientePedidos.Columns["Nome"].HeaderText = "Item";
             sfDataGridClientePedidos.Columns["Valor"].HeaderText = "Valor";
+            sfDataGridClientePedidos.Columns["Valor"].Format = "C2";
             sfDataGridClientePedidos.Columns["Quantidade"].HeaderText = "Quantidade";
+            sfDataGridClientePedidos.Columns["Quantidade"].Format = "N0";
+            sfDataGridClientePedidos.Columns["ValorTotal"].HeaderText = "Valor Total";
+            sfDataGridClientePedidos.Columns["ValorTotal"].Format = "C2";
             sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
             sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
 
@@ -40,16 +45,14 @@ namespace Caixa_Central
             sfDataGridClienteCardapio.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
             sfDataGridClienteCardapio.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
             sfDataGridClienteCardapio.Columns["Nome"].HeaderText = "Item";
-            sfDataGridClienteCardapio.Columns["Valor"].HeaderText = "Valor";
             sfDataGridClienteCardapio.Columns["Valor"].Format = "C2";
             sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
             sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
-            sfDataGridClienteCardapio.SelectionMode = GridSelectionMode.Single;
         }
 
 
         private void JanelaCentral_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
-        
+
         //
         private async void UpdateCardapio()
         {
@@ -361,8 +364,6 @@ namespace Caixa_Central
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
 
-            // Define a class to represent each object in the JSON array
-
             // Deserialize the JSON string into a list of Pessoa objects
             if (responseContent != null)
             {
@@ -384,28 +385,43 @@ namespace Caixa_Central
                         if (mesa.Ocupada)
                         {
                             mesa.UpdatePedidos();
-                            Pedido[] temp = Array.Empty<Pedido>();
-                            if (mesa.Pedidos != null)
-                            {
-                                temp = mesa.Pedidos.Values.ToArray();
-                            }
 
                             //Atualizar o datagrid de pedidos da mesa
-                            sfDataGridClientePedidos.AutoGenerateColumns = false;
-                            sfDataGridClientePedidos.DataSource = temp;
-                            sfDataGridClientePedidos.Refresh();
+                            UpdatePedidos(nrMesa);
 
                             //Nome do cliente na mesa
                             groupBoxClientesMesaAddPedidos.Visible = true;
                             groupBoxClientesMesaAddPedidos.Text = $"Mesa {nrMesa} - {mesa.Cliente}";
+                            labelClienteNrMesa.Text = nrMesa;
                         }
-                    }
-                    else
-                    {
-                        IniciarMesa(nrMesa);
+                        else
+                        {
+                            IniciarMesa(nrMesa);
+                        }
                     }
                 }
             }
+        }
+
+        private void UpdatePedidos(string nrMesa)
+        {
+            sfDataGridClientePedidos.Visible = false;
+            if (mesasOcupadas != null)
+            {
+                Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                if (mesa != null)
+                {
+                    Pedido[] temp = Array.Empty<Pedido>();
+                    if (mesa.Pedidos != null)
+                    {
+                        temp = mesa.Pedidos.Values.ToArray();
+                    }
+                    sfDataGridClientePedidos.AutoGenerateColumns = false;
+                    sfDataGridClientePedidos.DataSource = temp;
+                    sfDataGridClientePedidos.Refresh();
+                }
+            }
+            sfDataGridClientePedidos.Visible = true;
         }
 
         private void IniciarMesa(string nrMesa)
@@ -468,6 +484,36 @@ namespace Caixa_Central
             groupBoxClientesNovaMesa.Visible = false;
             textBoxClientesNovoNome.Text = string.Empty;
             comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+        }
+
+        private void SfDataGridClienteCardapio_CellDoubleClick(object sender, Syncfusion.WinForms.DataGrid.Events.CellClickEventArgs e)
+        {
+            Item item = (Item)sfDataGridClienteCardapio.SelectedItem;
+            Pedido pedido = new(item.Nome, item.Valor, 1);
+            pedido.AdicionarPedido(labelClienteNrMesa.Text);
+            UpdatePedidos(labelClienteNrMesa.Text);
+            groupBoxClientesMesaAddPedidos.Visible = false;
+            MessageBox.Show("Pedido adicionado com sucesso!");
+
+            //Limpar o campo de pesquisa e atualizar o datagrid
+            textBoxClientesMesaAddPedidos.Text = string.Empty;
+            sfDataGridClienteCardapio.DataSource = cardapio;
+
+        }
+
+        private void TextBoxClientesMesaAddPedidos_TextChanged(object sender, EventArgs e)
+        {
+            string nome = textBoxClientesMesaAddPedidos.Text.ToLower();
+            if (cardapio != null)
+            {
+                List<Item> pesquisa = cardapio.Where(o => o.Nome.ToLower().StartsWith(nome)).ToList();
+                sfDataGridClienteCardapio.DataSource = pesquisa;
+            }
+        }
+
+        private void ButtonClienteFecharConta_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = tabPageCaixa;
         }
     }
 }

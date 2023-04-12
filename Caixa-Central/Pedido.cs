@@ -14,7 +14,9 @@ namespace Caixa_Central
         [JsonProperty("quantidade")]
         public int Quantidade { get; set; }
 
-        public Pedido(string nome, decimal valor,int quantidade)
+        public decimal ValorTotal => Valor * Quantidade;
+
+        public Pedido(string nome, decimal valor, int quantidade)
         {
             Nome = nome;
             Valor = valor;
@@ -23,7 +25,7 @@ namespace Caixa_Central
 
         public async void AdicionarPedido(string idMesa)
         {
-            string url = "https://rr2fat3qw6.execute-api.us-east-1.amazonaws.com/api-mesas/mesa/" + idMesa;
+            string url = Auxiliar.urlMesa + "/" + idMesa;
             var httpClient = new HttpClient();
             var json = JsonConvert.SerializeObject(this);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

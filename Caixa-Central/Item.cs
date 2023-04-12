@@ -8,6 +8,7 @@ internal class Item
     [JsonProperty("preco")]
     public decimal Valor { get; set; }
 
+
     public bool Selected { get; set; }
 
     public Item(string nome, decimal valor)
