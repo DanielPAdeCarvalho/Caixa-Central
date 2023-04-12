@@ -270,8 +270,7 @@ namespace Caixa_Central
             MessageBox.Show(responseContent);
 
             //Gravar o pagamento da assinatura
-            Pagamento pagamento = new Pagamento
-            (
+            Pagamento pagamento = new(
                 textBoxCadastroAssinantesNome.Text + " " + textBoxCadastroAssinantesSobreNome.Text,
                 troco,
                 currencyTextBoxCadastroAssinanteCredito.DecimalValue,
@@ -281,6 +280,7 @@ namespace Caixa_Central
                 currencyTextBoxCadastroAssinantePix.DecimalValue,
                 currencyTextBoxCadastroAssinantePersyCoins.DecimalValue
             );
+            pagamento.GravarPagamento();
 
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
@@ -334,6 +334,10 @@ namespace Caixa_Central
             if (valorTotal >= valorAssinatura)
             {
                 buttonCadastroAssiantePagar.Visible = true;
+            }
+            else
+            {
+                buttonCadastroAssiantePagar.Visible = false;
             }
 
         }
@@ -532,6 +536,7 @@ namespace Caixa_Central
         private void ButtonClienteFecharConta_Click(object sender, EventArgs e)
         {
             string nrMesa = labelClienteNrMesa.Text;
+            decimal valorTotal = 0;
             if (mesasOcupadas != null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
@@ -543,16 +548,80 @@ namespace Caixa_Central
                         listViewItem.SubItems.Add(item.Valor.ToString("C2"));
                         listViewItem.SubItems.Add(item.ValorTotal.ToString("C2"));
                         listViewCaixaPedidos.Items.Add(listViewItem);
+                        valorTotal += item.ValorTotal;
                     }
                 }
             }
             // Auto-size the columns
             listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
+            labelCauxaValorTotal.Text = valorTotal.ToString("C2");
+
             groupBoxCaixaFechaConta.Visible = true;
             labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
             tabControl1.SelectedTab = tabPageCaixa;
 
+        }
+
+        private void ButtonCaixaFechaContaConfirma_Click(object sender, EventArgs e)
+        {
+            string nrMesa = labelClienteNrMesa.Text;
+            if (mesasOcupadas != null)
+            {
+                Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                if (mesa != null && mesa.Pedidos != null)
+                {
+                    Pagamento pagamento = new(
+                        mesa.Cliente,
+                        DeLabelParaDecimal(labelCaixaFechaContaTroco.Text),
+                        textBoxCaixaFechaContaCredito.DecimalValue,
+                        textBoxCaixaFechaContaDebito.DecimalValue,
+                        textBoxCaixaFechaContaDinheiro.DecimalValue,
+                        textBoxCaixaFechaContaPicpay.DecimalValue,
+                        textBoxCaixaFechaContaPix.DecimalValue,
+                        textBoxCaixaFechaContaCoins.DecimalValue
+                        );
+                    pagamento.GravarPagamento();
+                    MessageBox.Show("Pagamento realizado com sucesso!");
+
+                    //Limpar a lista de pedidos
+                    listViewCaixaPedidos.Items.Clear();
+                    //Limpar os campos de pagamento
+                    textBoxCaixaFechaContaCredito.Text = string.Empty;
+                    textBoxCaixaFechaContaDebito.Text = string.Empty;
+                    textBoxCaixaFechaContaDinheiro.Text = string.Empty;
+                    textBoxCaixaFechaContaPicpay.Text = string.Empty;
+                    textBoxCaixaFechaContaPix.Text = string.Empty;
+                    textBoxCaixaFechaContaCoins.Text = string.Empty;
+
+                }
+            }
+
+        }
+
+        private void TextBoxCaixaFecha_TextChanged(object sender, EventArgs e)
+        {
+            decimal valorTotal = 0;
+            valorTotal += textBoxCaixaFechaContaPix.DecimalValue;
+            valorTotal += textBoxCaixaFechaContaPicpay.DecimalValue;
+            valorTotal += textBoxCaixaFechaContaCoins.DecimalValue;
+            valorTotal += textBoxCaixaFechaContaDinheiro.DecimalValue;
+            valorTotal += textBoxCaixaFechaContaDebito.DecimalValue;
+            valorTotal += textBoxCaixaFechaContaCredito.DecimalValue;
+
+            labelCadastroAssinantesTotalSendoPago.Text = valorTotal.ToString();
+            decimal valorConta = DeLabelParaDecimal(labelCauxaValorTotal.Text);
+            decimal troco = valorTotal - valorConta;
+            labelCaixaFechaContaTroco.Text = troco.ToString();
+
+            if (valorTotal >= valorConta)
+            {
+                buttonCaixaFechaContaConfirma.Visible = true;
+            }
+            else
+            {
+                buttonCaixaFechaContaConfirma.Visible = false;
+            }
         }
     }
 }

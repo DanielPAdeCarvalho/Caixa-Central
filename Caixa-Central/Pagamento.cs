@@ -1,4 +1,8 @@
-﻿namespace Caixa_Central
+﻿using Newtonsoft.Json;
+using System.Security.Policy;
+using System.Text;
+
+namespace Caixa_Central
 {
     internal class Pagamento
     {
@@ -24,10 +28,13 @@
             Persycoins = persycoins;
         }
 
-        public async EnviarPagamento()
+        public async void GravarPagamento()
         {
             // Envia o pagamento para o banco de dados
-
+            var httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(this);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            await httpClient.PostAsync(Auxiliar.urlPagamentos, content);
         }
     }
 }

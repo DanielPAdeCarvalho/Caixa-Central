@@ -75,6 +75,8 @@
             listViewCaixaPedidos = new ListView();
             labelCaixaNomeCliente = new Label();
             groupBoxCaixaFechaConta = new GroupBox();
+            labelCauxaValorTotal = new Label();
+            label16 = new Label();
             checkBoxCaixaFechaConta = new CheckBox();
             label15 = new Label();
             labelCaixaFechaContaTroco = new Label();
@@ -687,6 +689,8 @@
             // 
             // groupBoxCaixaFechaConta
             // 
+            groupBoxCaixaFechaConta.Controls.Add(labelCauxaValorTotal);
+            groupBoxCaixaFechaConta.Controls.Add(label16);
             groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaConta);
             groupBoxCaixaFechaConta.Controls.Add(label15);
             groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTroco);
@@ -716,6 +720,26 @@
             groupBoxCaixaFechaConta.TabStop = false;
             groupBoxCaixaFechaConta.Text = "Pagamento";
             groupBoxCaixaFechaConta.Visible = false;
+            // 
+            // labelCauxaValorTotal
+            // 
+            labelCauxaValorTotal.AutoSize = true;
+            labelCauxaValorTotal.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCauxaValorTotal.Location = new Point(172, 38);
+            labelCauxaValorTotal.Name = "labelCauxaValorTotal";
+            labelCauxaValorTotal.Size = new Size(20, 24);
+            labelCauxaValorTotal.TabIndex = 27;
+            labelCauxaValorTotal.Text = "0";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Location = new Point(7, 38);
+            label16.Name = "label16";
+            label16.Size = new Size(105, 24);
+            label16.TabIndex = 26;
+            label16.Text = "Valor Total:";
             // 
             // checkBoxCaixaFechaConta
             // 
@@ -787,6 +811,7 @@
             buttonCaixaFechaContaConfirma.Text = "Confirmar Pagamento";
             buttonCaixaFechaContaConfirma.UseVisualStyleBackColor = true;
             buttonCaixaFechaContaConfirma.Visible = false;
+            buttonCaixaFechaContaConfirma.Click += ButtonCaixaFechaContaConfirma_Click;
             // 
             // label20
             // 
@@ -807,6 +832,7 @@
             textBoxCaixaFechaContaPicpay.Size = new Size(100, 29);
             textBoxCaixaFechaContaPicpay.TabIndex = 18;
             textBoxCaixaFechaContaPicpay.Text = "R$ 0,00";
+            textBoxCaixaFechaContaPicpay.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // label21
             // 
@@ -827,6 +853,7 @@
             textBoxCaixaFechaContaDebito.Size = new Size(100, 29);
             textBoxCaixaFechaContaDebito.TabIndex = 16;
             textBoxCaixaFechaContaDebito.Text = "R$ 0,00";
+            textBoxCaixaFechaContaDebito.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // label22
             // 
@@ -847,6 +874,7 @@
             textBoxCaixaFechaContaCredito.Size = new Size(100, 29);
             textBoxCaixaFechaContaCredito.TabIndex = 14;
             textBoxCaixaFechaContaCredito.Text = "R$ 0,00";
+            textBoxCaixaFechaContaCredito.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // label23
             // 
@@ -867,6 +895,7 @@
             textBoxCaixaFechaContaDinheiro.Size = new Size(100, 29);
             textBoxCaixaFechaContaDinheiro.TabIndex = 12;
             textBoxCaixaFechaContaDinheiro.Text = "R$ 0,00";
+            textBoxCaixaFechaContaDinheiro.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // label24
             // 
@@ -887,6 +916,7 @@
             textBoxCaixaFechaContaPix.Size = new Size(100, 29);
             textBoxCaixaFechaContaPix.TabIndex = 10;
             textBoxCaixaFechaContaPix.Text = "R$ 0,00";
+            textBoxCaixaFechaContaPix.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // label25
             // 
@@ -902,7 +932,7 @@
             // 
             label26.AutoSize = true;
             label26.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label26.Location = new Point(171, 49);
+            label26.Location = new Point(172, 76);
             label26.Name = "label26";
             label26.Size = new Size(20, 24);
             label26.TabIndex = 8;
@@ -912,7 +942,7 @@
             // 
             label27.AutoSize = true;
             label27.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label27.Location = new Point(6, 49);
+            label27.Location = new Point(7, 76);
             label27.Name = "label27";
             label27.Size = new Size(163, 24);
             label27.TabIndex = 7;
@@ -927,21 +957,22 @@
             textBoxCaixaFechaContaCoins.Size = new Size(100, 29);
             textBoxCaixaFechaContaCoins.TabIndex = 0;
             textBoxCaixaFechaContaCoins.Text = "R$ 0,00";
+            textBoxCaixaFechaContaCoins.TextChanged += TextBoxCaixaFecha_TextChanged;
             // 
             // calculatorControl2
             // 
             calculatorControl2.AccessibleDescription = "Calculator control";
             calculatorControl2.AccessibleName = "Calculator Control";
-            calculatorControl2.BeforeTouchSize = new Size(408, 381);
+            calculatorControl2.BeforeTouchSize = new Size(362, 415);
             calculatorControl2.Culture = new System.Globalization.CultureInfo("pt-BR");
             calculatorControl2.DoubleValue = 0D;
             calculatorControl2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             calculatorControl2.ForeColor = SystemColors.ControlText;
-            calculatorControl2.Location = new Point(984, 20);
+            calculatorControl2.Location = new Point(1030, 20);
             calculatorControl2.MetroColor = SystemColors.Control;
             calculatorControl2.Name = "calculatorControl2";
             calculatorControl2.RightToLeft = RightToLeft.No;
-            calculatorControl2.Size = new Size(408, 381);
+            calculatorControl2.Size = new Size(362, 415);
             calculatorControl2.TabIndex = 12;
             calculatorControl2.Text = "calculatorControl2";
             // 
@@ -1565,5 +1596,7 @@
         private Syncfusion.Windows.Forms.Tools.CurrencyTextBox textBoxCaixaFechaContaCoins;
         private Label labelCaixaNomeCliente;
         private ListView listViewCaixaPedidos;
+        private Label labelCauxaValorTotal;
+        private Label label16;
     }
 }
