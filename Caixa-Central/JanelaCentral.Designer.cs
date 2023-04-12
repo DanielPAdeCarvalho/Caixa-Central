@@ -72,6 +72,30 @@
             buttonCliente03 = new Button();
             buttonCliente02 = new Button();
             tabPageCaixa = new TabPage();
+            listViewCaixaPedidos = new ListView();
+            labelCaixaNomeCliente = new Label();
+            groupBoxCaixaFechaConta = new GroupBox();
+            checkBoxCaixaFechaConta = new CheckBox();
+            label15 = new Label();
+            labelCaixaFechaContaTroco = new Label();
+            label17 = new Label();
+            labelCaixaFechaContaTotalPago = new Label();
+            label19 = new Label();
+            buttonCaixaFechaContaConfirma = new Button();
+            label20 = new Label();
+            textBoxCaixaFechaContaPicpay = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            label21 = new Label();
+            textBoxCaixaFechaContaDebito = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            label22 = new Label();
+            textBoxCaixaFechaContaCredito = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            label23 = new Label();
+            textBoxCaixaFechaContaDinheiro = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            label24 = new Label();
+            textBoxCaixaFechaContaPix = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            label25 = new Label();
+            label26 = new Label();
+            label27 = new Label();
+            textBoxCaixaFechaContaCoins = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
             calculatorControl2 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             CadastroAssinantes = new TabPage();
             calculatorControl1 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
@@ -113,28 +137,6 @@
             label2 = new Label();
             label1 = new Label();
             Nome = new DataGridViewTextBoxColumn();
-            groupBoxCaixaFechaConta = new GroupBox();
-            checkBoxCaixaFechaConta = new CheckBox();
-            label15 = new Label();
-            labelCaixaFechaContaTroco = new Label();
-            label17 = new Label();
-            labelCaixaFechaContaTotalPago = new Label();
-            label19 = new Label();
-            buttonCaixaFechaContaConfirma = new Button();
-            label20 = new Label();
-            textBoxCaixaFechaContaPicpay = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
-            label21 = new Label();
-            textBoxCaixaFechaContaDebito = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
-            label22 = new Label();
-            textBoxCaixaFechaContaCredito = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
-            label23 = new Label();
-            textBoxCaixaFechaContaDinheiro = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
-            label24 = new Label();
-            textBoxCaixaFechaContaPix = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
-            label25 = new Label();
-            label26 = new Label();
-            label27 = new Label();
-            textBoxCaixaFechaContaCoins = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -143,6 +145,13 @@
             groupBoxClientes.SuspendLayout();
             groupBoxClientesNovaMesa.SuspendLayout();
             tabPageCaixa.SuspendLayout();
+            groupBoxCaixaFechaConta.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDebito).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCredito).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDinheiro).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPix).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCoins).BeginInit();
             CadastroAssinantes.SuspendLayout();
             groupBoxCadastroAssinantesPagar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)currencyTextBoxCadastroAssinantePicpay).BeginInit();
@@ -153,13 +162,6 @@
             ((System.ComponentModel.ISupportInitialize)currencyTextBoxCadastroAssinantePersyCoins).BeginInit();
             groupBoxCadastroAssinantesTempoPlano.SuspendLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.SuspendLayout();
-            groupBoxCaixaFechaConta.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDebito).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCredito).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDinheiro).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPix).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCoins).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -652,6 +654,8 @@
             // tabPageCaixa
             // 
             tabPageCaixa.BackColor = Color.DarkGray;
+            tabPageCaixa.Controls.Add(listViewCaixaPedidos);
+            tabPageCaixa.Controls.Add(labelCaixaNomeCliente);
             tabPageCaixa.Controls.Add(groupBoxCaixaFechaConta);
             tabPageCaixa.Controls.Add(calculatorControl2);
             tabPageCaixa.Location = new Point(4, 24);
@@ -660,6 +664,269 @@
             tabPageCaixa.Size = new Size(1404, 672);
             tabPageCaixa.TabIndex = 1;
             tabPageCaixa.Text = "Caixa";
+            // 
+            // listViewCaixaPedidos
+            // 
+            listViewCaixaPedidos.Font = new Font("Lato", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            listViewCaixaPedidos.Location = new Point(6, 69);
+            listViewCaixaPedidos.Name = "listViewCaixaPedidos";
+            listViewCaixaPedidos.Size = new Size(396, 574);
+            listViewCaixaPedidos.TabIndex = 50;
+            listViewCaixaPedidos.UseCompatibleStateImageBehavior = false;
+            listViewCaixaPedidos.View = View.Details;
+            // 
+            // labelCaixaNomeCliente
+            // 
+            labelCaixaNomeCliente.AutoSize = true;
+            labelCaixaNomeCliente.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaNomeCliente.Location = new Point(6, 42);
+            labelCaixaNomeCliente.Name = "labelCaixaNomeCliente";
+            labelCaixaNomeCliente.Size = new Size(67, 24);
+            labelCaixaNomeCliente.TabIndex = 49;
+            labelCaixaNomeCliente.Text = "Nome:";
+            // 
+            // groupBoxCaixaFechaConta
+            // 
+            groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaConta);
+            groupBoxCaixaFechaConta.Controls.Add(label15);
+            groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTroco);
+            groupBoxCaixaFechaConta.Controls.Add(label17);
+            groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTotalPago);
+            groupBoxCaixaFechaConta.Controls.Add(label19);
+            groupBoxCaixaFechaConta.Controls.Add(buttonCaixaFechaContaConfirma);
+            groupBoxCaixaFechaConta.Controls.Add(label20);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaPicpay);
+            groupBoxCaixaFechaConta.Controls.Add(label21);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaDebito);
+            groupBoxCaixaFechaConta.Controls.Add(label22);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaCredito);
+            groupBoxCaixaFechaConta.Controls.Add(label23);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaDinheiro);
+            groupBoxCaixaFechaConta.Controls.Add(label24);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaPix);
+            groupBoxCaixaFechaConta.Controls.Add(label25);
+            groupBoxCaixaFechaConta.Controls.Add(label26);
+            groupBoxCaixaFechaConta.Controls.Add(label27);
+            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaCoins);
+            groupBoxCaixaFechaConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            groupBoxCaixaFechaConta.Location = new Point(431, 20);
+            groupBoxCaixaFechaConta.Name = "groupBoxCaixaFechaConta";
+            groupBoxCaixaFechaConta.Size = new Size(273, 623);
+            groupBoxCaixaFechaConta.TabIndex = 13;
+            groupBoxCaixaFechaConta.TabStop = false;
+            groupBoxCaixaFechaConta.Text = "Pagamento";
+            groupBoxCaixaFechaConta.Visible = false;
+            // 
+            // checkBoxCaixaFechaConta
+            // 
+            checkBoxCaixaFechaConta.AutoSize = true;
+            checkBoxCaixaFechaConta.Location = new Point(7, 531);
+            checkBoxCaixaFechaConta.Name = "checkBoxCaixaFechaConta";
+            checkBoxCaixaFechaConta.Size = new Size(216, 28);
+            checkBoxCaixaFechaConta.TabIndex = 12;
+            checkBoxCaixaFechaConta.Text = "Troco em Persy Coins";
+            checkBoxCaixaFechaConta.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.Location = new Point(6, 495);
+            label15.Name = "label15";
+            label15.Size = new Size(65, 24);
+            label15.TabIndex = 25;
+            label15.Text = "Troco:";
+            // 
+            // labelCaixaFechaContaTroco
+            // 
+            labelCaixaFechaContaTroco.AutoSize = true;
+            labelCaixaFechaContaTroco.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaTroco.Location = new Point(159, 495);
+            labelCaixaFechaContaTroco.Name = "labelCaixaFechaContaTroco";
+            labelCaixaFechaContaTroco.Size = new Size(73, 24);
+            labelCaixaFechaContaTroco.TabIndex = 24;
+            labelCaixaFechaContaTroco.Text = "R$ 0,00";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.Location = new Point(6, 463);
+            label17.Name = "label17";
+            label17.Size = new Size(105, 24);
+            label17.TabIndex = 23;
+            label17.Text = "Total Pago:";
+            // 
+            // labelCaixaFechaContaTotalPago
+            // 
+            labelCaixaFechaContaTotalPago.AutoSize = true;
+            labelCaixaFechaContaTotalPago.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaTotalPago.Location = new Point(159, 463);
+            labelCaixaFechaContaTotalPago.Name = "labelCaixaFechaContaTotalPago";
+            labelCaixaFechaContaTotalPago.Size = new Size(73, 24);
+            labelCaixaFechaContaTotalPago.TabIndex = 22;
+            labelCaixaFechaContaTotalPago.Text = "R$ 0,00";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.Location = new Point(159, 440);
+            label19.Name = "label19";
+            label19.Size = new Size(88, 24);
+            label19.TabIndex = 21;
+            label19.Text = "-------------";
+            // 
+            // buttonCaixaFechaContaConfirma
+            // 
+            buttonCaixaFechaContaConfirma.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonCaixaFechaContaConfirma.Location = new Point(6, 564);
+            buttonCaixaFechaContaConfirma.Name = "buttonCaixaFechaContaConfirma";
+            buttonCaixaFechaContaConfirma.Size = new Size(261, 53);
+            buttonCaixaFechaContaConfirma.TabIndex = 20;
+            buttonCaixaFechaContaConfirma.Text = "Confirmar Pagamento";
+            buttonCaixaFechaContaConfirma.UseVisualStyleBackColor = true;
+            buttonCaixaFechaContaConfirma.Visible = false;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.Location = new Point(6, 351);
+            label20.Name = "label20";
+            label20.Size = new Size(71, 24);
+            label20.TabIndex = 19;
+            label20.Text = "Picpay:";
+            // 
+            // textBoxCaixaFechaContaPicpay
+            // 
+            textBoxCaixaFechaContaPicpay.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaPicpay.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaPicpay.Location = new Point(159, 348);
+            textBoxCaixaFechaContaPicpay.Name = "textBoxCaixaFechaContaPicpay";
+            textBoxCaixaFechaContaPicpay.Size = new Size(100, 29);
+            textBoxCaixaFechaContaPicpay.TabIndex = 18;
+            textBoxCaixaFechaContaPicpay.Text = "R$ 0,00";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label21.Location = new Point(6, 293);
+            label21.Name = "label21";
+            label21.Size = new Size(69, 24);
+            label21.TabIndex = 17;
+            label21.Text = "Débito:";
+            // 
+            // textBoxCaixaFechaContaDebito
+            // 
+            textBoxCaixaFechaContaDebito.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaDebito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaDebito.Location = new Point(159, 290);
+            textBoxCaixaFechaContaDebito.Name = "textBoxCaixaFechaContaDebito";
+            textBoxCaixaFechaContaDebito.Size = new Size(100, 29);
+            textBoxCaixaFechaContaDebito.TabIndex = 16;
+            textBoxCaixaFechaContaDebito.Text = "R$ 0,00";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.Location = new Point(6, 235);
+            label22.Name = "label22";
+            label22.Size = new Size(75, 24);
+            label22.TabIndex = 15;
+            label22.Text = "Crédito:";
+            // 
+            // textBoxCaixaFechaContaCredito
+            // 
+            textBoxCaixaFechaContaCredito.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaCredito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaCredito.Location = new Point(159, 232);
+            textBoxCaixaFechaContaCredito.Name = "textBoxCaixaFechaContaCredito";
+            textBoxCaixaFechaContaCredito.Size = new Size(100, 29);
+            textBoxCaixaFechaContaCredito.TabIndex = 14;
+            textBoxCaixaFechaContaCredito.Text = "R$ 0,00";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.Location = new Point(6, 409);
+            label23.Name = "label23";
+            label23.Size = new Size(97, 24);
+            label23.TabIndex = 13;
+            label23.Text = "Dinheiro :(";
+            // 
+            // textBoxCaixaFechaContaDinheiro
+            // 
+            textBoxCaixaFechaContaDinheiro.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaDinheiro.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaDinheiro.Location = new Point(159, 406);
+            textBoxCaixaFechaContaDinheiro.Name = "textBoxCaixaFechaContaDinheiro";
+            textBoxCaixaFechaContaDinheiro.Size = new Size(100, 29);
+            textBoxCaixaFechaContaDinheiro.TabIndex = 12;
+            textBoxCaixaFechaContaDinheiro.Text = "R$ 0,00";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.Location = new Point(6, 177);
+            label24.Name = "label24";
+            label24.Size = new Size(41, 24);
+            label24.TabIndex = 11;
+            label24.Text = "Pix:";
+            // 
+            // textBoxCaixaFechaContaPix
+            // 
+            textBoxCaixaFechaContaPix.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaPix.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaPix.Location = new Point(159, 174);
+            textBoxCaixaFechaContaPix.Name = "textBoxCaixaFechaContaPix";
+            textBoxCaixaFechaContaPix.Size = new Size(100, 29);
+            textBoxCaixaFechaContaPix.TabIndex = 10;
+            textBoxCaixaFechaContaPix.Text = "R$ 0,00";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Location = new Point(6, 119);
+            label25.Name = "label25";
+            label25.Size = new Size(110, 24);
+            label25.TabIndex = 9;
+            label25.Text = "PersyCoins:";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.Location = new Point(171, 49);
+            label26.Name = "label26";
+            label26.Size = new Size(20, 24);
+            label26.TabIndex = 8;
+            label26.Text = "0";
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Location = new Point(6, 49);
+            label27.Name = "label27";
+            label27.Size = new Size(163, 24);
+            label27.TabIndex = 7;
+            label27.Text = "Saldo PersyCoins:";
+            // 
+            // textBoxCaixaFechaContaCoins
+            // 
+            textBoxCaixaFechaContaCoins.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaCoins.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            textBoxCaixaFechaContaCoins.Location = new Point(159, 116);
+            textBoxCaixaFechaContaCoins.Name = "textBoxCaixaFechaContaCoins";
+            textBoxCaixaFechaContaCoins.Size = new Size(100, 29);
+            textBoxCaixaFechaContaCoins.TabIndex = 0;
+            textBoxCaixaFechaContaCoins.Text = "R$ 0,00";
             // 
             // calculatorControl2
             // 
@@ -1142,249 +1409,6 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // groupBoxCaixaFechaConta
-            // 
-            groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaConta);
-            groupBoxCaixaFechaConta.Controls.Add(label15);
-            groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTroco);
-            groupBoxCaixaFechaConta.Controls.Add(label17);
-            groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTotalPago);
-            groupBoxCaixaFechaConta.Controls.Add(label19);
-            groupBoxCaixaFechaConta.Controls.Add(buttonCaixaFechaContaConfirma);
-            groupBoxCaixaFechaConta.Controls.Add(label20);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaPicpay);
-            groupBoxCaixaFechaConta.Controls.Add(label21);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaDebito);
-            groupBoxCaixaFechaConta.Controls.Add(label22);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaCredito);
-            groupBoxCaixaFechaConta.Controls.Add(label23);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaDinheiro);
-            groupBoxCaixaFechaConta.Controls.Add(label24);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaPix);
-            groupBoxCaixaFechaConta.Controls.Add(label25);
-            groupBoxCaixaFechaConta.Controls.Add(label26);
-            groupBoxCaixaFechaConta.Controls.Add(label27);
-            groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaCoins);
-            groupBoxCaixaFechaConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBoxCaixaFechaConta.Location = new Point(310, 20);
-            groupBoxCaixaFechaConta.Name = "groupBoxCaixaFechaConta";
-            groupBoxCaixaFechaConta.Size = new Size(273, 623);
-            groupBoxCaixaFechaConta.TabIndex = 13;
-            groupBoxCaixaFechaConta.TabStop = false;
-            groupBoxCaixaFechaConta.Text = "Pagamento";
-            groupBoxCaixaFechaConta.Visible = false;
-            // 
-            // checkBoxCaixaFechaConta
-            // 
-            checkBoxCaixaFechaConta.AutoSize = true;
-            checkBoxCaixaFechaConta.Location = new Point(7, 531);
-            checkBoxCaixaFechaConta.Name = "checkBoxCaixaFechaConta";
-            checkBoxCaixaFechaConta.Size = new Size(216, 28);
-            checkBoxCaixaFechaConta.TabIndex = 12;
-            checkBoxCaixaFechaConta.Text = "Troco em Persy Coins";
-            checkBoxCaixaFechaConta.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.Location = new Point(6, 495);
-            label15.Name = "label15";
-            label15.Size = new Size(65, 24);
-            label15.TabIndex = 25;
-            label15.Text = "Troco:";
-            // 
-            // labelCaixaFechaContaTroco
-            // 
-            labelCaixaFechaContaTroco.AutoSize = true;
-            labelCaixaFechaContaTroco.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCaixaFechaContaTroco.Location = new Point(159, 495);
-            labelCaixaFechaContaTroco.Name = "labelCaixaFechaContaTroco";
-            labelCaixaFechaContaTroco.Size = new Size(73, 24);
-            labelCaixaFechaContaTroco.TabIndex = 24;
-            labelCaixaFechaContaTroco.Text = "R$ 0,00";
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label17.Location = new Point(6, 463);
-            label17.Name = "label17";
-            label17.Size = new Size(105, 24);
-            label17.TabIndex = 23;
-            label17.Text = "Total Pago:";
-            // 
-            // labelCaixaFechaContaTotalPago
-            // 
-            labelCaixaFechaContaTotalPago.AutoSize = true;
-            labelCaixaFechaContaTotalPago.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCaixaFechaContaTotalPago.Location = new Point(159, 463);
-            labelCaixaFechaContaTotalPago.Name = "labelCaixaFechaContaTotalPago";
-            labelCaixaFechaContaTotalPago.Size = new Size(73, 24);
-            labelCaixaFechaContaTotalPago.TabIndex = 22;
-            labelCaixaFechaContaTotalPago.Text = "R$ 0,00";
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label19.Location = new Point(159, 440);
-            label19.Name = "label19";
-            label19.Size = new Size(88, 24);
-            label19.TabIndex = 21;
-            label19.Text = "-------------";
-            // 
-            // buttonCaixaFechaContaConfirma
-            // 
-            buttonCaixaFechaContaConfirma.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonCaixaFechaContaConfirma.Location = new Point(6, 564);
-            buttonCaixaFechaContaConfirma.Name = "buttonCaixaFechaContaConfirma";
-            buttonCaixaFechaContaConfirma.Size = new Size(261, 53);
-            buttonCaixaFechaContaConfirma.TabIndex = 20;
-            buttonCaixaFechaContaConfirma.Text = "Confirmar Pagamento";
-            buttonCaixaFechaContaConfirma.UseVisualStyleBackColor = true;
-            buttonCaixaFechaContaConfirma.Visible = false;
-            // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label20.Location = new Point(6, 351);
-            label20.Name = "label20";
-            label20.Size = new Size(71, 24);
-            label20.TabIndex = 19;
-            label20.Text = "Picpay:";
-            // 
-            // textBoxCaixaFechaContaPicpay
-            // 
-            textBoxCaixaFechaContaPicpay.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaPicpay.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaPicpay.Location = new Point(159, 348);
-            textBoxCaixaFechaContaPicpay.Name = "textBoxCaixaFechaContaPicpay";
-            textBoxCaixaFechaContaPicpay.Size = new Size(100, 29);
-            textBoxCaixaFechaContaPicpay.TabIndex = 18;
-            textBoxCaixaFechaContaPicpay.Text = "R$ 0,00";
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label21.Location = new Point(6, 293);
-            label21.Name = "label21";
-            label21.Size = new Size(69, 24);
-            label21.TabIndex = 17;
-            label21.Text = "Débito:";
-            // 
-            // textBoxCaixaFechaContaDebito
-            // 
-            textBoxCaixaFechaContaDebito.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaDebito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaDebito.Location = new Point(159, 290);
-            textBoxCaixaFechaContaDebito.Name = "textBoxCaixaFechaContaDebito";
-            textBoxCaixaFechaContaDebito.Size = new Size(100, 29);
-            textBoxCaixaFechaContaDebito.TabIndex = 16;
-            textBoxCaixaFechaContaDebito.Text = "R$ 0,00";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label22.Location = new Point(6, 235);
-            label22.Name = "label22";
-            label22.Size = new Size(75, 24);
-            label22.TabIndex = 15;
-            label22.Text = "Crédito:";
-            // 
-            // textBoxCaixaFechaContaCredito
-            // 
-            textBoxCaixaFechaContaCredito.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaCredito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaCredito.Location = new Point(159, 232);
-            textBoxCaixaFechaContaCredito.Name = "textBoxCaixaFechaContaCredito";
-            textBoxCaixaFechaContaCredito.Size = new Size(100, 29);
-            textBoxCaixaFechaContaCredito.TabIndex = 14;
-            textBoxCaixaFechaContaCredito.Text = "R$ 0,00";
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label23.Location = new Point(6, 409);
-            label23.Name = "label23";
-            label23.Size = new Size(97, 24);
-            label23.TabIndex = 13;
-            label23.Text = "Dinheiro :(";
-            // 
-            // textBoxCaixaFechaContaDinheiro
-            // 
-            textBoxCaixaFechaContaDinheiro.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaDinheiro.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaDinheiro.Location = new Point(159, 406);
-            textBoxCaixaFechaContaDinheiro.Name = "textBoxCaixaFechaContaDinheiro";
-            textBoxCaixaFechaContaDinheiro.Size = new Size(100, 29);
-            textBoxCaixaFechaContaDinheiro.TabIndex = 12;
-            textBoxCaixaFechaContaDinheiro.Text = "R$ 0,00";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label24.Location = new Point(6, 177);
-            label24.Name = "label24";
-            label24.Size = new Size(41, 24);
-            label24.TabIndex = 11;
-            label24.Text = "Pix:";
-            // 
-            // textBoxCaixaFechaContaPix
-            // 
-            textBoxCaixaFechaContaPix.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaPix.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaPix.Location = new Point(159, 174);
-            textBoxCaixaFechaContaPix.Name = "textBoxCaixaFechaContaPix";
-            textBoxCaixaFechaContaPix.Size = new Size(100, 29);
-            textBoxCaixaFechaContaPix.TabIndex = 10;
-            textBoxCaixaFechaContaPix.Text = "R$ 0,00";
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label25.Location = new Point(6, 119);
-            label25.Name = "label25";
-            label25.Size = new Size(110, 24);
-            label25.TabIndex = 9;
-            label25.Text = "PersyCoins:";
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label26.Location = new Point(171, 49);
-            label26.Name = "label26";
-            label26.Size = new Size(20, 24);
-            label26.TabIndex = 8;
-            label26.Text = "0";
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label27.Location = new Point(6, 49);
-            label27.Name = "label27";
-            label27.Size = new Size(163, 24);
-            label27.TabIndex = 7;
-            label27.Text = "Saldo PersyCoins:";
-            // 
-            // textBoxCaixaFechaContaCoins
-            // 
-            textBoxCaixaFechaContaCoins.BeforeTouchSize = new Size(100, 29);
-            textBoxCaixaFechaContaCoins.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
-            textBoxCaixaFechaContaCoins.Location = new Point(159, 116);
-            textBoxCaixaFechaContaCoins.Name = "textBoxCaixaFechaContaCoins";
-            textBoxCaixaFechaContaCoins.Size = new Size(100, 29);
-            textBoxCaixaFechaContaCoins.TabIndex = 0;
-            textBoxCaixaFechaContaCoins.Text = "R$ 0,00";
-            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1406,6 +1430,15 @@
             groupBoxClientesNovaMesa.ResumeLayout(false);
             groupBoxClientesNovaMesa.PerformLayout();
             tabPageCaixa.ResumeLayout(false);
+            tabPageCaixa.PerformLayout();
+            groupBoxCaixaFechaConta.ResumeLayout(false);
+            groupBoxCaixaFechaConta.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDebito).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCredito).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDinheiro).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPix).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCoins).EndInit();
             CadastroAssinantes.ResumeLayout(false);
             CadastroAssinantes.PerformLayout();
             groupBoxCadastroAssinantesPagar.ResumeLayout(false);
@@ -1420,14 +1453,6 @@
             groupBoxCadastroAssinantesTempoPlano.PerformLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.ResumeLayout(false);
             groupBoxCadastroAssinantesPlanoEscolhido.PerformLayout();
-            groupBoxCaixaFechaConta.ResumeLayout(false);
-            groupBoxCaixaFechaConta.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDebito).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCredito).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaDinheiro).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPix).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaCoins).EndInit();
             ResumeLayout(false);
         }
 
@@ -1538,5 +1563,7 @@
         private Label label26;
         private Label label27;
         private Syncfusion.Windows.Forms.Tools.CurrencyTextBox textBoxCaixaFechaContaCoins;
+        private Label labelCaixaNomeCliente;
+        private ListView listViewCaixaPedidos;
     }
 }

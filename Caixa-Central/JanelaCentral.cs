@@ -48,6 +48,11 @@ namespace Caixa_Central
             sfDataGridClienteCardapio.Columns["Valor"].Format = "C2";
             sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
             sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
+
+            //Inicializa o ListView de PEdidos
+            listViewCaixaPedidos.Columns.Add("Item", -2, HorizontalAlignment.Left);
+            listViewCaixaPedidos.Columns.Add("Valor", -2, HorizontalAlignment.Left);
+            listViewCaixaPedidos.Columns.Add("ValorTotal", -2, HorizontalAlignment.Right);
         }
 
 
@@ -120,7 +125,6 @@ namespace Caixa_Central
                 }
             }
         }
-
 
         private void TextBoxCadastroAssinantesSobreNome_TextChanged(object sender, EventArgs e)
         {
@@ -253,6 +257,7 @@ namespace Caixa_Central
             }
             string validade = futureDate.ToString("yyyy-MM-dd");
 
+            //Criar novo assinante e enviar para a API
             var assinante = new
             {
                 nome = textBoxCadastroAssinantesNome.Text,
@@ -263,6 +268,19 @@ namespace Caixa_Central
             };
             string responseContent = await PostNewAssinante(assinante);
             MessageBox.Show(responseContent);
+
+            //Gravar o pagamento da assinatura
+            Pagamento pagamento = new Pagamento
+            (
+                textBoxCadastroAssinantesNome.Text + " " + textBoxCadastroAssinantesSobreNome.Text,
+                troco,
+                currencyTextBoxCadastroAssinanteCredito.DecimalValue,
+                currencyTextBoxCadastroAssinanteDebito.DecimalValue,
+                currencyTextBoxCadastroAssinanteDinheiro.DecimalValue,
+                currencyTextBoxCadastroAssinantePicpay.DecimalValue,
+                currencyTextBoxCadastroAssinantePix.DecimalValue,
+                currencyTextBoxCadastroAssinantePersyCoins.DecimalValue
+            );
 
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
@@ -298,7 +316,7 @@ namespace Caixa_Central
             groupBoxCadastroAssinantesPagar.Visible = false;
         }
 
-        private void CalcularTotal()
+        private void CalcularTotalAssinante()
         {
             decimal valorTotal = 0;
             valorTotal += currencyTextBoxCadastroAssinantePix.DecimalValue;
@@ -327,7 +345,7 @@ namespace Caixa_Central
 
         private void CurrencyTextBoxCadastroAssinante_TextChanged(object sender, EventArgs e)
         {
-            CalcularTotal();
+            CalcularTotalAssinante();
         }
 
         private void TabPageClientes_EnterAsync(object sender, EventArgs e)
@@ -513,7 +531,28 @@ namespace Caixa_Central
 
         private void ButtonClienteFecharConta_Click(object sender, EventArgs e)
         {
+            string nrMesa = labelClienteNrMesa.Text;
+            if (mesasOcupadas != null)
+            {
+                Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                if (mesa != null && mesa.Pedidos != null)
+                {
+                    foreach (Pedido item in mesa.Pedidos.Values)
+                    {
+                        ListViewItem listViewItem = new(item.Nome);
+                        listViewItem.SubItems.Add(item.Valor.ToString("C2"));
+                        listViewItem.SubItems.Add(item.ValorTotal.ToString("C2"));
+                        listViewCaixaPedidos.Items.Add(listViewItem);
+                    }
+                }
+            }
+            // Auto-size the columns
+            listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            groupBoxCaixaFechaConta.Visible = true;
+            labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
             tabControl1.SelectedTab = tabPageCaixa;
+
         }
     }
 }
