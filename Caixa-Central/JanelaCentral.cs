@@ -606,9 +606,9 @@ namespace Caixa_Central
             string nrMesa = labelClienteNrMesa.Text;
             Mesa mesa = new(nrMesa, textBoxClientesNovoNome.Text);
 
-            var httpClient = new HttpClient();
+            HttpClient httpClient = new();
             var json = JsonConvert.SerializeObject(mesa);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
             await httpClient.PutAsync(Auxiliar.urlMesa, content);
             MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
             GetAllMesasAsync();

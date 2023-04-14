@@ -14,8 +14,10 @@ namespace Caixa_Central
         [JsonProperty("pedidos")]
         public Dictionary<string, Pedido>? PedidosDictionary { get; set; }
 
+        [JsonIgnore]
         public BindingList<Pedido> Pedidos { get; set; }
 
+        [JsonIgnore]
         public bool Ocupada { get; set; }
 
         public Mesa(string id, string client)
