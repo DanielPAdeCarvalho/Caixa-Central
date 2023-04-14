@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Enums;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace Caixa_Central
         private readonly HttpClient httpClient;
         List<Assinante>? assinantes;
         List<Mesa>? mesasOcupadas;
-        List<Item>? cardapio;
+        BindingList<Item>? cardapio;
 
         public JanelaCentral(string nome)
         {
@@ -26,28 +27,36 @@ namespace Caixa_Central
             GetAllMesasAsync();
             UpdateCardapio();
 
-            //Inicializa o DataGrid de Pedidos
-            sfDataGridClientePedidos.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
-            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
-            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "Quantidade" });
-            sfDataGridClientePedidos.Columns.Add(new GridNumericColumn() { MappingName = "ValorTotal" });
-            sfDataGridClientePedidos.Columns["Nome"].HeaderText = "Item";
-            sfDataGridClientePedidos.Columns["Valor"].HeaderText = "Valor";
-            sfDataGridClientePedidos.Columns["Valor"].Format = "C2";
-            sfDataGridClientePedidos.Columns["Quantidade"].HeaderText = "Quantidade";
-            sfDataGridClientePedidos.Columns["Quantidade"].Format = "N0";
-            sfDataGridClientePedidos.Columns["ValorTotal"].HeaderText = "Valor Total";
-            sfDataGridClientePedidos.Columns["ValorTotal"].Format = "C2";
-            sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
-            sfDataGridClientePedidos.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
+            //Inicializa o DataGrid de Pedidos do Cliente
+            dataGridClientePedidos.AutoGenerateColumns = false;
+            dataGridClientePedidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
+            dataGridClientePedidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Valor", HeaderText = "Valor", ValueType = typeof(decimal) });
+            dataGridClientePedidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Quantidade", HeaderText = "Quantidade", ValueType = typeof(int) });
+            dataGridClientePedidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ValorTotal", HeaderText = "Valor Total", ValueType = typeof(decimal), ReadOnly = true });
+            dataGridClientePedidos.DefaultCellStyle.Font = new Font(dataGridClientePedidos.Font.FontFamily, 10);
+            dataGridClientePedidos.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridClientePedidos.Font.FontFamily, 10);
+            dataGridClientePedidos.Columns[0].MinimumWidth = 160;
+            dataGridClientePedidos.Columns[1].DefaultCellStyle.Format = "C2";
+            dataGridClientePedidos.Columns[2].DefaultCellStyle.Format = "N0";
+            dataGridClientePedidos.Columns[3].DefaultCellStyle.Format = "C2";
+            dataGridClientePedidos.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridClientePedidos.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridClientePedidos.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridClientePedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+
 
             //Inicializa o DataGrid do Cardapio
-            sfDataGridClienteCardapio.Columns.Add(new GridTextColumn() { MappingName = "Nome" });
-            sfDataGridClienteCardapio.Columns.Add(new GridNumericColumn() { MappingName = "Valor" });
-            sfDataGridClienteCardapio.Columns["Nome"].HeaderText = "Item";
-            sfDataGridClienteCardapio.Columns["Valor"].Format = "C2";
-            sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.AllCells;
-            sfDataGridClienteCardapio.AutoSizeColumnsMode = AutoSizeColumnsMode.LastColumnFill;
+            dataGridClienteCardapio.AutoGenerateColumns = false;
+            dataGridClienteCardapio.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
+            dataGridClienteCardapio.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Valor", HeaderText = "Valor", ValueType = typeof(decimal) });
+            dataGridClienteCardapio.DefaultCellStyle.Font = new Font(dataGridClienteCardapio.Font.FontFamily, 10);
+            dataGridClienteCardapio.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridClienteCardapio.Font.FontFamily, 10);
+            dataGridClienteCardapio.Columns[0].MinimumWidth = 160;
+            dataGridClienteCardapio.Columns[1].DefaultCellStyle.Format = "C2";
+            dataGridClienteCardapio.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridClienteCardapio.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
 
             //Inicializa o ListView de PEdidos
             listViewCaixaPedidos.Columns.Add("Item", -2, HorizontalAlignment.Left);
@@ -70,7 +79,7 @@ namespace Caixa_Central
                 // Read response content
                 string responseContent = await response.Content.ReadAsStringAsync();
                 // Parse response content
-                cardapio = JsonConvert.DeserializeObject<List<Item>>(responseContent);
+                cardapio = JsonConvert.DeserializeObject<BindingList<Item>>(responseContent);
             }
             catch (Exception ex)
             {
@@ -79,7 +88,7 @@ namespace Caixa_Central
             }
             if (cardapio != null)
             {
-                sfDataGridClienteCardapio.DataSource = cardapio;
+                dataGridClienteCardapio.DataSource = cardapio;
             }
         }
 
@@ -113,16 +122,20 @@ namespace Caixa_Central
                         mesa.Ocupada = true;
                     }
                 }
-                for (int i = 1; i < 26; i++)
+            }
+            else
+            {
+                mesasOcupadas = new List<Mesa>();
+            }
+            for (int i = 1; i < 26; i++)
+            {
+                string nrMesa = i.ToString("D2");
+                Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                mesa ??= new Mesa(nrMesa, "")
                 {
-                    string nrMesa = i.ToString("D2");
-                    Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                    mesa ??= new Mesa(nrMesa, "")
-                    {
-                        Ocupada = false
-                    };
-                    mesasOcupadas.Add(mesa);
-                }
+                    Ocupada = false
+                };
+                mesasOcupadas.Add(mesa);
             }
         }
 
@@ -393,7 +406,7 @@ namespace Caixa_Central
             }
         }
 
-        private void ButtonCliente_Click(object sender, EventArgs e)
+        private async void ButtonCliente_Click(object sender, EventArgs e)
         {
             if (sender is Button clickedButton)
             {
@@ -406,10 +419,10 @@ namespace Caixa_Central
                     {
                         if (mesa.Ocupada)
                         {
-                            mesa.UpdatePedidos();
+                            await mesa.UpdatePedidos();
 
                             //Atualizar o datagrid de pedidos da mesa
-                            UpdatePedidos(nrMesa);
+                            await UpdatePedidos(nrMesa);
 
                             //Nome do cliente na mesa
                             groupBoxClientesMesaAddPedidos.Visible = true;
@@ -425,25 +438,20 @@ namespace Caixa_Central
             }
         }
 
-        private void UpdatePedidos(string nrMesa)
+        private async Task UpdatePedidos(string nrMesa)
         {
-            sfDataGridClientePedidos.Visible = false;
+            dataGridClientePedidos.Visible = false;
             if (mesasOcupadas != null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
                 if (mesa != null)
                 {
-                    Pedido[] temp = Array.Empty<Pedido>();
-                    if (mesa.Pedidos != null)
-                    {
-                        temp = mesa.Pedidos.Values.ToArray();
-                    }
-                    sfDataGridClientePedidos.AutoGenerateColumns = false;
-                    sfDataGridClientePedidos.DataSource = temp;
-                    sfDataGridClientePedidos.Refresh();
+                    await mesa.UpdatePedidos();
+                    dataGridClientePedidos.DataSource = mesa.Pedidos;
+                    dataGridClientePedidos.Refresh();
                 }
             }
-            sfDataGridClientePedidos.Visible = true;
+            dataGridClientePedidos.Visible = true;
         }
 
         private void IniciarMesa(string nrMesa)
@@ -453,12 +461,22 @@ namespace Caixa_Central
             if (result == DialogResult.Yes)
             {
                 // User clicked Yes
+                groupBoxClientesNovaMesaAssinante.Visible = true;
                 groupBoxClientesNovaMesa.Visible = false;
+                if (assinantes is not null)
+                {
+                    List<string> nomesESobrenomes = assinantes.Select(p => $"{p.Nome} {p.Sobrenome}").ToList();
+                    comboBoxClienteNovaMesaAssinanteNomeAssinante.DataSource = nomesESobrenomes;
+                    comboBoxClienteNovaMesaAssinanteNomeAssinante.Refresh();
+                    comboBoxClienteNovaMesaAssinanteNomeAssinante.Visible = true;
+                    labelClienteNrMesa.Text = nrMesa;
+                }
             }
             else
             {
                 // User clicked No
                 groupBoxClientesNovaMesa.Visible = true;
+                groupBoxClientesNovaMesaAssinante.Visible = false;
                 labelClienteNrMesa.Text = nrMesa;
             }
         }
@@ -482,54 +500,13 @@ namespace Caixa_Central
             }
         }
 
-        private async void ButtonClientesAdd_ClickAsync(object sender, EventArgs e)
-        {
-            //Gravar que a mesa está ocupada
-            string nrMesa = labelClienteNrMesa.Text;
-            Mesa mesa = new(nrMesa, textBoxClientesNovoNome.Text);
-
-            var httpClient = new HttpClient();
-            var json = JsonConvert.SerializeObject(mesa);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            await httpClient.PutAsync(Auxiliar.urlMesa, content);
-            MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
-            GetAllMesasAsync();
-            groupBoxClientesMesaAddPedidos.Visible = true;
-
-            if (!checkBoxClienteUsarPassaporteAssinante.Checked)
-            {
-                //Adicionar o pedido passaporte na lista de pedidos da mesa
-                Pedido pedido = new("Passaporte", 10, 1);
-                pedido.AdicionarPedido(nrMesa);
-            }
-
-            groupBoxClientesNovaMesa.Visible = false;
-            textBoxClientesNovoNome.Text = string.Empty;
-            comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
-        }
-
-        private void SfDataGridClienteCardapio_CellDoubleClick(object sender, Syncfusion.WinForms.DataGrid.Events.CellClickEventArgs e)
-        {
-            Item item = (Item)sfDataGridClienteCardapio.SelectedItem;
-            Pedido pedido = new(item.Nome, item.Valor, 1);
-            pedido.AdicionarPedido(labelClienteNrMesa.Text);
-            UpdatePedidos(labelClienteNrMesa.Text);
-            groupBoxClientesMesaAddPedidos.Visible = false;
-            MessageBox.Show("Pedido adicionado com sucesso!");
-
-            //Limpar o campo de pesquisa e atualizar o datagrid
-            textBoxClientesMesaAddPedidos.Text = string.Empty;
-            sfDataGridClienteCardapio.DataSource = cardapio;
-
-        }
-
         private void TextBoxClientesMesaAddPedidos_TextChanged(object sender, EventArgs e)
         {
             string nome = textBoxClientesMesaAddPedidos.Text.ToLower();
             if (cardapio != null)
             {
                 List<Item> pesquisa = cardapio.Where(o => o.Nome.ToLower().StartsWith(nome)).ToList();
-                sfDataGridClienteCardapio.DataSource = pesquisa;
+                dataGridClienteCardapio.DataSource = pesquisa;
             }
         }
 
@@ -540,9 +517,9 @@ namespace Caixa_Central
             if (mesasOcupadas != null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                if (mesa != null && mesa.Pedidos != null)
+                if (mesa != null && mesa.PedidosDictionary != null)
                 {
-                    foreach (Pedido item in mesa.Pedidos.Values)
+                    foreach (Pedido item in mesa.PedidosDictionary.Values)
                     {
                         ListViewItem listViewItem = new(item.Nome);
                         listViewItem.SubItems.Add(item.Valor.ToString("C2"));
@@ -552,9 +529,8 @@ namespace Caixa_Central
                     }
                 }
             }
-            // Auto-size the columns
+            // Auto-size the columns in the list view control.
             listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-
             labelCauxaValorTotal.Text = valorTotal.ToString("C2");
 
             groupBoxCaixaFechaConta.Visible = true;
@@ -569,7 +545,7 @@ namespace Caixa_Central
             if (mesasOcupadas != null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                if (mesa != null && mesa.Pedidos != null)
+                if (mesa != null && mesa.PedidosDictionary != null)
                 {
                     Pagamento pagamento = new(
                         mesa.Cliente,
@@ -621,6 +597,73 @@ namespace Caixa_Central
             else
             {
                 buttonCaixaFechaContaConfirma.Visible = false;
+            }
+        }
+
+        private async void ButtonClientesAdd_ClickAsync(object sender, EventArgs e)
+        {
+            //Gravar que a mesa está ocupada
+            string nrMesa = labelClienteNrMesa.Text;
+            Mesa mesa = new(nrMesa, textBoxClientesNovoNome.Text);
+
+            var httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(mesa);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            await httpClient.PutAsync(Auxiliar.urlMesa, content);
+            MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
+            GetAllMesasAsync();
+            groupBoxClientesMesaAddPedidos.Visible = true;
+
+            if (!checkBoxClienteUsarPassaporteAssinante.Checked)
+            {
+                //Adicionar o pedido passaporte na lista de pedidos da mesa
+                Pedido pedido = new("Passaporte", 10, 1);
+                await pedido.AdicionarPedido(nrMesa);
+            }
+
+            groupBoxClientesNovaMesa.Visible = false;
+            textBoxClientesNovoNome.Text = string.Empty;
+            comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+        }
+        private async void ButtonClientesAddAssinante_Click(object sender, EventArgs e)
+        {
+            //Gravar que a mesa está ocupada
+            string nrMesa = labelClienteNrMesa.Text;
+            Mesa mesa = new(nrMesa, comboBoxClienteNovaMesaAssinanteNomeAssinante.Text);
+
+            var httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(mesa);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            await httpClient.PutAsync(Auxiliar.urlMesa, content);
+            MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
+            GetAllMesasAsync();
+            groupBoxClientesMesaAddPedidos.Visible = true;
+
+
+            //Limpar o campo de pesquisa e atualizar o datagrid
+            groupBoxClientesNovaMesa.Visible = false;
+            groupBoxClientesNovaMesaAssinante.Visible = false;
+            textBoxClientesNovoNome.Text = string.Empty;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Text = string.Empty;
+        }
+
+        private async void SfDataGridClienteCardapio_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridClienteCardapio.SelectedCells.Count > 0)
+            {
+                int selectedRowIndex = dataGridClienteCardapio.SelectedCells[0].RowIndex;
+                if (cardapio != null)
+                {
+                    Item item = cardapio[selectedRowIndex];
+                    Pedido pedido = new(item.Nome, item.Valor, 1);
+                    await pedido.AdicionarPedido(labelClienteNrMesa.Text);
+                    await UpdatePedidos(labelClienteNrMesa.Text);
+                    MessageBox.Show("Pedido adicionado com sucesso!");
+
+                    //Limpar o campo de pesquisa e atualizar o datagrid
+                    textBoxClientesMesaAddPedidos.Text = string.Empty;
+                    dataGridClienteCardapio.DataSource = cardapio;
+                }
             }
         }
     }

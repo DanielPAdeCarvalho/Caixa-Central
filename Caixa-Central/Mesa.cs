@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Caixa_Central
 {
@@ -11,7 +12,9 @@ namespace Caixa_Central
         public string Cliente { get; set; }
 
         [JsonProperty("pedidos")]
-        public Dictionary<string, Pedido>? Pedidos { get; set; }
+        public Dictionary<string, Pedido>? PedidosDictionary { get; set; }
+
+        public BindingList<Pedido> Pedidos { get; set; }
 
         public bool Ocupada { get; set; }
 
@@ -19,13 +22,14 @@ namespace Caixa_Central
         {
             Id = id;
             Cliente = client;
+            Pedidos = new BindingList<Pedido>();
         }
 
-        public async void UpdatePedidos()
+        public async Task UpdatePedidos()
         {
             //acessar a API para pegar a mesa atualizada          
             string responseContent;
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = new();
 
             //preencher a url com a mesa selecionada
             string url = Auxiliar.urlMesa + "/" + Id;
@@ -51,11 +55,19 @@ namespace Caixa_Central
             // Deserialize the JSON string into a list of Pessoa objects
             if (responseContent != null)
             {
-                Mesa? m = JsonConvert.DeserializeObject<Mesa>(responseContent);
-                this.Id = m.Id;
-                this.Cliente = m.Cliente;
-                this.Pedidos = m.Pedidos;
-                this.Ocupada = true;
+                Mesa? mesa = JsonConvert.DeserializeObject<Mesa>(responseContent);
+                if (mesa is not null)
+                {
+                    this.Id = mesa.Id;
+                    this.Cliente = mesa.Cliente;
+                    this.PedidosDictionary = mesa.PedidosDictionary;
+                    this.Ocupada = true;
+                    if (PedidosDictionary is not null)
+                    {
+                        //atualizar a lista de pedidos
+                        Pedidos = new BindingList<Pedido>(PedidosDictionary.Values.ToList()); 
+                    }
+                }
             }
         }
     }

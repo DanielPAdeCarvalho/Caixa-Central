@@ -23,7 +23,7 @@ namespace Caixa_Central
             Quantidade = quantidade;
         }
 
-        public async void AdicionarPedido(string idMesa)
+        public async Task AdicionarPedido(string idMesa)
         {
             string url = Auxiliar.urlMesa + "/" + idMesa;
             var httpClient = new HttpClient();

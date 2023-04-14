@@ -33,11 +33,11 @@
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
+            dataGridClienteCardapio = new DataGridView();
+            dataGridClientePedidos = new DataGridView();
             buttonClienteFecharConta = new Button();
             textBoxClientesMesaAddPedidos = new TextBox();
             label14 = new Label();
-            sfDataGridClienteCardapio = new Syncfusion.WinForms.DataGrid.SfDataGrid();
-            sfDataGridClientePedidos = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             groupBoxClientes = new GroupBox();
             groupBoxClientesNovaMesa = new GroupBox();
             labelClienteNrMesa = new Label();
@@ -46,6 +46,10 @@
             checkBoxClienteUsarPassaporteAssinante = new CheckBox();
             textBoxClientesNovoNome = new TextBox();
             label13 = new Label();
+            groupBoxClientesNovaMesaAssinante = new GroupBox();
+            buttonClientesAddAssinante = new Button();
+            label18 = new Label();
+            comboBoxClienteNovaMesaAssinanteNomeAssinante = new ComboBox();
             buttonCliente25 = new Button();
             buttonCliente21 = new Button();
             buttonCliente24 = new Button();
@@ -142,10 +146,11 @@
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClienteCardapio).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridClienteCardapio).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridClientePedidos).BeginInit();
             groupBoxClientes.SuspendLayout();
             groupBoxClientesNovaMesa.SuspendLayout();
+            groupBoxClientesNovaMesaAssinante.SuspendLayout();
             tabPageCaixa.SuspendLayout();
             groupBoxCaixaFechaConta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).BeginInit();
@@ -192,11 +197,11 @@
             // 
             // groupBoxClientesMesaAddPedidos
             // 
+            groupBoxClientesMesaAddPedidos.Controls.Add(dataGridClienteCardapio);
+            groupBoxClientesMesaAddPedidos.Controls.Add(dataGridClientePedidos);
             groupBoxClientesMesaAddPedidos.Controls.Add(buttonClienteFecharConta);
             groupBoxClientesMesaAddPedidos.Controls.Add(textBoxClientesMesaAddPedidos);
             groupBoxClientesMesaAddPedidos.Controls.Add(label14);
-            groupBoxClientesMesaAddPedidos.Controls.Add(sfDataGridClienteCardapio);
-            groupBoxClientesMesaAddPedidos.Controls.Add(sfDataGridClientePedidos);
             groupBoxClientesMesaAddPedidos.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
             groupBoxClientesMesaAddPedidos.Location = new Point(884, 3);
             groupBoxClientesMesaAddPedidos.Name = "groupBoxClientesMesaAddPedidos";
@@ -206,12 +211,37 @@
             groupBoxClientesMesaAddPedidos.Text = "NOME CLIENTE";
             groupBoxClientesMesaAddPedidos.Visible = false;
             // 
+            // dataGridClienteCardapio
+            // 
+            dataGridClienteCardapio.AllowUserToAddRows = false;
+            dataGridClienteCardapio.AllowUserToDeleteRows = false;
+            dataGridClienteCardapio.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridClienteCardapio.Location = new Point(0, 330);
+            dataGridClienteCardapio.Name = "dataGridClienteCardapio";
+            dataGridClienteCardapio.ReadOnly = true;
+            dataGridClienteCardapio.RowTemplate.Height = 25;
+            dataGridClienteCardapio.Size = new Size(310, 326);
+            dataGridClienteCardapio.TabIndex = 52;
+            dataGridClienteCardapio.CellDoubleClick += SfDataGridClienteCardapio_CellDoubleClick;
+            // 
+            // dataGridClientePedidos
+            // 
+            dataGridClientePedidos.AllowUserToAddRows = false;
+            dataGridClientePedidos.AllowUserToDeleteRows = false;
+            dataGridClientePedidos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridClientePedidos.Location = new Point(6, 34);
+            dataGridClientePedidos.Name = "dataGridClientePedidos";
+            dataGridClientePedidos.ReadOnly = true;
+            dataGridClientePedidos.RowTemplate.Height = 25;
+            dataGridClientePedidos.Size = new Size(502, 255);
+            dataGridClientePedidos.TabIndex = 51;
+            // 
             // buttonClienteFecharConta
             // 
             buttonClienteFecharConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonClienteFecharConta.Location = new Point(384, 34);
+            buttonClienteFecharConta.Location = new Point(331, 295);
             buttonClienteFecharConta.Name = "buttonClienteFecharConta";
-            buttonClienteFecharConta.Size = new Size(124, 78);
+            buttonClienteFecharConta.Size = new Size(177, 29);
             buttonClienteFecharConta.TabIndex = 47;
             buttonClienteFecharConta.Text = "Fechar a Conta";
             buttonClienteFecharConta.UseVisualStyleBackColor = true;
@@ -236,39 +266,11 @@
             label14.TabIndex = 3;
             label14.Text = "Pesquisar:";
             // 
-            // sfDataGridClienteCardapio
-            // 
-            sfDataGridClienteCardapio.AccessibleName = "Table";
-            sfDataGridClienteCardapio.Location = new Point(6, 327);
-            sfDataGridClienteCardapio.Name = "sfDataGridClienteCardapio";
-            sfDataGridClienteCardapio.Size = new Size(372, 329);
-            sfDataGridClienteCardapio.Style.BorderColor = Color.FromArgb(100, 100, 100);
-            sfDataGridClienteCardapio.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClienteCardapio.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClienteCardapio.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClienteCardapio.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClienteCardapio.TabIndex = 1;
-            sfDataGridClienteCardapio.Text = "sfDataGrid1";
-            sfDataGridClienteCardapio.CellDoubleClick += SfDataGridClienteCardapio_CellDoubleClick;
-            // 
-            // sfDataGridClientePedidos
-            // 
-            sfDataGridClientePedidos.AccessibleName = "Table";
-            sfDataGridClientePedidos.Location = new Point(6, 34);
-            sfDataGridClientePedidos.Name = "sfDataGridClientePedidos";
-            sfDataGridClientePedidos.Size = new Size(372, 245);
-            sfDataGridClientePedidos.Style.BorderColor = Color.FromArgb(100, 100, 100);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
-            sfDataGridClientePedidos.TabIndex = 0;
-            sfDataGridClientePedidos.Text = "sfDataGrid1";
-            // 
             // groupBoxClientes
             // 
             groupBoxClientes.BackColor = Color.DarkGray;
             groupBoxClientes.Controls.Add(groupBoxClientesNovaMesa);
+            groupBoxClientes.Controls.Add(groupBoxClientesNovaMesaAssinante);
             groupBoxClientes.Controls.Add(buttonCliente25);
             groupBoxClientes.Controls.Add(buttonCliente21);
             groupBoxClientes.Controls.Add(buttonCliente24);
@@ -312,7 +314,7 @@
             groupBoxClientesNovaMesa.Controls.Add(label13);
             groupBoxClientesNovaMesa.Location = new Point(20, 486);
             groupBoxClientesNovaMesa.Name = "groupBoxClientesNovaMesa";
-            groupBoxClientesNovaMesa.Size = new Size(830, 116);
+            groupBoxClientesNovaMesa.Size = new Size(830, 131);
             groupBoxClientesNovaMesa.TabIndex = 46;
             groupBoxClientesNovaMesa.TabStop = false;
             groupBoxClientesNovaMesa.Text = "Abrir uma nova Mesa";
@@ -377,6 +379,51 @@
             label13.Size = new Size(67, 24);
             label13.TabIndex = 2;
             label13.Text = "Nome:";
+            // 
+            // groupBoxClientesNovaMesaAssinante
+            // 
+            groupBoxClientesNovaMesaAssinante.BackColor = Color.MediumTurquoise;
+            groupBoxClientesNovaMesaAssinante.Controls.Add(buttonClientesAddAssinante);
+            groupBoxClientesNovaMesaAssinante.Controls.Add(label18);
+            groupBoxClientesNovaMesaAssinante.Controls.Add(comboBoxClienteNovaMesaAssinanteNomeAssinante);
+            groupBoxClientesNovaMesaAssinante.Location = new Point(20, 508);
+            groupBoxClientesNovaMesaAssinante.Name = "groupBoxClientesNovaMesaAssinante";
+            groupBoxClientesNovaMesaAssinante.Size = new Size(830, 145);
+            groupBoxClientesNovaMesaAssinante.TabIndex = 47;
+            groupBoxClientesNovaMesaAssinante.TabStop = false;
+            groupBoxClientesNovaMesaAssinante.Text = "Nova Mesa Assinante";
+            groupBoxClientesNovaMesaAssinante.Visible = false;
+            // 
+            // buttonClientesAddAssinante
+            // 
+            buttonClientesAddAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonClientesAddAssinante.Location = new Point(307, 22);
+            buttonClientesAddAssinante.Name = "buttonClientesAddAssinante";
+            buttonClientesAddAssinante.Size = new Size(142, 30);
+            buttonClientesAddAssinante.TabIndex = 51;
+            buttonClientesAddAssinante.Text = "Adicionar";
+            buttonClientesAddAssinante.UseVisualStyleBackColor = true;
+            buttonClientesAddAssinante.Click += ButtonClientesAddAssinante_Click;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.Location = new Point(15, 22);
+            label18.Name = "label18";
+            label18.Size = new Size(67, 24);
+            label18.TabIndex = 50;
+            label18.Text = "Nome:";
+            // 
+            // comboBoxClienteNovaMesaAssinanteNomeAssinante
+            // 
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.FormattingEnabled = true;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Location = new Point(88, 22);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Name = "comboBoxClienteNovaMesaAssinanteNomeAssinante";
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Size = new Size(200, 32);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.TabIndex = 49;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Visible = false;
             // 
             // buttonCliente25
             // 
@@ -1455,11 +1502,13 @@
             tabPageClientes.ResumeLayout(false);
             groupBoxClientesMesaAddPedidos.ResumeLayout(false);
             groupBoxClientesMesaAddPedidos.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClienteCardapio).EndInit();
-            ((System.ComponentModel.ISupportInitialize)sfDataGridClientePedidos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridClienteCardapio).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridClientePedidos).EndInit();
             groupBoxClientes.ResumeLayout(false);
             groupBoxClientesNovaMesa.ResumeLayout(false);
             groupBoxClientesNovaMesa.PerformLayout();
+            groupBoxClientesNovaMesaAssinante.ResumeLayout(false);
+            groupBoxClientesNovaMesaAssinante.PerformLayout();
             tabPageCaixa.ResumeLayout(false);
             tabPageCaixa.PerformLayout();
             groupBoxCaixaFechaConta.ResumeLayout(false);
@@ -1566,8 +1615,6 @@
         private Button buttonClientesAdd;
         private Label labelClienteNrMesa;
         private DataGridViewTextBoxColumn Nome;
-        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridClientePedidos;
-        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridClienteCardapio;
         private TextBox textBoxClientesMesaAddPedidos;
         private Label label14;
         private Button buttonClienteFecharConta;
@@ -1598,5 +1645,11 @@
         private ListView listViewCaixaPedidos;
         private Label labelCauxaValorTotal;
         private Label label16;
+        private GroupBox groupBoxClientesNovaMesaAssinante;
+        private Label label18;
+        private ComboBox comboBoxClienteNovaMesaAssinanteNomeAssinante;
+        private Button buttonClientesAddAssinante;
+        private DataGridView dataGridClientePedidos;
+        private DataGridView dataGridClienteCardapio;
     }
 }
