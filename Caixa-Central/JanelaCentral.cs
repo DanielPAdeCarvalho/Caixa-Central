@@ -655,7 +655,8 @@ namespace Caixa_Central
             {
                 if (cardapio != null)
                 {
-                    Pedido pedido = (Pedido)dataGridClienteCardapio.Rows[e.RowIndex].DataBoundItem;
+                    Item item = (Item)dataGridClienteCardapio.Rows[e.RowIndex].DataBoundItem;
+                    Pedido pedido = new(item.Nome, item.Valor, 1);
                     await pedido.AdicionarPedido(labelClienteNrMesa.Text);
                     await UpdatePedidos(labelClienteNrMesa.Text);
                     MessageBox.Show("Pedido adicionado com sucesso!");
