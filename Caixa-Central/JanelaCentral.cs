@@ -508,6 +508,7 @@ namespace Caixa_Central
                 dataGridClienteCardapio.ClearSelection();
                 List<Item> pesquisa = cardapio.Where(o => o.Nome.ToLower().StartsWith(nome)).ToList();
                 dataGridClienteCardapio.DataSource = pesquisa;
+                dataGridClienteCardapio.Refresh();
             }
         }
 
