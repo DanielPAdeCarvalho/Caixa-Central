@@ -505,6 +505,7 @@ namespace Caixa_Central
             string nome = textBoxClientesMesaAddPedidos.Text.ToLower();
             if (cardapio != null)
             {
+                dataGridClienteCardapio.ClearSelection();
                 List<Item> pesquisa = cardapio.Where(o => o.Nome.ToLower().StartsWith(nome)).ToList();
                 dataGridClienteCardapio.DataSource = pesquisa;
             }

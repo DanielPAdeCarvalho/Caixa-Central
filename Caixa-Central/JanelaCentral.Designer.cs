@@ -216,7 +216,7 @@
             dataGridClienteCardapio.AllowUserToAddRows = false;
             dataGridClienteCardapio.AllowUserToDeleteRows = false;
             dataGridClienteCardapio.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridClienteCardapio.Location = new Point(0, 330);
+            dataGridClienteCardapio.Location = new Point(6, 327);
             dataGridClienteCardapio.Name = "dataGridClienteCardapio";
             dataGridClienteCardapio.ReadOnly = true;
             dataGridClienteCardapio.RowTemplate.Height = 25;
