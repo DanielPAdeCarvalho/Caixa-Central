@@ -131,10 +131,19 @@ namespace Caixa_Central
             {
                 string nrMesa = i.ToString("D2");
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                mesa ??= new Mesa(nrMesa, "")
+                if (mesa == null)
                 {
-                    Ocupada = false
-                };
+                    mesa = new Mesa(nrMesa, "")
+                    {
+                        Ocupada = false,
+                    };
+                    string nomeBotao = "buttonCliente" + mesa.Id;
+                    if (groupBoxClientes.Controls.Find(nomeBotao, true).FirstOrDefault() is Button foundButton)
+                    {
+                        foundButton.BackColor = Color.Wheat;
+                        foundButton.Text = mesa.Id;
+                    }
+                }
                 mesasOcupadas.Add(mesa);
             }
         }
@@ -282,6 +291,11 @@ namespace Caixa_Central
             string responseContent = await PostNewAssinante(assinante);
             MessageBox.Show(responseContent);
 
+            //Criar um novo pedido com o valor da assinatura e enviar para a API 
+            Dictionary<string, Pedido>? PedidosDictionary = new();
+            Pedido newPedido = new(plano, DeLabelParaDecimal(labelCadastroAssinantesValorTotal.Text), 1);
+            PedidosDictionary.Add("Plano de Assinatura: " + plano, newPedido);
+
             //Gravar o pagamento da assinatura
             Pagamento pagamento = new(
                 textBoxCadastroAssinantesNome.Text + " " + textBoxCadastroAssinantesSobreNome.Text,
@@ -291,7 +305,8 @@ namespace Caixa_Central
                 currencyTextBoxCadastroAssinanteDinheiro.DecimalValue,
                 currencyTextBoxCadastroAssinantePicpay.DecimalValue,
                 currencyTextBoxCadastroAssinantePix.DecimalValue,
-                currencyTextBoxCadastroAssinantePersyCoins.DecimalValue
+                currencyTextBoxCadastroAssinantePersyCoins.DecimalValue,
+                PedidosDictionary
             );
             await pagamento.GravarPagamento();
 
@@ -428,6 +443,10 @@ namespace Caixa_Central
                             groupBoxClientesMesaAddPedidos.Visible = true;
                             groupBoxClientesMesaAddPedidos.Text = $"Mesa {nrMesa} - {mesa.Cliente}";
                             labelClienteNrMesa.Text = nrMesa;
+
+                            //Deixar os add mesa invisiveis
+                            groupBoxClientesNovaMesa.Visible = false;
+                            groupBoxClientesNovaMesaAssinante.Visible = false;
                         }
                         else
                         {
@@ -464,9 +483,9 @@ namespace Caixa_Central
         {
             DialogResult result = MessageBox.Show("Cliente é assinante?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            // User clicked Yes
             if (result == DialogResult.Yes)
             {
-                // User clicked Yes
                 groupBoxClientesNovaMesaAssinante.Visible = true;
                 groupBoxClientesNovaMesa.Visible = false;
                 if (assinantes is not null)
@@ -478,9 +497,9 @@ namespace Caixa_Central
                     labelClienteNrMesa.Text = nrMesa;
                 }
             }
+            // User clicked No
             else
             {
-                // User clicked No
                 groupBoxClientesNovaMesa.Visible = true;
                 groupBoxClientesNovaMesaAssinante.Visible = false;
                 labelClienteNrMesa.Text = nrMesa;
@@ -548,13 +567,13 @@ namespace Caixa_Central
             //Seta o valor de todo mundo para no máximo o valor da conta
             textBoxCaixaFechaContaCredito.MaxValue = valorTotal;
             textBoxCaixaFechaContaDebito.MaxValue = valorTotal;
-            textBoxCaixaFechaContaDinheiro.MaxValue = valorTotal;
             textBoxCaixaFechaContaPicpay.MaxValue = valorTotal;
             textBoxCaixaFechaContaPix.MaxValue = valorTotal;
         }
 
         private async void ButtonCaixaFechaContaConfirma_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             string nrMesa = labelClienteNrMesa.Text;
             if (mesasOcupadas != null)
             {
@@ -569,7 +588,8 @@ namespace Caixa_Central
                         textBoxCaixaFechaContaDinheiro.DecimalValue,
                         textBoxCaixaFechaContaPicpay.DecimalValue,
                         textBoxCaixaFechaContaPix.DecimalValue,
-                        textBoxCaixaFechaContaCoins.DecimalValue
+                        textBoxCaixaFechaContaCoins.DecimalValue,
+                        mesa.PedidosDictionary
                         );
                     int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
                     if (foundIndex != -1)
@@ -598,6 +618,13 @@ namespace Caixa_Central
                     labelCaixaValorTotal.Text = string.Empty;
                     labelCaixaFechaContaTroco.Text = string.Empty;
 
+                    //Limpar os pedidos na aba clientes
+                    groupBoxClientesMesaAddPedidos.Text = string.Empty;
+                    mesa.Pedidos.Clear();
+                    dataGridClientePedidos.DataSource = mesa.Pedidos;
+                    dataGridClientePedidos.Refresh();
+
+                    Cursor.Current = Cursors.Default;
                     MessageBox.Show("Pagamento realizado com sucesso!");
                 }
             }
@@ -631,49 +658,77 @@ namespace Caixa_Central
 
         private async void ButtonClientesAdd_ClickAsync(object sender, EventArgs e)
         {
-            //Gravar que a mesa está ocupada
+            Cursor.Current = Cursors.WaitCursor;
             string nrMesa = labelClienteNrMesa.Text;
             Mesa mesa = new(nrMesa, textBoxClientesNovoNome.Text);
-
-            HttpClient httpClient = new();
-            var json = JsonConvert.SerializeObject(mesa);
-            StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
-            await httpClient.PutAsync(Auxiliar.urlMesa, content);
-            MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
-            GetAllMesasAsync();
-            groupBoxClientesMesaAddPedidos.Visible = true;
-
-            if (!checkBoxClienteUsarPassaporteAssinante.Checked)
+            string cliente = textBoxClientesNovoNome.Text.ToLower();
+            if (mesasOcupadas is not null)
             {
-                //Adicionar o pedido passaporte na lista de pedidos da mesa
-                Pedido pedido = new("Passaporte", 10, 1);
-                await pedido.AdicionarPedido(nrMesa);
-            }
+                //Verificar se Já existe uma mesa com esse nome
+                IEnumerable<Mesa> mesas = mesasOcupadas.Where(mesa => mesa.Cliente.ToLower() == cliente);
+                if (!mesas.Any())
+                {
+                    //Gravar que a mesa está ocupada
+                    HttpClient httpClient = new();
+                    var json = JsonConvert.SerializeObject(mesa);
+                    StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
+                    await httpClient.PutAsync(Auxiliar.urlMesa, content);
+                    MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
+                    await GetAllMesasAsync();
+                    groupBoxClientesMesaAddPedidos.Visible = true;
 
-            groupBoxClientesNovaMesa.Visible = false;
-            textBoxClientesNovoNome.Text = string.Empty;
-            comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+                    if (!checkBoxClienteUsarPassaporteAssinante.Checked)
+                    {
+                        //Adicionar o pedido passaporte na lista de pedidos da mesa
+                        Pedido pedido = new("Passaporte", 10, 1);
+                        await pedido.AdicionarPedido(nrMesa);
+                    }
+
+                    groupBoxClientesNovaMesa.Visible = false;
+                    textBoxClientesNovoNome.Text = string.Empty;
+                    comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Já existe uma mesa com esse nome");
+                }
+            }
+            Cursor.Current = Cursors.Default;
         }
+
         private async void ButtonClientesAddAssinante_Click(object sender, EventArgs e)
         {
-            //Gravar que a mesa está ocupada
-            string nrMesa = labelClienteNrMesa.Text;
-            Mesa mesa = new(nrMesa, comboBoxClienteNovaMesaAssinanteNomeAssinante.Text);
+            if (mesasOcupadas is not null)
+            {
+                string cliente = comboBoxClienteNovaMesaAssinanteNomeAssinante.Text;
+                IEnumerable<Mesa> mesas = mesasOcupadas.Where(mesa => mesa.Cliente == cliente);
+                if (!mesas.Any())
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    //Gravar que a mesa está ocupada
+                    string nrMesa = labelClienteNrMesa.Text;
+                    Mesa mesa = new(nrMesa, comboBoxClienteNovaMesaAssinanteNomeAssinante.Text);
 
-            var httpClient = new HttpClient();
-            var json = JsonConvert.SerializeObject(mesa);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            await httpClient.PutAsync(Auxiliar.urlMesa, content);
-            MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
-            GetAllMesasAsync();
-            groupBoxClientesMesaAddPedidos.Visible = true;
+                    var httpClient = new HttpClient();
+                    var json = JsonConvert.SerializeObject(mesa);
+                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    await httpClient.PutAsync(Auxiliar.urlMesa, content);
+                    MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
+                    await GetAllMesasAsync();
+                    groupBoxClientesMesaAddPedidos.Visible = true;
 
-
-            //Limpar o campo de pesquisa e atualizar o datagrid
-            groupBoxClientesNovaMesa.Visible = false;
-            groupBoxClientesNovaMesaAssinante.Visible = false;
-            textBoxClientesNovoNome.Text = string.Empty;
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Text = string.Empty;
+                    //Limpar o campo de pesquisa e atualizar o datagrid
+                    groupBoxClientesNovaMesa.Visible = false;
+                    groupBoxClientesNovaMesaAssinante.Visible = false;
+                    textBoxClientesNovoNome.Text = string.Empty;
+                    comboBoxClienteNovaMesaAssinanteNomeAssinante.Text = string.Empty;
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    MessageBox.Show("Já existe uma mesa com esse nome");
+                }
+            }
         }
 
         private async void SfDataGridClienteCardapio_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

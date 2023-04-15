@@ -145,6 +145,7 @@
             label2 = new Label();
             label1 = new Label();
             Nome = new DataGridViewTextBoxColumn();
+            tabPageFluxoCaixa = new TabPage();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -178,6 +179,7 @@
             tabControl1.Controls.Add(tabPageClientes);
             tabControl1.Controls.Add(tabPageCaixa);
             tabControl1.Controls.Add(CadastroAssinantes);
+            tabControl1.Controls.Add(tabPageFluxoCaixa);
             tabControl1.Location = new Point(2, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -744,7 +746,7 @@
             listViewCaixaPedidos.Font = new Font("Lato", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             listViewCaixaPedidos.Location = new Point(6, 69);
             listViewCaixaPedidos.Name = "listViewCaixaPedidos";
-            listViewCaixaPedidos.Size = new Size(396, 574);
+            listViewCaixaPedidos.Size = new Size(524, 574);
             listViewCaixaPedidos.TabIndex = 50;
             listViewCaixaPedidos.UseCompatibleStateImageBehavior = false;
             listViewCaixaPedidos.View = View.Details;
@@ -785,7 +787,7 @@
             groupBoxCaixaFechaConta.Controls.Add(label27);
             groupBoxCaixaFechaConta.Controls.Add(textBoxCaixaFechaContaCoins);
             groupBoxCaixaFechaConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBoxCaixaFechaConta.Location = new Point(431, 20);
+            groupBoxCaixaFechaConta.Location = new Point(536, 20);
             groupBoxCaixaFechaConta.Name = "groupBoxCaixaFechaConta";
             groupBoxCaixaFechaConta.Size = new Size(273, 623);
             groupBoxCaixaFechaConta.TabIndex = 13;
@@ -1512,6 +1514,16 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
+            // tabPageFluxoCaixa
+            // 
+            tabPageFluxoCaixa.BackColor = Color.DarkGray;
+            tabPageFluxoCaixa.Location = new Point(4, 24);
+            tabPageFluxoCaixa.Name = "tabPageFluxoCaixa";
+            tabPageFluxoCaixa.Padding = new Padding(3);
+            tabPageFluxoCaixa.Size = new Size(1404, 672);
+            tabPageFluxoCaixa.TabIndex = 3;
+            tabPageFluxoCaixa.Text = "Fluxo de Caixa";
+            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1678,5 +1690,6 @@
         private DataGridView dataGridClienteCardapio;
         private Label labelClienteTotalConta;
         private Label label28;
+        private TabPage tabPageFluxoCaixa;
     }
 }

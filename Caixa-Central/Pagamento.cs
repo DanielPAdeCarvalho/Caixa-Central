@@ -30,8 +30,11 @@ namespace Caixa_Central
         [JsonProperty("persycoins")]
         public decimal Persycoins { get; set; }
 
+        [JsonProperty("pedidos")]
+        public Dictionary<string, Pedido>? PedidosDictionary { get; set; }
+
         public Pagamento(string cliente, decimal troco, decimal credito, decimal debito,
-            decimal dinheiro, decimal picpay, decimal pix, decimal persycoins)
+            decimal dinheiro, decimal picpay, decimal pix, decimal persycoins, Dictionary<string, Pedido>? pedidos)
         {
             Cliente = cliente;
             Troco = troco;
@@ -41,6 +44,7 @@ namespace Caixa_Central
             Picpay = picpay;
             Pix = pix;
             Persycoins = persycoins;
+            PedidosDictionary = pedidos;
         }
 
         public async Task GravarPagamento()
