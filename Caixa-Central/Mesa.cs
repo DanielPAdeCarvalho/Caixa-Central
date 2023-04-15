@@ -27,6 +27,7 @@ namespace Caixa_Central
             Pedidos = new BindingList<Pedido>();
         }
 
+        //método para adicionar um pedido à mesa
         public async Task UpdatePedidos()
         {
             //acessar a API para pegar a mesa atualizada          
@@ -67,10 +68,21 @@ namespace Caixa_Central
                     if (PedidosDictionary is not null)
                     {
                         //atualizar a lista de pedidos
-                        Pedidos = new BindingList<Pedido>(PedidosDictionary.Values.ToList()); 
+                        Pedidos = new BindingList<Pedido>(PedidosDictionary.Values.ToList());
                     }
                 }
             }
+        }
+
+        //encerrar apos pagamento no caixa
+        internal async Task EncerraMesa()
+        {
+            Cliente = "";
+            PedidosDictionary = null;
+            HttpClient httpClient = new();
+            var json = JsonConvert.SerializeObject(this);
+            StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
+            await httpClient.PutAsync(Auxiliar.urlMesa, content);
         }
     }
 }

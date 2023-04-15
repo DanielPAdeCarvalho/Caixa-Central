@@ -24,8 +24,8 @@ namespace Caixa_Central
             assinantes = new List<Assinante>();
             mesasOcupadas = new List<Mesa>();
             GetAllAssinantes();
-            GetAllMesasAsync();
-            UpdateCardapio();
+            _ = GetAllMesasAsync();
+            _ = UpdateCardapio();
 
             //Inicializa o DataGrid de Pedidos do Cliente
             dataGridClientePedidos.AutoGenerateColumns = false;
@@ -68,7 +68,7 @@ namespace Caixa_Central
         private void JanelaCentral_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
 
         //
-        private async void UpdateCardapio()
+        private async Task UpdateCardapio()
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Caixa_Central
             }
         }
 
-        private async void GetAllMesasAsync()
+        private async Task GetAllMesasAsync()
         {
             try
             {
@@ -293,7 +293,7 @@ namespace Caixa_Central
                 currencyTextBoxCadastroAssinantePix.DecimalValue,
                 currencyTextBoxCadastroAssinantePersyCoins.DecimalValue
             );
-            pagamento.GravarPagamento();
+            await pagamento.GravarPagamento();
 
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
@@ -365,13 +365,13 @@ namespace Caixa_Central
             CalcularTotalAssinante();
         }
 
-        private void TabPageClientes_EnterAsync(object sender, EventArgs e)
+        private void TabPageClientes_Enter(object sender, EventArgs e)
         {
             // Atualizar a lista de clientes q são assinantes
             GetAllAssinantes();
 
             // atualizar o array de mesas ocupadas
-            GetAllMesasAsync();
+            _ = GetAllMesasAsync();
         }
 
         private async void GetAllAssinantes()
@@ -539,15 +539,21 @@ namespace Caixa_Central
             }
             // Auto-size the columns in the list view control.
             listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            labelCauxaValorTotal.Text = valorTotal.ToString("C2");
+            labelCaixaValorTotal.Text = valorTotal.ToString("C2");
 
             groupBoxCaixaFechaConta.Visible = true;
             labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
             tabControl1.SelectedTab = tabPageCaixa;
 
+            //Seta o valor de todo mundo para no máximo o valor da conta
+            textBoxCaixaFechaContaCredito.MaxValue = valorTotal;
+            textBoxCaixaFechaContaDebito.MaxValue = valorTotal;
+            textBoxCaixaFechaContaDinheiro.MaxValue = valorTotal;
+            textBoxCaixaFechaContaPicpay.MaxValue = valorTotal;
+            textBoxCaixaFechaContaPix.MaxValue = valorTotal;
         }
 
-        private void ButtonCaixaFechaContaConfirma_Click(object sender, EventArgs e)
+        private async void ButtonCaixaFechaContaConfirma_Click(object sender, EventArgs e)
         {
             string nrMesa = labelClienteNrMesa.Text;
             if (mesasOcupadas != null)
@@ -565,11 +571,22 @@ namespace Caixa_Central
                         textBoxCaixaFechaContaPix.DecimalValue,
                         textBoxCaixaFechaContaCoins.DecimalValue
                         );
-                    pagamento.GravarPagamento();
-                    MessageBox.Show("Pagamento realizado com sucesso!");
+                    int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
+                    if (foundIndex != -1)
+                    {
+                        mesasOcupadas[foundIndex].Ocupada = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mesa não encontrada");
+                    }
+                    await pagamento.GravarPagamento();
+                    await mesa.EncerraMesa();
+                    await GetAllMesasAsync();
 
                     //Limpar a lista de pedidos
                     listViewCaixaPedidos.Items.Clear();
+
                     //Limpar os campos de pagamento
                     textBoxCaixaFechaContaCredito.Text = string.Empty;
                     textBoxCaixaFechaContaDebito.Text = string.Empty;
@@ -577,7 +594,11 @@ namespace Caixa_Central
                     textBoxCaixaFechaContaPicpay.Text = string.Empty;
                     textBoxCaixaFechaContaPix.Text = string.Empty;
                     textBoxCaixaFechaContaCoins.Text = string.Empty;
+                    labelCaixaNomeCliente.Text = string.Empty;
+                    labelCaixaValorTotal.Text = string.Empty;
+                    labelCaixaFechaContaTroco.Text = string.Empty;
 
+                    MessageBox.Show("Pagamento realizado com sucesso!");
                 }
             }
 
@@ -594,7 +615,7 @@ namespace Caixa_Central
             valorTotal += textBoxCaixaFechaContaCredito.DecimalValue;
 
             labelCadastroAssinantesTotalSendoPago.Text = valorTotal.ToString();
-            decimal valorConta = DeLabelParaDecimal(labelCauxaValorTotal.Text);
+            decimal valorConta = DeLabelParaDecimal(labelCaixaValorTotal.Text);
             decimal troco = valorTotal - valorConta;
             labelCaixaFechaContaTroco.Text = troco.ToString();
 

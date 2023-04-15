@@ -33,6 +33,8 @@
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
+            labelClienteTotalConta = new Label();
+            label28 = new Label();
             dataGridClienteCardapio = new DataGridView();
             dataGridClientePedidos = new DataGridView();
             buttonClienteFecharConta = new Button();
@@ -79,7 +81,7 @@
             listViewCaixaPedidos = new ListView();
             labelCaixaNomeCliente = new Label();
             groupBoxCaixaFechaConta = new GroupBox();
-            labelCauxaValorTotal = new Label();
+            labelCaixaValorTotal = new Label();
             label16 = new Label();
             checkBoxCaixaFechaConta = new CheckBox();
             label15 = new Label();
@@ -143,8 +145,6 @@
             label2 = new Label();
             label1 = new Label();
             Nome = new DataGridViewTextBoxColumn();
-            label28 = new Label();
-            labelClienteTotalConta = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -195,7 +195,7 @@
             tabPageClientes.Size = new Size(1404, 672);
             tabPageClientes.TabIndex = 0;
             tabPageClientes.Text = "Clientes";
-            tabPageClientes.Enter += TabPageClientes_EnterAsync;
+            tabPageClientes.Enter += TabPageClientes_Enter;
             // 
             // groupBoxClientesMesaAddPedidos
             // 
@@ -214,6 +214,26 @@
             groupBoxClientesMesaAddPedidos.TabStop = false;
             groupBoxClientesMesaAddPedidos.Text = "NOME CLIENTE";
             groupBoxClientesMesaAddPedidos.Visible = false;
+            // 
+            // labelClienteTotalConta
+            // 
+            labelClienteTotalConta.AutoSize = true;
+            labelClienteTotalConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelClienteTotalConta.Location = new Point(393, 300);
+            labelClienteTotalConta.Name = "labelClienteTotalConta";
+            labelClienteTotalConta.Size = new Size(56, 24);
+            labelClienteTotalConta.TabIndex = 54;
+            labelClienteTotalConta.Text = "Total:";
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label28.Location = new Point(331, 300);
+            label28.Name = "label28";
+            label28.Size = new Size(56, 24);
+            label28.TabIndex = 53;
+            label28.Text = "Total:";
             // 
             // dataGridClienteCardapio
             // 
@@ -741,7 +761,7 @@
             // 
             // groupBoxCaixaFechaConta
             // 
-            groupBoxCaixaFechaConta.Controls.Add(labelCauxaValorTotal);
+            groupBoxCaixaFechaConta.Controls.Add(labelCaixaValorTotal);
             groupBoxCaixaFechaConta.Controls.Add(label16);
             groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaConta);
             groupBoxCaixaFechaConta.Controls.Add(label15);
@@ -773,15 +793,15 @@
             groupBoxCaixaFechaConta.Text = "Pagamento";
             groupBoxCaixaFechaConta.Visible = false;
             // 
-            // labelCauxaValorTotal
+            // labelCaixaValorTotal
             // 
-            labelCauxaValorTotal.AutoSize = true;
-            labelCauxaValorTotal.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCauxaValorTotal.Location = new Point(172, 38);
-            labelCauxaValorTotal.Name = "labelCauxaValorTotal";
-            labelCauxaValorTotal.Size = new Size(20, 24);
-            labelCauxaValorTotal.TabIndex = 27;
-            labelCauxaValorTotal.Text = "0";
+            labelCaixaValorTotal.AutoSize = true;
+            labelCaixaValorTotal.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaValorTotal.Location = new Point(172, 38);
+            labelCaixaValorTotal.Name = "labelCaixaValorTotal";
+            labelCaixaValorTotal.Size = new Size(20, 24);
+            labelCaixaValorTotal.TabIndex = 27;
+            labelCaixaValorTotal.Text = "0";
             // 
             // label16
             // 
@@ -1492,26 +1512,6 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label28.Location = new Point(331, 300);
-            label28.Name = "label28";
-            label28.Size = new Size(56, 24);
-            label28.TabIndex = 53;
-            label28.Text = "Total:";
-            // 
-            // labelClienteTotalConta
-            // 
-            labelClienteTotalConta.AutoSize = true;
-            labelClienteTotalConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelClienteTotalConta.Location = new Point(393, 300);
-            labelClienteTotalConta.Name = "labelClienteTotalConta";
-            labelClienteTotalConta.Size = new Size(56, 24);
-            labelClienteTotalConta.TabIndex = 54;
-            labelClienteTotalConta.Text = "Total:";
-            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1668,7 +1668,7 @@
         private Syncfusion.Windows.Forms.Tools.CurrencyTextBox textBoxCaixaFechaContaCoins;
         private Label labelCaixaNomeCliente;
         private ListView listViewCaixaPedidos;
-        private Label labelCauxaValorTotal;
+        private Label labelCaixaValorTotal;
         private Label label16;
         private GroupBox groupBoxClientesNovaMesaAssinante;
         private Label label18;
