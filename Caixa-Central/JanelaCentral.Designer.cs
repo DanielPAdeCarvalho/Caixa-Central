@@ -235,6 +235,7 @@
             dataGridClientePedidos.RowTemplate.Height = 25;
             dataGridClientePedidos.Size = new Size(502, 255);
             dataGridClientePedidos.TabIndex = 51;
+            dataGridClientePedidos.CellDoubleClick += DataGridClientePedidos_CellDoubleClick;
             // 
             // buttonClienteFecharConta
             // 

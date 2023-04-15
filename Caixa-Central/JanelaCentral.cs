@@ -666,5 +666,26 @@ namespace Caixa_Central
                 }
             }
         }
+
+        private async void DataGridClientePedidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Apagar esse pedido?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (dataGridClientePedidos.SelectedCells.Count > 0)
+                {
+                    if (mesasOcupadas != null)
+                    {
+                        Pedido pedido = (Pedido)dataGridClientePedidos.Rows[e.RowIndex].DataBoundItem;
+                        string nrMesa = labelClienteNrMesa.Text;
+                        await pedido.RemoverPedido(nrMesa);
+                        await UpdatePedidos(nrMesa);
+                        MessageBox.Show("Pedido removido com sucesso!");
+                    }
+                }
+            }
+
+        }
     }
 }

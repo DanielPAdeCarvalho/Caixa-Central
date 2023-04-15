@@ -31,5 +31,12 @@ namespace Caixa_Central
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             await httpClient.PostAsync(url, content);
         }
+
+        internal async Task RemoverPedido(string nrMesa)
+        {
+            string url = Auxiliar.urlMesa + "/" + nrMesa + "/" + Nome;
+            var httpClient = new HttpClient();
+            await httpClient.DeleteAsync(url);
+        }
     }
 }
