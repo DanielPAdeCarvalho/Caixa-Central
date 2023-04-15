@@ -143,6 +143,8 @@
             label2 = new Label();
             label1 = new Label();
             Nome = new DataGridViewTextBoxColumn();
+            label28 = new Label();
+            labelClienteTotalConta = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -197,6 +199,8 @@
             // 
             // groupBoxClientesMesaAddPedidos
             // 
+            groupBoxClientesMesaAddPedidos.Controls.Add(labelClienteTotalConta);
+            groupBoxClientesMesaAddPedidos.Controls.Add(label28);
             groupBoxClientesMesaAddPedidos.Controls.Add(dataGridClienteCardapio);
             groupBoxClientesMesaAddPedidos.Controls.Add(dataGridClientePedidos);
             groupBoxClientesMesaAddPedidos.Controls.Add(buttonClienteFecharConta);
@@ -240,7 +244,7 @@
             // buttonClienteFecharConta
             // 
             buttonClienteFecharConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonClienteFecharConta.Location = new Point(331, 295);
+            buttonClienteFecharConta.Location = new Point(331, 327);
             buttonClienteFecharConta.Name = "buttonClienteFecharConta";
             buttonClienteFecharConta.Size = new Size(177, 29);
             buttonClienteFecharConta.TabIndex = 47;
@@ -1488,6 +1492,26 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label28.Location = new Point(331, 300);
+            label28.Name = "label28";
+            label28.Size = new Size(56, 24);
+            label28.TabIndex = 53;
+            label28.Text = "Total:";
+            // 
+            // labelClienteTotalConta
+            // 
+            labelClienteTotalConta.AutoSize = true;
+            labelClienteTotalConta.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelClienteTotalConta.Location = new Point(393, 300);
+            labelClienteTotalConta.Name = "labelClienteTotalConta";
+            labelClienteTotalConta.Size = new Size(56, 24);
+            labelClienteTotalConta.TabIndex = 54;
+            labelClienteTotalConta.Text = "Total:";
+            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1652,5 +1676,7 @@
         private Button buttonClientesAddAssinante;
         private DataGridView dataGridClientePedidos;
         private DataGridView dataGridClienteCardapio;
+        private Label labelClienteTotalConta;
+        private Label label28;
     }
 }

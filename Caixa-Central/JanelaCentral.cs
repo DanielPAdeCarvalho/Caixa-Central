@@ -449,6 +449,12 @@ namespace Caixa_Central
                     await mesa.UpdatePedidos();
                     dataGridClientePedidos.DataSource = mesa.Pedidos;
                     dataGridClientePedidos.Refresh();
+                    decimal total = 0;
+                    foreach (Pedido pedido in mesa.Pedidos)
+                    {
+                        total += pedido.ValorTotal;
+                    }
+                    labelClienteTotalConta.Text = total.ToString("C2");
                 }
             }
             dataGridClientePedidos.Visible = true;
