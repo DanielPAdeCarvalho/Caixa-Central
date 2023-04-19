@@ -1396,7 +1396,7 @@
             radioButtonCadastroAssinantes12meses.TabStop = true;
             radioButtonCadastroAssinantes12meses.Text = "12 Meses";
             radioButtonCadastroAssinantes12meses.UseVisualStyleBackColor = true;
-            radioButtonCadastroAssinantes12meses.Click += RadioButtonCadastroAssinantes1mes_Click;
+            radioButtonCadastroAssinantes12meses.Click += RadioButtonCadastroAssinantes_Click;
             // 
             // radioButtonCadastroAssinantes6meses
             // 
@@ -1408,7 +1408,7 @@
             radioButtonCadastroAssinantes6meses.TabStop = true;
             radioButtonCadastroAssinantes6meses.Text = "6 Meses";
             radioButtonCadastroAssinantes6meses.UseVisualStyleBackColor = true;
-            radioButtonCadastroAssinantes6meses.Click += RadioButtonCadastroAssinantes1mes_Click;
+            radioButtonCadastroAssinantes6meses.Click += RadioButtonCadastroAssinantes_Click;
             // 
             // radioButtonCadastroAssinantes1mes
             // 
@@ -1420,7 +1420,7 @@
             radioButtonCadastroAssinantes1mes.TabStop = true;
             radioButtonCadastroAssinantes1mes.Text = "1 Mês";
             radioButtonCadastroAssinantes1mes.UseVisualStyleBackColor = true;
-            radioButtonCadastroAssinantes1mes.Click += RadioButtonCadastroAssinantes1mes_Click;
+            radioButtonCadastroAssinantes1mes.Click += RadioButtonCadastroAssinantes_Click;
             // 
             // groupBoxCadastroAssinantesPlanoEscolhido
             // 

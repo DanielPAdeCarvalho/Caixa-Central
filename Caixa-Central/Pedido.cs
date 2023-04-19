@@ -26,16 +26,16 @@ namespace Caixa_Central
         public async Task AdicionarPedido(string idMesa)
         {
             string url = Auxiliar.urlMesa + "/" + idMesa;
-            var httpClient = new HttpClient();
-            var json = JsonConvert.SerializeObject(this);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpClient httpClient = new();
+            string json = JsonConvert.SerializeObject(this);
+            StringContent content = new(json, Encoding.UTF8, "application/json");
             await httpClient.PostAsync(url, content);
         }
 
         internal async Task RemoverPedido(string nrMesa)
         {
             string url = Auxiliar.urlMesa + "/" + nrMesa + "/" + Nome;
-            var httpClient = new HttpClient();
+            HttpClient  httpClient = new();
             await httpClient.DeleteAsync(url);
         }
     }

@@ -13,6 +13,8 @@ namespace Caixa_Central
         public const string urlMesas = "https://x23svpb7h1.execute-api.us-east-1.amazonaws.com/api-mesas/mesas";
         public const string urlCardapio = "https://x23svpb7h1.execute-api.us-east-1.amazonaws.com/api-mesas/cardapio";
         public const string urlPagamentos = "https://cs0qhks08k.execute-api.us-east-1.amazonaws.com/api-pagamento/pagamento";
+        public const string urlPersyCoins = "https://t4gezwh5y6.execute-api.us-east-1.amazonaws.com/api-persycoins/";
+        public const string urlPersyCoinsNovo = "https://t4gezwh5y6.execute-api.us-east-1.amazonaws.com/api-persycoins/newclient";
         public static async Task<string> Login(string n, string s)
         {
             var data = new { nome = n, senha = s };

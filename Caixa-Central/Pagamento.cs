@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Security.Policy;
+using System.Globalization;
 using System.Text;
 
 namespace Caixa_Central
@@ -54,6 +54,12 @@ namespace Caixa_Central
             var json = JsonConvert.SerializeObject(this);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             await httpClient.PostAsync(Auxiliar.urlPagamentos, content);
+            if ( Persycoins > 0)
+            {
+                string PersycoinsStr = Persycoins.ToString("0.00", CultureInfo.InvariantCulture);
+                string url = Auxiliar.urlPersyCoins + Cliente+"/sub/"+ PersycoinsStr;
+                await httpClient.PutAsync(url, content);
+            }
         }
     }
 }

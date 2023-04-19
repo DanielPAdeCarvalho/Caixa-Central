@@ -164,7 +164,7 @@ namespace Caixa_Central
             }
         }
 
-        private void RadioButtonCadastroAssinantes1mes_Click(object sender, EventArgs e)
+        private void RadioButtonCadastroAssinantes_Click(object sender, EventArgs e)
         {
             if (radioButtonCadastroAssinantes1mes.Checked || radioButtonCadastroAssinantes6meses.Checked || radioButtonCadastroAssinantes12meses.Checked)
             {
@@ -185,17 +185,42 @@ namespace Caixa_Central
             string formattedValue = valorAssinatura.ToString("C2", CultureInfo.CreateSpecificCulture("pt-BR"));
             labelCadastroAssinantesValorTotal.Text = formattedValue;
 
-            //TODO: Ir na api para preencher o saldo de persycoins
-            // ----
-            decimal saldoPersyCoins = 0.0M;
+            //Ir na api para preencher o saldo de persycoins 
+            string plano = "Fun";
+            if (radioButtonCadastroAssinantesHolics.Checked)
+            {
+                plano = "Holics";
+            }
+            else if (radioButtonCadastroAssinantesFamily.Checked)
+            {
+                plano = "Family";
+            }
+            string validade = "1";
+            if (radioButtonCadastroAssinantes6meses.Checked)
+            {
+                validade = "6";
+            }
+            else if (radioButtonCadastroAssinantes12meses.Checked)
+            {
+                validade = "12";
+            }
+            string hoje = DateTime.Now.ToString("yyyy-MM-dd");
+            Assinante assinante = new(textBoxCadastroAssinantesNome.Text, textBoxCadastroAssinantesSobreNome.Text, plano, validade, hoje);
+            decimal saldoPersyCoins = await assinante.GetSaldoPersyCoins();
+            if (saldoPersyCoins < valorAssinatura)
+            {
+                currencyTextBoxCadastroAssinantePersyCoins.MaxValue = saldoPersyCoins;
+            }
+            else
+            {
+            currencyTextBoxCadastroAssinantePersyCoins.MaxValue = valorAssinatura;    
+            }
             formattedValue = saldoPersyCoins.ToString("C2", CultureInfo.CreateSpecificCulture("pt-BR"));
             labelCadastroAssinantesSaldoPersyCoins.Text = formattedValue;
-            currencyTextBoxCadastroAssinantePersyCoins.MaxValue = saldoPersyCoins;
 
             //Seta o valor de todo mundo para no máximo o valor da assinatura
             currencyTextBoxCadastroAssinanteCredito.MaxValue = valorAssinatura;
             currencyTextBoxCadastroAssinanteDebito.MaxValue = valorAssinatura;
-            currencyTextBoxCadastroAssinanteDinheiro.MaxValue = valorAssinatura;
             currencyTextBoxCadastroAssinantePicpay.MaxValue = valorAssinatura;
             currencyTextBoxCadastroAssinantePix.MaxValue = valorAssinatura;
         }
@@ -255,6 +280,7 @@ namespace Caixa_Central
         private async void ButtonCadastroAssiantePagar_ClickAsync(object sender, EventArgs e)
         {
             decimal troco = decimal.Parse(labelCadastroAssinantesTroco.Text, CultureInfo.InvariantCulture);
+            Cursor = Cursors.WaitCursor;
 
             //Chamar a API para gravar o novo assinante
             string plano = "Fun";
@@ -275,21 +301,36 @@ namespace Caixa_Central
             else if (radioButtonCadastroAssinantes12meses.Checked)
             {
                 futureDate = currentDate.AddMonths(12);
-
             }
             string validade = futureDate.ToString("yyyy-MM-dd");
 
             //Criar novo assinante e enviar para a API
-            var assinante = new
+            if (assinantes is not null)
             {
-                nome = textBoxCadastroAssinantesNome.Text,
-                sobrenome = textBoxCadastroAssinantesSobreNome.Text,
-                plano,
-                validade,
-                datainicio = currentDate.ToString("yyyy-MM-dd"),
-            };
-            string responseContent = await PostNewAssinante(assinante);
-            MessageBox.Show(responseContent);
+                Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == textBoxCadastroAssinantesNome.Text && 
+                a.Sobrenome == textBoxCadastroAssinantesSobreNome.Text);
+
+                if (foundAssinante != null)
+                {
+                    // An Assinante with the given name and surname was found
+                    foundAssinante.Validade = validade;
+                    foundAssinante.Plano = plano;
+                    string responseContent = await PostNewAssinante(foundAssinante);
+                }
+                else
+                {
+                    // No Assinante with the given name and surname was found
+                    Assinante assinante = new
+                    (
+                        textBoxCadastroAssinantesNome.Text,
+                        textBoxCadastroAssinantesSobreNome.Text,
+                        plano,
+                        validade,
+                        currentDate.ToString("yyyy-MM-dd")
+                    );
+                    string responseContent = await PostNewAssinante(assinante);
+                }
+            }
 
             //Criar um novo pedido com o valor da assinatura e enviar para a API 
             Dictionary<string, Pedido>? PedidosDictionary = new();
@@ -310,8 +351,12 @@ namespace Caixa_Central
             );
             await pagamento.GravarPagamento();
 
+            //Criar a entrada dele no Dynamo com o saldo de moedas zerado
+
+
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
+            Cursor = Cursors.Default;
         }
 
         private async Task<string> PostNewAssinante(object assinante)
@@ -342,6 +387,15 @@ namespace Caixa_Central
             labelCadastroAssinantesValorTotal.Visible = false;
             labelCadastroAssinantesValorTotalTexto.Visible = false;
             groupBoxCadastroAssinantesPagar.Visible = false;
+            currencyTextBoxCadastroAssinanteCredito.Text = string.Empty;
+            currencyTextBoxCadastroAssinanteDebito.Text = string.Empty;
+            currencyTextBoxCadastroAssinanteDinheiro.Text = string.Empty;
+            currencyTextBoxCadastroAssinantePicpay.Text = string.Empty;
+            currencyTextBoxCadastroAssinantePix.Text = string.Empty;
+            currencyTextBoxCadastroAssinantePersyCoins.Text = string.Empty;
+            labelCadastroAssinantesTotalSendoPago.Text = string.Empty;
+            labelCadastroAssinantesTroco.Text = string.Empty;
+
         }
 
         private void CalcularTotalAssinante()
@@ -768,7 +822,6 @@ namespace Caixa_Central
                     }
                 }
             }
-
         }
     }
 }

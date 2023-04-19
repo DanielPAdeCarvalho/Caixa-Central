@@ -80,7 +80,7 @@ namespace Caixa_Central
             Cliente = "";
             PedidosDictionary = null;
             HttpClient httpClient = new();
-            var json = JsonConvert.SerializeObject(this);
+            string json = JsonConvert.SerializeObject(this);
             StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
             await httpClient.PutAsync(Auxiliar.urlMesa, content);
         }
