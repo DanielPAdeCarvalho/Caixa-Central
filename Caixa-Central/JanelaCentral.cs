@@ -329,6 +329,7 @@ namespace Caixa_Central
                         currentDate.ToString("yyyy-MM-dd")
                     );
                     string responseContent = await PostNewAssinante(assinante);
+                    await assinante.SetNewPersyCoinsAccount();
 
                     //Criar a entrada dele no Dynamo com o saldo de moedas zerado
 
@@ -358,6 +359,7 @@ namespace Caixa_Central
 
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
+            MessageBox.Show("Assinatura realizada com sucesso!");
             Cursor = Cursors.Default;
         }
 
