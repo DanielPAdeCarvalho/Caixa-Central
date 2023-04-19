@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Security.Policy;
 using System.Text;
 
 namespace Caixa_Central
@@ -33,6 +32,16 @@ namespace Caixa_Central
                 return 0;
             }
             return JsonConvert.DeserializeObject<decimal>(json);
+        }
+
+        public async Task SetNewPersyCoinsAccount()
+        {
+            string nomeCompleto = Nome + " " + Sobrenome;
+            PersyCoins persyCoins = new(nomeCompleto,0);
+            string json = JsonConvert.SerializeObject(persyCoins);
+            StringContent content = new(json, Encoding.UTF8, "application/json");
+            HttpClient httpClient = new();
+            await httpClient.PostAsync(Auxiliar.urlPersyCoinsNovo, content);
         }
     }
 }

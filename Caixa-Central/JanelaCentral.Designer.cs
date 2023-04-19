@@ -83,7 +83,7 @@
             groupBoxCaixaFechaConta = new GroupBox();
             labelCaixaValorTotal = new Label();
             label16 = new Label();
-            checkBoxCaixaFechaConta = new CheckBox();
+            checkBoxCaixaFechaContaTroco = new CheckBox();
             label15 = new Label();
             labelCaixaFechaContaTroco = new Label();
             label17 = new Label();
@@ -144,8 +144,8 @@
             textBoxCadastroAssinantesNome = new TextBox();
             label2 = new Label();
             label1 = new Label();
-            Nome = new DataGridViewTextBoxColumn();
             tabPageFluxoCaixa = new TabPage();
+            Nome = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -765,7 +765,7 @@
             // 
             groupBoxCaixaFechaConta.Controls.Add(labelCaixaValorTotal);
             groupBoxCaixaFechaConta.Controls.Add(label16);
-            groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaConta);
+            groupBoxCaixaFechaConta.Controls.Add(checkBoxCaixaFechaContaTroco);
             groupBoxCaixaFechaConta.Controls.Add(label15);
             groupBoxCaixaFechaConta.Controls.Add(labelCaixaFechaContaTroco);
             groupBoxCaixaFechaConta.Controls.Add(label17);
@@ -815,15 +815,15 @@
             label16.TabIndex = 26;
             label16.Text = "Valor Total:";
             // 
-            // checkBoxCaixaFechaConta
+            // checkBoxCaixaFechaContaTroco
             // 
-            checkBoxCaixaFechaConta.AutoSize = true;
-            checkBoxCaixaFechaConta.Location = new Point(7, 531);
-            checkBoxCaixaFechaConta.Name = "checkBoxCaixaFechaConta";
-            checkBoxCaixaFechaConta.Size = new Size(216, 28);
-            checkBoxCaixaFechaConta.TabIndex = 12;
-            checkBoxCaixaFechaConta.Text = "Troco em Persy Coins";
-            checkBoxCaixaFechaConta.UseVisualStyleBackColor = true;
+            checkBoxCaixaFechaContaTroco.AutoSize = true;
+            checkBoxCaixaFechaContaTroco.Location = new Point(7, 531);
+            checkBoxCaixaFechaContaTroco.Name = "checkBoxCaixaFechaContaTroco";
+            checkBoxCaixaFechaContaTroco.Size = new Size(216, 28);
+            checkBoxCaixaFechaContaTroco.TabIndex = 12;
+            checkBoxCaixaFechaContaTroco.Text = "Troco em Persy Coins";
+            checkBoxCaixaFechaContaTroco.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
@@ -1092,7 +1092,7 @@
             // 
             labelCadastroAssinantesValorTotal.AutoSize = true;
             labelCadastroAssinantesValorTotal.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCadastroAssinantesValorTotal.Location = new Point(494, 194);
+            labelCadastroAssinantesValorTotal.Location = new Point(411, 190);
             labelCadastroAssinantesValorTotal.Name = "labelCadastroAssinantesValorTotal";
             labelCadastroAssinantesValorTotal.Size = new Size(20, 24);
             labelCadastroAssinantesValorTotal.TabIndex = 10;
@@ -1353,17 +1353,17 @@
             // 
             labelCadastroAssinantesValorTotalTexto.AutoSize = true;
             labelCadastroAssinantesValorTotalTexto.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCadastroAssinantesValorTotalTexto.Location = new Point(323, 190);
+            labelCadastroAssinantesValorTotalTexto.Location = new Point(349, 149);
             labelCadastroAssinantesValorTotalTexto.Name = "labelCadastroAssinantesValorTotalTexto";
-            labelCadastroAssinantesValorTotalTexto.Size = new Size(153, 24);
+            labelCadastroAssinantesValorTotalTexto.Size = new Size(148, 24);
             labelCadastroAssinantesValorTotalTexto.TabIndex = 9;
-            labelCadastroAssinantesValorTotalTexto.Text = "Valor a ser pago:";
+            labelCadastroAssinantesValorTotalTexto.Text = "Valor a ser pago";
             labelCadastroAssinantesValorTotalTexto.Visible = false;
             // 
             // buttonCadastroAssianteConfirmarDados
             // 
             buttonCadastroAssianteConfirmarDados.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonCadastroAssianteConfirmarDados.Location = new Point(323, 77);
+            buttonCadastroAssianteConfirmarDados.Location = new Point(323, 46);
             buttonCadastroAssianteConfirmarDados.Name = "buttonCadastroAssianteConfirmarDados";
             buttonCadastroAssianteConfirmarDados.Size = new Size(204, 84);
             buttonCadastroAssianteConfirmarDados.TabIndex = 5;
@@ -1509,11 +1509,6 @@
             label1.TabIndex = 0;
             label1.Text = "Nome:";
             // 
-            // Nome
-            // 
-            Nome.HeaderText = "Nome";
-            Nome.Name = "Nome";
-            // 
             // tabPageFluxoCaixa
             // 
             tabPageFluxoCaixa.BackColor = Color.DarkGray;
@@ -1523,6 +1518,11 @@
             tabPageFluxoCaixa.Size = new Size(1404, 672);
             tabPageFluxoCaixa.TabIndex = 3;
             tabPageFluxoCaixa.Text = "Fluxo de Caixa";
+            // 
+            // Nome
+            // 
+            Nome.HeaderText = "Nome";
+            Nome.Name = "Nome";
             // 
             // JanelaCentral
             // 
@@ -1657,7 +1657,7 @@
         private Button buttonClienteFecharConta;
         private Syncfusion.Windows.Forms.Tools.CalculatorControl calculatorControl2;
         private GroupBox groupBoxCaixaFechaConta;
-        private CheckBox checkBoxCaixaFechaConta;
+        private CheckBox checkBoxCaixaFechaContaTroco;
         private Label label15;
         private Label labelCaixaFechaContaTroco;
         private Label label17;

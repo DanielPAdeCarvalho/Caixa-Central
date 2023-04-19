@@ -213,7 +213,7 @@ namespace Caixa_Central
             }
             else
             {
-            currencyTextBoxCadastroAssinantePersyCoins.MaxValue = valorAssinatura;    
+                currencyTextBoxCadastroAssinantePersyCoins.MaxValue = valorAssinatura;
             }
             formattedValue = saldoPersyCoins.ToString("C2", CultureInfo.CreateSpecificCulture("pt-BR"));
             labelCadastroAssinantesSaldoPersyCoins.Text = formattedValue;
@@ -307,7 +307,7 @@ namespace Caixa_Central
             //Criar novo assinante e enviar para a API
             if (assinantes is not null)
             {
-                Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == textBoxCadastroAssinantesNome.Text && 
+                Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == textBoxCadastroAssinantesNome.Text &&
                 a.Sobrenome == textBoxCadastroAssinantesSobreNome.Text);
 
                 if (foundAssinante != null)
@@ -329,6 +329,9 @@ namespace Caixa_Central
                         currentDate.ToString("yyyy-MM-dd")
                     );
                     string responseContent = await PostNewAssinante(assinante);
+
+                    //Criar a entrada dele no Dynamo com o saldo de moedas zerado
+
                 }
             }
 
@@ -351,7 +354,6 @@ namespace Caixa_Central
             );
             await pagamento.GravarPagamento();
 
-            //Criar a entrada dele no Dynamo com o saldo de moedas zerado
 
 
             //Deu tudo certo sai limpando todos os campos
@@ -395,6 +397,7 @@ namespace Caixa_Central
             currencyTextBoxCadastroAssinantePersyCoins.Text = string.Empty;
             labelCadastroAssinantesTotalSendoPago.Text = string.Empty;
             labelCadastroAssinantesTroco.Text = string.Empty;
+            checkBoxCadastroAssinantesTrocoEmPersyCoins.Checked = false;
 
         }
 
@@ -591,11 +594,11 @@ namespace Caixa_Central
             }
         }
 
-        private void ButtonClienteFecharConta_Click(object sender, EventArgs e)
+        private async void ButtonClienteFecharConta_Click(object sender, EventArgs e)
         {
             string nrMesa = labelClienteNrMesa.Text;
             decimal valorTotal = 0;
-            if (mesasOcupadas != null)
+            if (mesasOcupadas != null && assinantes is not null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
                 if (mesa != null && mesa.PedidosDictionary != null)
@@ -608,21 +611,46 @@ namespace Caixa_Central
                         listViewCaixaPedidos.Items.Add(listViewItem);
                         valorTotal += item.ValorTotal;
                     }
+                    // Auto-size the columns in the list view control.
+                    listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    labelCaixaValorTotal.Text = valorTotal.ToString("C2");
+
+                    groupBoxCaixaFechaConta.Visible = true;
+                    labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
+                    tabControl1.SelectedTab = tabPageCaixa;
+
+
+                    string[] parts = mesa.Cliente.Split(new[] { ' ' }, 2);
+                    Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == parts[0] &&
+                       a.Sobrenome == parts[1]);
+                    decimal persycoins = 0;
+                    if (foundAssinante is not null)
+                    {
+                        persycoins = await foundAssinante.GetSaldoPersyCoins();
+
+                    }
+                    //Seta o valor de todo mundo para no máximo o valor da conta
+                    if (persycoins > 0)
+                    {
+                        if (persycoins > valorTotal)
+                        {
+                            textBoxCaixaFechaContaCoins.MaxValue = valorTotal;
+                        }
+                        else
+                        {
+                            textBoxCaixaFechaContaCoins.MaxValue = persycoins;
+                        }
+                    }
+                    else
+                    {
+                        textBoxCaixaFechaContaCoins.MaxValue = 0;
+                    }
+                    textBoxCaixaFechaContaCredito.MaxValue = valorTotal;
+                    textBoxCaixaFechaContaDebito.MaxValue = valorTotal;
+                    textBoxCaixaFechaContaPicpay.MaxValue = valorTotal;
+                    textBoxCaixaFechaContaPix.MaxValue = valorTotal;
                 }
             }
-            // Auto-size the columns in the list view control.
-            listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            labelCaixaValorTotal.Text = valorTotal.ToString("C2");
-
-            groupBoxCaixaFechaConta.Visible = true;
-            labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
-            tabControl1.SelectedTab = tabPageCaixa;
-
-            //Seta o valor de todo mundo para no máximo o valor da conta
-            textBoxCaixaFechaContaCredito.MaxValue = valorTotal;
-            textBoxCaixaFechaContaDebito.MaxValue = valorTotal;
-            textBoxCaixaFechaContaPicpay.MaxValue = valorTotal;
-            textBoxCaixaFechaContaPix.MaxValue = valorTotal;
         }
 
         private async void ButtonCaixaFechaContaConfirma_Click(object sender, EventArgs e)
@@ -671,6 +699,7 @@ namespace Caixa_Central
                     labelCaixaNomeCliente.Text = string.Empty;
                     labelCaixaValorTotal.Text = string.Empty;
                     labelCaixaFechaContaTroco.Text = string.Empty;
+                    checkBoxCaixaFechaContaTroco.Checked = false;
 
                     //Limpar os pedidos na aba clientes
                     groupBoxClientesMesaAddPedidos.Text = string.Empty;
