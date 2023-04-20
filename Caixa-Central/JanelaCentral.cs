@@ -823,6 +823,10 @@ namespace Caixa_Central
                 if (cardapio != null)
                 {
                     Item item = (Item)dataGridClienteCardapio.Rows[e.RowIndex].DataBoundItem;
+                    string nrMesa = labelClienteNrMesa.Text;
+                    Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+
+                    Assinante assinante = assinantes.Find(assinante => assinante.Nome == comboBoxClienteNovaMesaNomeAssinante.Text);
                     Pedido pedido = new(item.Nome, item.Valor, 1);
                     await pedido.AdicionarPedido(labelClienteNrMesa.Text);
                     await UpdatePedidos(labelClienteNrMesa.Text);

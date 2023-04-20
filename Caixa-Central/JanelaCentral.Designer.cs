@@ -146,6 +146,8 @@
             label1 = new Label();
             tabPageFluxoCaixa = new TabPage();
             Nome = new DataGridViewTextBoxColumn();
+            label29 = new Label();
+            labelCaixaFechaContaRetornoPersyCoins = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -730,6 +732,8 @@
             // tabPageCaixa
             // 
             tabPageCaixa.BackColor = Color.DarkGray;
+            tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPersyCoins);
+            tabPageCaixa.Controls.Add(label29);
             tabPageCaixa.Controls.Add(listViewCaixaPedidos);
             tabPageCaixa.Controls.Add(labelCaixaNomeCliente);
             tabPageCaixa.Controls.Add(groupBoxCaixaFechaConta);
@@ -824,6 +828,7 @@
             checkBoxCaixaFechaContaTroco.TabIndex = 12;
             checkBoxCaixaFechaContaTroco.Text = "Troco em Persy Coins";
             checkBoxCaixaFechaContaTroco.UseVisualStyleBackColor = true;
+            checkBoxCaixaFechaContaTroco.Visible = false;
             // 
             // label15
             // 
@@ -1018,9 +1023,9 @@
             label27.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label27.Location = new Point(7, 76);
             label27.Name = "label27";
-            label27.Size = new Size(163, 24);
+            label27.Size = new Size(90, 24);
             label27.TabIndex = 7;
-            label27.Text = "Saldo PersyCoins:";
+            label27.Text = "Saldo P¢:";
             // 
             // textBoxCaixaFechaContaCoins
             // 
@@ -1037,16 +1042,16 @@
             // 
             calculatorControl2.AccessibleDescription = "Calculator control";
             calculatorControl2.AccessibleName = "Calculator Control";
-            calculatorControl2.BeforeTouchSize = new Size(362, 415);
+            calculatorControl2.BeforeTouchSize = new Size(373, 263);
             calculatorControl2.Culture = new System.Globalization.CultureInfo("pt-BR");
             calculatorControl2.DoubleValue = 0D;
             calculatorControl2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             calculatorControl2.ForeColor = SystemColors.ControlText;
-            calculatorControl2.Location = new Point(1030, 20);
+            calculatorControl2.Location = new Point(1028, 396);
             calculatorControl2.MetroColor = SystemColors.Control;
             calculatorControl2.Name = "calculatorControl2";
             calculatorControl2.RightToLeft = RightToLeft.No;
-            calculatorControl2.Size = new Size(362, 415);
+            calculatorControl2.Size = new Size(373, 263);
             calculatorControl2.TabIndex = 12;
             calculatorControl2.Text = "calculatorControl2";
             // 
@@ -1092,7 +1097,7 @@
             // 
             labelCadastroAssinantesValorTotal.AutoSize = true;
             labelCadastroAssinantesValorTotal.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCadastroAssinantesValorTotal.Location = new Point(411, 190);
+            labelCadastroAssinantesValorTotal.Location = new Point(349, 190);
             labelCadastroAssinantesValorTotal.Name = "labelCadastroAssinantesValorTotal";
             labelCadastroAssinantesValorTotal.Size = new Size(20, 24);
             labelCadastroAssinantesValorTotal.TabIndex = 10;
@@ -1140,6 +1145,7 @@
             checkBoxCadastroAssinantesTrocoEmPersyCoins.TabIndex = 12;
             checkBoxCadastroAssinantesTrocoEmPersyCoins.Text = "Troco em Persy Coins";
             checkBoxCadastroAssinantesTrocoEmPersyCoins.UseVisualStyleBackColor = true;
+            checkBoxCadastroAssinantesTrocoEmPersyCoins.Visible = false;
             // 
             // label12
             // 
@@ -1524,6 +1530,26 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.Location = new Point(815, 58);
+            label29.Name = "label29";
+            label29.Size = new Size(226, 24);
+            label29.TabIndex = 51;
+            label29.Text = "Esse pagamento irá gerar";
+            // 
+            // labelCaixaFechaContaRetornoPersyCoins
+            // 
+            labelCaixaFechaContaRetornoPersyCoins.AutoSize = true;
+            labelCaixaFechaContaRetornoPersyCoins.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaRetornoPersyCoins.Location = new Point(815, 96);
+            labelCaixaFechaContaRetornoPersyCoins.Name = "labelCaixaFechaContaRetornoPersyCoins";
+            labelCaixaFechaContaRetornoPersyCoins.Size = new Size(52, 24);
+            labelCaixaFechaContaRetornoPersyCoins.TabIndex = 52;
+            labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0";
+            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1691,5 +1717,7 @@
         private Label labelClienteTotalConta;
         private Label label28;
         private TabPage tabPageFluxoCaixa;
+        private Label labelCaixaFechaContaRetornoPersyCoins;
+        private Label label29;
     }
 }
