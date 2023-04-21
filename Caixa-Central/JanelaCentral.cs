@@ -625,11 +625,22 @@ namespace Caixa_Central
                     string[] parts = mesa.Cliente.Split(new[] { ' ' }, 2);
                     Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == parts[0] &&
                        a.Sobrenome == parts[1]);
+
+                    //PersyCoins
                     decimal persycoins = 0;
                     if (foundAssinante is not null)
                     {
                         persycoins = await foundAssinante.GetSaldoPersyCoins();
-
+                        decimal cashback = valorTotal * 0.10M ;
+                        if (foundAssinante.Plano == "Fun")
+                        {
+                           cashback = valorTotal * 0.05m;
+                        }
+                        labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: "+cashback.ToString("N2");
+                    }
+                    else
+                    {
+                        labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0,00";
                     }
                     //Seta o valor de todo mundo para no máximo o valor da conta
                     if (persycoins > 0)
@@ -659,11 +670,12 @@ namespace Caixa_Central
         {
             Cursor.Current = Cursors.WaitCursor;
             string nrMesa = labelClienteNrMesa.Text;
-            if (mesasOcupadas != null)
+            if (mesasOcupadas is not null && assinantes is not null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
                 if (mesa != null && mesa.PedidosDictionary != null)
                 {
+                    //Grava o pagamento
                     Pagamento pagamento = new(
                         mesa.Cliente,
                         DeLabelParaDecimal(labelCaixaFechaContaTroco.Text),
@@ -675,6 +687,19 @@ namespace Caixa_Central
                         textBoxCaixaFechaContaCoins.DecimalValue,
                         mesa.PedidosDictionary
                         );
+
+                    //Gravar o cashback se houver
+                    Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == mesa.Cliente.Split(' ')[0] &&
+                                          a.Sobrenome == mesa.Cliente.Split(' ')[1]);
+                    if (foundAssinante is not null)
+                    {
+                        decimal cashback = DeLabelParaDecimal(labelCaixaFechaContaRetornoPersyCoins.Text);
+                        if (cashback > 0)
+                        {
+                            await foundAssinante.(cashback);
+                        }
+                    }
+
                     int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
                     if (foundIndex != -1)
                     {
@@ -713,7 +738,6 @@ namespace Caixa_Central
                     MessageBox.Show("Pagamento realizado com sucesso!");
                 }
             }
-
         }
 
         private void TextBoxCaixaFecha_TextChanged(object sender, EventArgs e)
@@ -755,7 +779,7 @@ namespace Caixa_Central
                 {
                     //Gravar que a mesa está ocupada
                     HttpClient httpClient = new();
-                    var json = JsonConvert.SerializeObject(mesa);
+                    string json = JsonConvert.SerializeObject(mesa);
                     StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
                     await httpClient.PutAsync(Auxiliar.urlMesa, content);
                     MessageBox.Show("Mesa " + nrMesa + " iniciada com sucesso!");
@@ -769,9 +793,11 @@ namespace Caixa_Central
                         await pedido.AdicionarPedido(nrMesa);
                     }
 
+                    //Limpar os campos
                     groupBoxClientesNovaMesa.Visible = false;
                     textBoxClientesNovoNome.Text = string.Empty;
                     comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+                    groupBoxClientesMesaAddPedidos.Text = $"Mesa {nrMesa} - {mesa.Cliente}";
                 }
                 else
                 {
@@ -820,13 +846,13 @@ namespace Caixa_Central
         {
             if (dataGridClienteCardapio.SelectedCells.Count > 0)
             {
-                if (cardapio != null)
+                if (cardapio is not null && mesasOcupadas is not null && assinantes is not null)
                 {
                     Item item = (Item)dataGridClienteCardapio.Rows[e.RowIndex].DataBoundItem;
                     string nrMesa = labelClienteNrMesa.Text;
                     Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
 
-                    Assinante assinante = assinantes.Find(assinante => assinante.Nome == comboBoxClienteNovaMesaNomeAssinante.Text);
+                    Assinante? assinante = assinantes.Find(assinante => assinante.Nome == comboBoxClienteNovaMesaNomeAssinante.Text);
                     Pedido pedido = new(item.Nome, item.Valor, 1);
                     await pedido.AdicionarPedido(labelClienteNrMesa.Text);
                     await UpdatePedidos(labelClienteNrMesa.Text);

@@ -21,11 +21,12 @@ namespace Caixa_Central
             this.Datainicio = datainicio;
         }
 
+        //Pegar o saldo de PersyCoins do assinante
         public async Task<decimal> GetSaldoPersyCoins()
         {
-            HttpClient httpClient = new();
+            using HttpClient client = new();
             string nomeCompleto = Nome + " " + Sobrenome;
-            HttpResponseMessage result = await httpClient.GetAsync(Auxiliar.urlPersyCoins + nomeCompleto);
+            HttpResponseMessage result = await client.GetAsync(Auxiliar.urlPersyCoins + nomeCompleto);
             string json = await result.Content.ReadAsStringAsync();
             if (string.IsNullOrEmpty(json))
             {
@@ -34,14 +35,32 @@ namespace Caixa_Central
             return JsonConvert.DeserializeObject<decimal>(json);
         }
 
+        //Atualizar o saldo de PersyCoins do assinante
+        public async Task UpdateSaldoPersyCoins(decimal valor, string operation)
+        {
+            string nomeCompleto = Nome + " " + Sobrenome;
+            try
+            {
+                using HttpClient client = new();
+                string endpoint = $"{Auxiliar.urlPersyCoins}{nomeCompleto}/{operation}/{valor}";
+                await client.PutAsync(endpoint, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating saldo: {ex.Message}");
+            }
+        }
+
+
+        //Criar nova conta de PersyCoins para o assinante
         public async Task SetNewPersyCoinsAccount()
         {
             string nomeCompleto = Nome + " " + Sobrenome;
-            PersyCoins persyCoins = new(nomeCompleto,0);
+            PersyCoins persyCoins = new(nomeCompleto, 0);
             string json = JsonConvert.SerializeObject(persyCoins);
             StringContent content = new(json, Encoding.UTF8, "application/json");
-            HttpClient httpClient = new();
-            await httpClient.PostAsync(Auxiliar.urlPersyCoinsNovo, content);
+            using HttpClient client = new();
+            await client.PostAsync(Auxiliar.urlPersyCoinsNovo, content);
         }
     }
 }

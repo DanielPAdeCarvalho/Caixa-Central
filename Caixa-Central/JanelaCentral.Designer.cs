@@ -1141,9 +1141,9 @@
             checkBoxCadastroAssinantesTrocoEmPersyCoins.AutoSize = true;
             checkBoxCadastroAssinantesTrocoEmPersyCoins.Location = new Point(7, 531);
             checkBoxCadastroAssinantesTrocoEmPersyCoins.Name = "checkBoxCadastroAssinantesTrocoEmPersyCoins";
-            checkBoxCadastroAssinantesTrocoEmPersyCoins.Size = new Size(216, 28);
+            checkBoxCadastroAssinantesTrocoEmPersyCoins.Size = new Size(211, 28);
             checkBoxCadastroAssinantesTrocoEmPersyCoins.TabIndex = 12;
-            checkBoxCadastroAssinantesTrocoEmPersyCoins.Text = "Troco em Persy Coins";
+            checkBoxCadastroAssinantesTrocoEmPersyCoins.Text = "Troco em PersyCoins";
             checkBoxCadastroAssinantesTrocoEmPersyCoins.UseVisualStyleBackColor = true;
             checkBoxCadastroAssinantesTrocoEmPersyCoins.Visible = false;
             // 
@@ -1340,9 +1340,9 @@
             label3.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(6, 49);
             label3.Name = "label3";
-            label3.Size = new Size(163, 24);
+            label3.Size = new Size(90, 24);
             label3.TabIndex = 7;
-            label3.Text = "Saldo PersyCoins:";
+            label3.Text = "Saldo P¢:";
             // 
             // currencyTextBoxCadastroAssinantePersyCoins
             // 
