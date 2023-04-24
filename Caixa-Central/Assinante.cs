@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 using System.Text;
 
 namespace Caixa_Central
@@ -41,8 +43,9 @@ namespace Caixa_Central
             string nomeCompleto = Nome + " " + Sobrenome;
             try
             {
+                string formattedValue = valor.ToString(CultureInfo.InvariantCulture);
                 using HttpClient client = new();
-                string endpoint = $"{Auxiliar.urlPersyCoins}{nomeCompleto}/{operation}/{valor}";
+                string endpoint = $"{Auxiliar.urlPersyCoins}{nomeCompleto}/{operation}/{formattedValue}";
                 await client.PutAsync(endpoint, null);
             }
             catch (Exception ex)

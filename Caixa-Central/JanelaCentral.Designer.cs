@@ -78,6 +78,8 @@
             buttonCliente03 = new Button();
             buttonCliente02 = new Button();
             tabPageCaixa = new TabPage();
+            labelCaixaFechaContaRetornoPersyCoins = new Label();
+            label29 = new Label();
             listViewCaixaPedidos = new ListView();
             labelCaixaNomeCliente = new Label();
             groupBoxCaixaFechaConta = new GroupBox();
@@ -105,6 +107,7 @@
             label27 = new Label();
             textBoxCaixaFechaContaCoins = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
             calculatorControl2 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
+            labelCaixaFechaContaRetornoPersyCoinsBKP = new Label();
             CadastroAssinantes = new TabPage();
             calculatorControl1 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             labelCadastroAssinantesValorTotal = new Label();
@@ -146,8 +149,7 @@
             label1 = new Label();
             tabPageFluxoCaixa = new TabPage();
             Nome = new DataGridViewTextBoxColumn();
-            label29 = new Label();
-            labelCaixaFechaContaRetornoPersyCoins = new Label();
+            labelCaixaFechaContaRetornoPercentBKP = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -732,11 +734,13 @@
             // tabPageCaixa
             // 
             tabPageCaixa.BackColor = Color.DarkGray;
+            tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPercentBKP);
             tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPersyCoins);
             tabPageCaixa.Controls.Add(label29);
             tabPageCaixa.Controls.Add(listViewCaixaPedidos);
             tabPageCaixa.Controls.Add(labelCaixaNomeCliente);
             tabPageCaixa.Controls.Add(groupBoxCaixaFechaConta);
+            tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPersyCoinsBKP);
             tabPageCaixa.Controls.Add(calculatorControl2);
             tabPageCaixa.Location = new Point(4, 24);
             tabPageCaixa.Name = "tabPageCaixa";
@@ -744,6 +748,26 @@
             tabPageCaixa.Size = new Size(1404, 672);
             tabPageCaixa.TabIndex = 1;
             tabPageCaixa.Text = "Caixa";
+            // 
+            // labelCaixaFechaContaRetornoPersyCoins
+            // 
+            labelCaixaFechaContaRetornoPersyCoins.AutoSize = true;
+            labelCaixaFechaContaRetornoPersyCoins.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaRetornoPersyCoins.Location = new Point(815, 96);
+            labelCaixaFechaContaRetornoPersyCoins.Name = "labelCaixaFechaContaRetornoPersyCoins";
+            labelCaixaFechaContaRetornoPersyCoins.Size = new Size(52, 24);
+            labelCaixaFechaContaRetornoPersyCoins.TabIndex = 52;
+            labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0";
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.Location = new Point(815, 58);
+            label29.Name = "label29";
+            label29.Size = new Size(226, 24);
+            label29.TabIndex = 51;
+            label29.Text = "Esse pagamento irá gerar";
             // 
             // listViewCaixaPedidos
             // 
@@ -1054,6 +1078,16 @@
             calculatorControl2.Size = new Size(373, 263);
             calculatorControl2.TabIndex = 12;
             calculatorControl2.Text = "calculatorControl2";
+            // 
+            // labelCaixaFechaContaRetornoPersyCoinsBKP
+            // 
+            labelCaixaFechaContaRetornoPersyCoinsBKP.AutoSize = true;
+            labelCaixaFechaContaRetornoPersyCoinsBKP.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaRetornoPersyCoinsBKP.Location = new Point(1045, 431);
+            labelCaixaFechaContaRetornoPersyCoinsBKP.Name = "labelCaixaFechaContaRetornoPersyCoinsBKP";
+            labelCaixaFechaContaRetornoPersyCoinsBKP.Size = new Size(20, 24);
+            labelCaixaFechaContaRetornoPersyCoinsBKP.TabIndex = 53;
+            labelCaixaFechaContaRetornoPersyCoinsBKP.Text = "0";
             // 
             // CadastroAssinantes
             // 
@@ -1530,25 +1564,15 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // label29
+            // labelCaixaFechaContaRetornoPercentBKP
             // 
-            label29.AutoSize = true;
-            label29.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label29.Location = new Point(815, 58);
-            label29.Name = "label29";
-            label29.Size = new Size(226, 24);
-            label29.TabIndex = 51;
-            label29.Text = "Esse pagamento irá gerar";
-            // 
-            // labelCaixaFechaContaRetornoPersyCoins
-            // 
-            labelCaixaFechaContaRetornoPersyCoins.AutoSize = true;
-            labelCaixaFechaContaRetornoPersyCoins.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCaixaFechaContaRetornoPersyCoins.Location = new Point(815, 96);
-            labelCaixaFechaContaRetornoPersyCoins.Name = "labelCaixaFechaContaRetornoPersyCoins";
-            labelCaixaFechaContaRetornoPersyCoins.Size = new Size(52, 24);
-            labelCaixaFechaContaRetornoPersyCoins.TabIndex = 52;
-            labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0";
+            labelCaixaFechaContaRetornoPercentBKP.AutoSize = true;
+            labelCaixaFechaContaRetornoPercentBKP.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelCaixaFechaContaRetornoPercentBKP.Location = new Point(1045, 460);
+            labelCaixaFechaContaRetornoPercentBKP.Name = "labelCaixaFechaContaRetornoPercentBKP";
+            labelCaixaFechaContaRetornoPercentBKP.Size = new Size(20, 24);
+            labelCaixaFechaContaRetornoPercentBKP.TabIndex = 54;
+            labelCaixaFechaContaRetornoPercentBKP.Text = "0";
             // 
             // JanelaCentral
             // 
@@ -1719,5 +1743,7 @@
         private TabPage tabPageFluxoCaixa;
         private Label labelCaixaFechaContaRetornoPersyCoins;
         private Label label29;
+        private Label labelCaixaFechaContaRetornoPersyCoinsBKP;
+        private Label labelCaixaFechaContaRetornoPercentBKP;
     }
 }

@@ -322,17 +322,16 @@ namespace Caixa_Central
                     // No Assinante with the given name and surname was found
                     Assinante assinante = new
                     (
-                        textBoxCadastroAssinantesNome.Text,
-                        textBoxCadastroAssinantesSobreNome.Text,
+                        textBoxCadastroAssinantesNome.Text.Trim(),
+                        textBoxCadastroAssinantesSobreNome.Text.Trim(),
                         plano,
                         validade,
                         currentDate.ToString("yyyy-MM-dd")
                     );
                     string responseContent = await PostNewAssinante(assinante);
-                    await assinante.SetNewPersyCoinsAccount();
 
                     //Criar a entrada dele no Dynamo com o saldo de moedas zerado
-
+                    await assinante.SetNewPersyCoinsAccount();
                 }
             }
 
@@ -631,17 +630,21 @@ namespace Caixa_Central
                     if (foundAssinante is not null)
                     {
                         persycoins = await foundAssinante.GetSaldoPersyCoins();
-                        decimal cashback = valorTotal * 0.10M ;
+                        decimal cashbackReturn = 0.1M;                        
                         if (foundAssinante.Plano == "Fun")
                         {
-                           cashback = valorTotal * 0.05m;
+                            cashbackReturn = 0.05M;
                         }
-                        labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: "+cashback.ToString("N2");
+                        decimal cashback = valorTotal * cashbackReturn;
+                        labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: " + cashback.ToString("N2");
+                        labelCaixaFechaContaRetornoPersyCoinsBKP.Text = cashback.ToString("N2");
+                        labelCaixaFechaContaRetornoPercentBKP.Text = cashbackReturn.ToString("N2");
                     }
                     else
                     {
                         labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0,00";
                     }
+
                     //Seta o valor de todo mundo para no máximo o valor da conta
                     if (persycoins > 0)
                     {
@@ -662,6 +665,7 @@ namespace Caixa_Central
                     textBoxCaixaFechaContaDebito.MaxValue = valorTotal;
                     textBoxCaixaFechaContaPicpay.MaxValue = valorTotal;
                     textBoxCaixaFechaContaPix.MaxValue = valorTotal;
+
                 }
             }
         }
@@ -687,19 +691,21 @@ namespace Caixa_Central
                         textBoxCaixaFechaContaCoins.DecimalValue,
                         mesa.PedidosDictionary
                         );
+                    await pagamento.GravarPagamento();
 
                     //Gravar o cashback se houver
-                    Assinante? foundAssinante = assinantes.FirstOrDefault(a => a.Nome == mesa.Cliente.Split(' ')[0] &&
+                    Assinante? assinante = assinantes.FirstOrDefault(a => a.Nome == mesa.Cliente.Split(' ')[0] &&
                                           a.Sobrenome == mesa.Cliente.Split(' ')[1]);
-                    if (foundAssinante is not null)
+                    if (assinante is not null)
                     {
-                        decimal cashback = DeLabelParaDecimal(labelCaixaFechaContaRetornoPersyCoins.Text);
+                        decimal cashback = DeLabelParaDecimal(labelCaixaFechaContaRetornoPersyCoins.Text[3..]);
                         if (cashback > 0)
                         {
-                            await foundAssinante.(cashback);
+                            await assinante.UpdateSaldoPersyCoins(cashback, "add");
                         }
                     }
 
+                    //Limpa a mesa de mesas ocupadas
                     int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
                     if (foundIndex != -1)
                     {
@@ -709,7 +715,6 @@ namespace Caixa_Central
                     {
                         MessageBox.Show("Mesa não encontrada");
                     }
-                    await pagamento.GravarPagamento();
                     await mesa.EncerraMesa();
                     await GetAllMesasAsync();
 
@@ -727,12 +732,16 @@ namespace Caixa_Central
                     labelCaixaValorTotal.Text = string.Empty;
                     labelCaixaFechaContaTroco.Text = string.Empty;
                     checkBoxCaixaFechaContaTroco.Checked = false;
+                    labelCaixaFechaContaRetornoPersyCoins.Text = string.Empty;
+                    labelCaixaFechaContaRetornoPercentBKP.Text = string.Empty;
+                    labelCaixaFechaContaRetornoPersyCoinsBKP.Text = string.Empty;
 
                     //Limpar os pedidos na aba clientes
                     groupBoxClientesMesaAddPedidos.Text = string.Empty;
                     mesa.Pedidos.Clear();
                     dataGridClientePedidos.DataSource = mesa.Pedidos;
                     dataGridClientePedidos.Refresh();
+                    tabControl1.SelectedTab = tabPageClientes;
 
                     Cursor.Current = Cursors.Default;
                     MessageBox.Show("Pagamento realizado com sucesso!");
@@ -740,7 +749,7 @@ namespace Caixa_Central
             }
         }
 
-        private void TextBoxCaixaFecha_TextChanged(object sender, EventArgs e)
+        private async void TextBoxCaixaFecha_TextChanged(object sender, EventArgs e)
         {
             decimal valorTotal = 0;
             valorTotal += textBoxCaixaFechaContaPix.DecimalValue;
@@ -762,6 +771,13 @@ namespace Caixa_Central
             else
             {
                 buttonCaixaFechaContaConfirma.Visible = false;
+            }
+            if (textBoxCaixaFechaContaCoins.DecimalValue > 0)
+            {
+                decimal cashback = DeLabelParaDecimal(labelCaixaFechaContaRetornoPersyCoinsBKP.Text);
+                decimal percentual = DeLabelParaDecimal(labelCaixaFechaContaRetornoPercentBKP.Text);
+                cashback = (valorConta - textBoxCaixaFechaContaCoins.DecimalValue) * percentual;
+
             }
         }
 
