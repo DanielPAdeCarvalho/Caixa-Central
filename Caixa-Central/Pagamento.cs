@@ -50,10 +50,12 @@ namespace Caixa_Central
         public async Task GravarPagamento()
         {
             // Envia o pagamento para o banco de dados
+            string json = JsonConvert.SerializeObject(this);
+            StringContent content = new(json, Encoding.UTF8, "application/json");
             HttpClient httpClient = new();
-            var json = JsonConvert.SerializeObject(this);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
             await httpClient.PostAsync(Auxiliar.urlPagamentos, content);
+
+            // Atualiza o saldo de PersyCoins do cliente no banco de dados
             if ( Persycoins > 0)
             {
                 string PersycoinsStr = Persycoins.ToString("0.00", CultureInfo.InvariantCulture);
