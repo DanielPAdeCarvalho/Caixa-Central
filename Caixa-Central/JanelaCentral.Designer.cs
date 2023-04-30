@@ -78,6 +78,7 @@
             buttonCliente03 = new Button();
             buttonCliente02 = new Button();
             tabPageCaixa = new TabPage();
+            calculatorControl2 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             labelCaixaFechaContaRetornoPercentBKP = new Label();
             labelCaixaFechaContaRetornoPersyCoins = new Label();
             label29 = new Label();
@@ -108,7 +109,6 @@
             label27 = new Label();
             textBoxCaixaFechaContaPersyCoins = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
             labelCaixaFechaContaRetornoPersyCoinsBKP = new Label();
-            calculatorControl2 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             CadastroAssinantes = new TabPage();
             calculatorControl1 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             labelCadastroAssinantesValorTotal = new Label();
@@ -149,6 +149,10 @@
             label2 = new Label();
             label1 = new Label();
             tabPageFluxoCaixa = new TabPage();
+            Ponto = new TabPage();
+            buttonRefreshPontos = new Button();
+            labelPontoUltimos = new Label();
+            label26 = new Label();
             Nome = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
@@ -176,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)currencyTextBoxCadastroAssinantePersyCoins).BeginInit();
             groupBoxCadastroAssinantesTempoPlano.SuspendLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.SuspendLayout();
+            Ponto.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -184,6 +189,7 @@
             tabControl1.Controls.Add(tabPageCaixa);
             tabControl1.Controls.Add(CadastroAssinantes);
             tabControl1.Controls.Add(tabPageFluxoCaixa);
+            tabControl1.Controls.Add(Ponto);
             tabControl1.Location = new Point(2, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -749,6 +755,23 @@
             tabPageCaixa.TabIndex = 1;
             tabPageCaixa.Text = "Caixa";
             // 
+            // calculatorControl2
+            // 
+            calculatorControl2.AccessibleDescription = "Calculator control";
+            calculatorControl2.AccessibleName = "Calculator Control";
+            calculatorControl2.BeforeTouchSize = new Size(373, 263);
+            calculatorControl2.Culture = new System.Globalization.CultureInfo("pt-BR");
+            calculatorControl2.DoubleValue = 0D;
+            calculatorControl2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            calculatorControl2.ForeColor = SystemColors.ControlText;
+            calculatorControl2.Location = new Point(1028, 396);
+            calculatorControl2.MetroColor = SystemColors.Control;
+            calculatorControl2.Name = "calculatorControl2";
+            calculatorControl2.RightToLeft = RightToLeft.No;
+            calculatorControl2.Size = new Size(373, 263);
+            calculatorControl2.TabIndex = 12;
+            calculatorControl2.Text = "calculatorControl2";
+            // 
             // labelCaixaFechaContaRetornoPercentBKP
             // 
             labelCaixaFechaContaRetornoPercentBKP.AutoSize = true;
@@ -1061,12 +1084,12 @@
             label27.TabIndex = 7;
             label27.Text = "Saldo P¢:";
             // 
-            // textBoxCaixaFechaContaCoins
+            // textBoxCaixaFechaContaPersyCoins
             // 
             textBoxCaixaFechaContaPersyCoins.BeforeTouchSize = new Size(100, 29);
             textBoxCaixaFechaContaPersyCoins.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaPersyCoins.Location = new Point(159, 116);
-            textBoxCaixaFechaContaPersyCoins.Name = "textBoxCaixaFechaContaCoins";
+            textBoxCaixaFechaContaPersyCoins.Name = "textBoxCaixaFechaContaPersyCoins";
             textBoxCaixaFechaContaPersyCoins.Size = new Size(100, 29);
             textBoxCaixaFechaContaPersyCoins.TabIndex = 0;
             textBoxCaixaFechaContaPersyCoins.Text = "R$ 0,00";
@@ -1081,23 +1104,6 @@
             labelCaixaFechaContaRetornoPersyCoinsBKP.Size = new Size(20, 24);
             labelCaixaFechaContaRetornoPersyCoinsBKP.TabIndex = 53;
             labelCaixaFechaContaRetornoPersyCoinsBKP.Text = "0";
-            // 
-            // calculatorControl2
-            // 
-            calculatorControl2.AccessibleDescription = "Calculator control";
-            calculatorControl2.AccessibleName = "Calculator Control";
-            calculatorControl2.BeforeTouchSize = new Size(373, 263);
-            calculatorControl2.Culture = new System.Globalization.CultureInfo("pt-BR");
-            calculatorControl2.DoubleValue = 0D;
-            calculatorControl2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            calculatorControl2.ForeColor = SystemColors.ControlText;
-            calculatorControl2.Location = new Point(1028, 396);
-            calculatorControl2.MetroColor = SystemColors.Control;
-            calculatorControl2.Name = "calculatorControl2";
-            calculatorControl2.RightToLeft = RightToLeft.No;
-            calculatorControl2.Size = new Size(373, 263);
-            calculatorControl2.TabIndex = 12;
-            calculatorControl2.Text = "calculatorControl2";
             // 
             // CadastroAssinantes
             // 
@@ -1569,6 +1575,50 @@
             tabPageFluxoCaixa.TabIndex = 3;
             tabPageFluxoCaixa.Text = "Fluxo de Caixa";
             // 
+            // Ponto
+            // 
+            Ponto.BackColor = Color.DarkGray;
+            Ponto.Controls.Add(buttonRefreshPontos);
+            Ponto.Controls.Add(labelPontoUltimos);
+            Ponto.Controls.Add(label26);
+            Ponto.Location = new Point(4, 24);
+            Ponto.Name = "Ponto";
+            Ponto.Padding = new Padding(3);
+            Ponto.Size = new Size(1404, 672);
+            Ponto.TabIndex = 4;
+            Ponto.Text = "Ponto";
+            // 
+            // buttonRefreshPontos
+            // 
+            buttonRefreshPontos.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonRefreshPontos.Location = new Point(24, 20);
+            buttonRefreshPontos.Name = "buttonRefreshPontos";
+            buttonRefreshPontos.Size = new Size(261, 53);
+            buttonRefreshPontos.TabIndex = 21;
+            buttonRefreshPontos.Text = "Ultimos Pontos Batidos";
+            buttonRefreshPontos.UseVisualStyleBackColor = true;
+            buttonRefreshPontos.Click += ButtonRefreshPontos_Click;
+            // 
+            // labelPontoUltimos
+            // 
+            labelPontoUltimos.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelPontoUltimos.Location = new Point(24, 98);
+            labelPontoUltimos.Name = "labelPontoUltimos";
+            labelPontoUltimos.Size = new Size(200, 24);
+            labelPontoUltimos.TabIndex = 11;
+            labelPontoUltimos.Text = "Ultimos Pontos Batidos";
+            labelPontoUltimos.Visible = false;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.Location = new Point(18, 20);
+            label26.Name = "label26";
+            label26.Size = new Size(0, 24);
+            label26.TabIndex = 10;
+            label26.Visible = false;
+            // 
             // Nome
             // 
             Nome.HeaderText = "Nome";
@@ -1620,6 +1670,8 @@
             groupBoxCadastroAssinantesTempoPlano.PerformLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.ResumeLayout(false);
             groupBoxCadastroAssinantesPlanoEscolhido.PerformLayout();
+            Ponto.ResumeLayout(false);
+            Ponto.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1745,5 +1797,9 @@
         private Label label29;
         private Label labelCaixaFechaContaRetornoPersyCoinsBKP;
         private Label labelCaixaFechaContaRetornoPercentBKP;
+        private TabPage Ponto;
+        private Label label26;
+        private Button buttonRefreshPontos;
+        private Label labelPontoUltimos;
     }
 }

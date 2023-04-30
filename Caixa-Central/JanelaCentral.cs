@@ -549,6 +549,7 @@ namespace Caixa_Central
                 if (assinantes is not null)
                 {
                     List<string> nomesESobrenomes = assinantes.Select(p => $"{p.Nome} {p.Sobrenome}").ToList();
+                    nomesESobrenomes.Sort();
                     comboBoxClienteNovaMesaAssinanteNomeAssinante.DataSource = nomesESobrenomes;
                     comboBoxClienteNovaMesaAssinanteNomeAssinante.Refresh();
                     comboBoxClienteNovaMesaAssinanteNomeAssinante.Visible = true;
@@ -903,6 +904,25 @@ namespace Caixa_Central
                         MessageBox.Show("Pedido removido com sucesso!");
                     }
                 }
+            }
+        }
+
+        private async void ButtonRefreshPontos_Click(object sender, EventArgs e)
+        {
+            HttpClient client = new();
+            HttpResponseMessage response = await client.GetAsync(Auxiliar.urlPontos);
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                List<Ponto>? pontos = JsonConvert.DeserializeObject<List<Ponto>>(json);
+                if (pontos is not null)
+                {
+                    MessageBox.Show(pontos.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Erro ao obter os pontos"+response);
             }
         }
     }
