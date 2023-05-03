@@ -1602,9 +1602,9 @@
             // labelPontoUltimos
             // 
             labelPontoUltimos.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelPontoUltimos.Location = new Point(24, 98);
+            labelPontoUltimos.Location = new Point(24, 97);
             labelPontoUltimos.Name = "labelPontoUltimos";
-            labelPontoUltimos.Size = new Size(200, 24);
+            labelPontoUltimos.Size = new Size(357, 187);
             labelPontoUltimos.TabIndex = 11;
             labelPontoUltimos.Text = "Ultimos Pontos Batidos";
             labelPontoUltimos.Visible = false;

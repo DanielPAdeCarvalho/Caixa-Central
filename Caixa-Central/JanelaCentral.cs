@@ -909,7 +909,7 @@ namespace Caixa_Central
 
         private async void ButtonRefreshPontos_Click(object sender, EventArgs e)
         {
-            HttpClient client = new();
+            HttpClient client = Auxiliar.CreateCustomHttpClient();
             HttpResponseMessage response = await client.GetAsync(Auxiliar.urlPontos);
             if (response.IsSuccessStatusCode)
             {
@@ -917,12 +917,14 @@ namespace Caixa_Central
                 List<Ponto>? pontos = JsonConvert.DeserializeObject<List<Ponto>>(json);
                 if (pontos is not null)
                 {
-                    MessageBox.Show(pontos.ToString());
+                    string pontosText = string.Join(Environment.NewLine, pontos.Select(p => $"{p.Nome}: {p.Data.ToString()}"));
+                    labelPontoUltimos.Visible = true;
+                    labelPontoUltimos.Text = pontosText;
                 }
             }
             else
             {
-                MessageBox.Show("Erro ao obter os pontos"+response);
+                MessageBox.Show("Erro ao obter os pontos " + response);
             }
         }
     }
