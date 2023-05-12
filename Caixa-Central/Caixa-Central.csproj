@@ -20,9 +20,9 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Syncfusion.GridHelperClasses.Windows" Version="21.1.41" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="21.1.41" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="21.1.41" />
+    <PackageReference Include="Syncfusion.GridHelperClasses.Windows" Version="21.2.3" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="21.2.3" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="21.2.3" />
   </ItemGroup>
 
   <ItemGroup>

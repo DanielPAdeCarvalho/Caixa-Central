@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Syncfusion.WinForms.DataGrid;
-using Syncfusion.WinForms.DataGrid.Enums;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
@@ -62,6 +60,29 @@ namespace Caixa_Central
             listViewCaixaPedidos.Columns.Add("Item", -2, HorizontalAlignment.Left);
             listViewCaixaPedidos.Columns.Add("Valor", -2, HorizontalAlignment.Left);
             listViewCaixaPedidos.Columns.Add("ValorTotal", -2, HorizontalAlignment.Right);
+
+            //Tab de Pontos e WebBrowser
+            WebBrowser webBrowser = new()
+            {
+                // Set properties for the WebBrowser control
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 0),
+                MinimumSize = new Size(20, 20),
+                Name = "webBrowser",
+                Size = new Size(800, 450),
+                TabIndex = 0
+            };
+
+            // Add the WebBrowser control to the form's Controls collection
+            this.Controls.Add(webBrowser);
+
+            // Set properties for the form
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(800, 450);
+            this.Name = "MainForm";
+            this.Text = "HTML Viewer";
+            webBrowser.DocumentText = this.Text;
         }
 
 
@@ -354,8 +375,6 @@ namespace Caixa_Central
             );
             await pagamento.GravarPagamento();
 
-
-
             //Deu tudo certo sai limpando todos os campos
             LimparAbaAssinantes();
             MessageBox.Show("Assinatura realizada com sucesso!");
@@ -603,15 +622,20 @@ namespace Caixa_Central
             if (mesasOcupadas != null && assinantes is not null)
             {
                 Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                if (mesa != null && mesa.PedidosDictionary != null)
+                if (mesa != null)
                 {
-                    foreach (Pedido item in mesa.PedidosDictionary.Values)
+                    listViewCaixaPedidos.Items.Clear();
+
+                    if (mesa.PedidosDictionary is not null)
                     {
-                        ListViewItem listViewItem = new(item.Nome);
-                        listViewItem.SubItems.Add(item.Valor.ToString("C2"));
-                        listViewItem.SubItems.Add(item.ValorTotal.ToString("C2"));
-                        listViewCaixaPedidos.Items.Add(listViewItem);
-                        valorTotal += item.ValorTotal;
+                        foreach (Pedido item in mesa.PedidosDictionary.Values)
+                        {
+                            ListViewItem listViewItem = new(item.Nome);
+                            listViewItem.SubItems.Add(item.Valor.ToString("C2"));
+                            listViewItem.SubItems.Add(item.ValorTotal.ToString("C2"));
+                            listViewCaixaPedidos.Items.Add(listViewItem);
+                            valorTotal += item.ValorTotal;
+                        }
                     }
                     // Auto-size the columns in the list view control.
                     listViewCaixaPedidos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -620,6 +644,11 @@ namespace Caixa_Central
                     groupBoxCaixaFechaConta.Visible = true;
                     labelCaixaNomeCliente.Text = groupBoxClientesMesaAddPedidos.Text;
                     tabControl1.SelectedTab = tabPageCaixa;
+
+                    if (valorTotal == 0)
+                    {
+                        buttonCaixaFechaContaConfirma.Visible = true;
+                    }
 
 
                     string[] parts = mesa.Cliente.Split(new[] { ' ' }, 2);
@@ -707,48 +736,61 @@ namespace Caixa_Central
                             await assinante.UpdateSaldoPersyCoins(cashback, "add");
                         }
                     }
-
-                    //Limpa a mesa de mesas ocupadas
-                    int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
-                    if (foundIndex != -1)
-                    {
-                        mesasOcupadas[foundIndex].Ocupada = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Mesa não encontrada");
-                    }
-                    await mesa.EncerraMesa();
-                    await GetAllMesasAsync();
-
-                    //Limpar a lista de pedidos
-                    listViewCaixaPedidos.Items.Clear();
-
-                    //Limpar os campos de pagamento
-                    textBoxCaixaFechaContaCredito.Text = string.Empty;
-                    textBoxCaixaFechaContaDebito.Text = string.Empty;
-                    textBoxCaixaFechaContaDinheiro.Text = string.Empty;
-                    textBoxCaixaFechaContaPicpay.Text = string.Empty;
-                    textBoxCaixaFechaContaPix.Text = string.Empty;
-                    textBoxCaixaFechaContaPersyCoins.Text = string.Empty;
-                    labelCaixaNomeCliente.Text = string.Empty;
-                    labelCaixaValorTotal.Text = string.Empty;
-                    labelCaixaFechaContaTroco.Text = string.Empty;
-                    checkBoxCaixaFechaContaTroco.Checked = false;
-                    labelCaixaFechaContaRetornoPersyCoins.Text = string.Empty;
-                    labelCaixaFechaContaRetornoPercentBKP.Text = string.Empty;
-                    labelCaixaFechaContaRetornoPersyCoinsBKP.Text = string.Empty;
-
-                    //Limpar os pedidos na aba clientes
-                    groupBoxClientesMesaAddPedidos.Text = string.Empty;
-                    mesa.Pedidos.Clear();
-                    dataGridClientePedidos.DataSource = mesa.Pedidos;
-                    dataGridClientePedidos.Refresh();
-                    tabControl1.SelectedTab = tabPageClientes;
-
+                    await EncerraMesaCaixa(nrMesa, mesa);
                     Cursor.Current = Cursors.Default;
                     MessageBox.Show("Pagamento realizado com sucesso!");
                 }
+                else
+                {
+                    if (mesa != null && mesa.PedidosDictionary is null)
+                    {
+                        await EncerraMesaCaixa(nrMesa, mesa);
+                    }
+                }
+            }
+        }
+
+        private async Task EncerraMesaCaixa(string nrMesa, Mesa mesa)
+        {
+            if (mesasOcupadas is not null)
+            {
+                //Limpa a mesa de mesas ocupadas
+                int foundIndex = mesasOcupadas.FindIndex(x => x.Id == nrMesa);
+                if (foundIndex != -1)
+                {
+                    mesasOcupadas[foundIndex].Ocupada = false;
+                }
+                else
+                {
+                    MessageBox.Show("Mesa não encontrada");
+                }
+                await mesa.EncerraMesa();
+                await GetAllMesasAsync();
+
+                //Limpar a lista de pedidos
+                listViewCaixaPedidos.Items.Clear();
+
+                //Limpar os campos de pagamento
+                textBoxCaixaFechaContaCredito.Text = string.Empty;
+                textBoxCaixaFechaContaDebito.Text = string.Empty;
+                textBoxCaixaFechaContaDinheiro.Text = string.Empty;
+                textBoxCaixaFechaContaPicpay.Text = string.Empty;
+                textBoxCaixaFechaContaPix.Text = string.Empty;
+                textBoxCaixaFechaContaPersyCoins.Text = string.Empty;
+                labelCaixaNomeCliente.Text = string.Empty;
+                labelCaixaValorTotal.Text = string.Empty;
+                labelCaixaFechaContaTroco.Text = string.Empty;
+                checkBoxCaixaFechaContaTroco.Checked = false;
+                labelCaixaFechaContaRetornoPersyCoins.Text = string.Empty;
+                labelCaixaFechaContaRetornoPercentBKP.Text = string.Empty;
+                labelCaixaFechaContaRetornoPersyCoinsBKP.Text = string.Empty;
+
+                //Limpar os pedidos na aba clientes
+                groupBoxClientesMesaAddPedidos.Text = string.Empty;
+                mesa.Pedidos.Clear();
+                dataGridClientePedidos.DataSource = mesa.Pedidos;
+                dataGridClientePedidos.Refresh();
+                tabControl1.SelectedTab = tabPageClientes;
             }
         }
 
@@ -917,7 +959,7 @@ namespace Caixa_Central
                 List<Ponto>? pontos = JsonConvert.DeserializeObject<List<Ponto>>(json);
                 if (pontos is not null)
                 {
-                    string pontosText = string.Join(Environment.NewLine, pontos.Select(p => $"{p.Nome}: {p.Data.ToString()}"));
+                    string pontosText = string.Join(Environment.NewLine, pontos.Select(p => $"{p.Nome}: {p.Data}"));
                     labelPontoUltimos.Visible = true;
                     labelPontoUltimos.Text = pontosText;
                 }
@@ -925,6 +967,112 @@ namespace Caixa_Central
             else
             {
                 MessageBox.Show("Erro ao obter os pontos " + response);
+            }
+        }
+
+        private void ButtonPontoBater_Click(object sender, EventArgs e)
+        {
+            groupBoxPontoNovoPonto.Visible = true;
+        }
+
+        private async void ButtonPontoSend_Click(object sender, EventArgs e)
+        {
+            if (textBoxPontoNome.Text.Length > 3 && textBoxPontoSenha.Text.Length > 3)
+            {
+                labelPontoUltimos.Visible = false;
+                string nome = textBoxPontoNome.Text;
+                string password = textBoxPontoSenha.Text;
+                Ponto ponto = new(nome);
+                bool login = await ponto.Login(password);
+                if (login)
+                {
+                    await ponto.EnviarPonto();
+
+                    //Limpando os campos 
+                    textBoxPontoNome.Text = string.Empty;
+                    textBoxPontoSenha.Text = string.Empty;
+                    groupBoxPontoNovoPonto.Visible = false;
+                }
+            }
+        }
+
+        private void TextBoxPontoSenha_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                ButtonPontoSend_Click(sender, e);
+            }
+        }
+
+        private void ButtonPontoGerarRelatorio_Click(object sender, EventArgs e)
+        {
+            groupBoxPontoGerarRelatorio.Visible = true;
+        }
+
+        private void ButtonPontoEnviarRelatorio_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            if (comboBoxPontoNome.SelectedIndex != -1)
+            {
+                DateTime mes = DateTime.Now;
+                mes = mes.AddMonths(-1);
+                string periodo = mes.Month.ToString("d2");
+                if (radioButtonPontoMesAtual.Checked)
+                {
+                    periodo = DateTime.Now.Month.ToString("d2");
+                }
+                Ponto p = new(comboBoxPontoNome.Text);
+                p.Report(periodo);
+            }
+            Cursor.Current = Cursors.Default;
+        }
+
+        private async void ButtonFluxo_Click(object sender, EventArgs e)
+        {
+            Caixa caixa = await Caixa.GetLatestCaixa();
+            if (caixa != null)
+            {
+                labelFluxoUltimoCaixa.Text = $"Dia: {caixa.Dia}\n" +
+              $"DinheiroAbertura: {caixa.DinheiroAbertura}\n" +
+              $"DinheiroFechamento: {caixa.DinheiroFechamento}\n" +
+              $"TotalDebito: {caixa.TotalDebito}\n" +
+              $"TotalCredito: {caixa.TotalCredito}\n" +
+              $"TotalPersyCoins: {caixa.TotalPersyCoins}\n" +
+              $"TotalPicPay: {caixa.TotalPicPay}\n" +
+              $"TotalPix: {caixa.TotalPix}";
+                labelFluxoUltimoCaixa.Visible = true;
+                buttonFluxoCaixaFechar.Visible = true;
+            }
+        }
+
+        private async void ButtonFluxoCaixaFechar_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Fazer o fechamento do Caixa Agora?", "Confirmation", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                // 'Yes' logic here.
+                buttonFluxoCaixaFechar.Visible = false;
+                await Caixa.FecharCaixa();
+                Caixa caixa = await Caixa.GetLatestCaixa();
+                if (caixa != null)
+                {
+                    labelFluxoEncerrado.Text = $"Dia: {caixa.Dia}\n" +
+                  $"DinheiroAbertura: {caixa.DinheiroAbertura}\n" +
+                  $"DinheiroFechamento: {caixa.DinheiroFechamento}\n" +
+                  $"TotalDebito: {caixa.TotalDebito}\n" +
+                  $"TotalCredito: {caixa.TotalCredito}\n" +
+                  $"TotalPersyCoins: {caixa.TotalPersyCoins}\n" +
+                  $"TotalPicPay: {caixa.TotalPicPay}\n" +
+                  $"TotalPix: {caixa.TotalPix}";
+                    labelFluxoUltimoCaixa.Visible = true;
+                }
+                labelFluxoEncerrado.Visible = true;
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                buttonFluxoCaixaFechar.Visible = false;
+                labelFluxoUltimoCaixa.Visible = false;
+                labelFluxoUltimoCaixa.Text = string.Empty;
             }
         }
     }
