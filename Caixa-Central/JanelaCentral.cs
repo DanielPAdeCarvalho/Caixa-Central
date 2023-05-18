@@ -56,10 +56,13 @@ namespace Caixa_Central
             dataGridClienteCardapio.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 
-            //Inicializa o ListView de PEdidos
+            //Inicializa o ListView de Pedidos
             listViewCaixaPedidos.Columns.Add("Item", -2, HorizontalAlignment.Left);
             listViewCaixaPedidos.Columns.Add("Valor", -2, HorizontalAlignment.Left);
             listViewCaixaPedidos.Columns.Add("ValorTotal", -2, HorizontalAlignment.Right);
+
+            //Datagrid de fechar o caixa
+            dataGridViewFluxoFechamento.AutoSizeColumnsMode= DataGridViewAutoSizeColumnsMode.Fill;
 
             //Tab de Pontos e WebBrowser
             WebBrowser webBrowser = new()
@@ -1033,13 +1036,13 @@ namespace Caixa_Central
             if (caixa != null)
             {
                 labelFluxoUltimoCaixa.Text = $"Dia: {caixa.Dia}\n" +
-              $"DinheiroAbertura: {caixa.DinheiroAbertura}\n" +
-              $"DinheiroFechamento: {caixa.DinheiroFechamento}\n" +
-              $"TotalDebito: {caixa.TotalDebito}\n" +
-              $"TotalCredito: {caixa.TotalCredito}\n" +
+              $"DinheiroAbertura: {caixa.DinheiroAbertura:C2}\n" +
+              $"DinheiroFechamento: {caixa.DinheiroFechamento:C2}\n" +
+              $"TotalDebito: {caixa.TotalDebito:C2}\n" +
+              $"TotalCredito: {caixa.TotalCredito:C2}\n" +
               $"TotalPersyCoins: {caixa.TotalPersyCoins}\n" +
-              $"TotalPicPay: {caixa.TotalPicPay}\n" +
-              $"TotalPix: {caixa.TotalPix}";
+              $"TotalPicPay: {caixa.TotalPicPay:C2}\n" +
+              $"TotalPix: {caixa.TotalPix:C2}";
                 labelFluxoUltimoCaixa.Visible = true;
                 buttonFluxoCaixaFechar.Visible = true;
             }
@@ -1057,16 +1060,22 @@ namespace Caixa_Central
                 if (caixa != null)
                 {
                     labelFluxoEncerrado.Text = $"Dia: {caixa.Dia}\n" +
-                  $"DinheiroAbertura: {caixa.DinheiroAbertura}\n" +
-                  $"DinheiroFechamento: {caixa.DinheiroFechamento}\n" +
-                  $"TotalDebito: {caixa.TotalDebito}\n" +
-                  $"TotalCredito: {caixa.TotalCredito}\n" +
+                  $"DinheiroAbertura: {caixa.DinheiroAbertura:C2}\n" +
+                  $"DinheiroFechamento: {caixa.DinheiroFechamento:C2}\n" +
+                  $"TotalDebito: {caixa.TotalDebito:C2}\n" +
+                  $"TotalCredito: {caixa.TotalCredito:C2}\n" +
                   $"TotalPersyCoins: {caixa.TotalPersyCoins}\n" +
-                  $"TotalPicPay: {caixa.TotalPicPay}\n" +
-                  $"TotalPix: {caixa.TotalPix}";
+                  $"TotalPicPay: {caixa.TotalPicPay:C2}\n" +
+                  $"TotalPix: {caixa.TotalPix:C2}";
                     labelFluxoUltimoCaixa.Visible = true;
+
+                    //Setup datagrid pagamentos
+                    dataGridViewFluxoFechamento.DataSource = caixa.PagamentoReports;
+
+
+                    labelFluxoEncerrado.Visible = true;
+                    dataGridViewFluxoFechamento.Visible = true;
                 }
-                labelFluxoEncerrado.Visible = true;
             }
             else if (dialogResult == DialogResult.No)
             {

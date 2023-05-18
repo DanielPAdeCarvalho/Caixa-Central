@@ -149,6 +149,8 @@
             label2 = new Label();
             label1 = new Label();
             tabPageFluxoCaixa = new TabPage();
+            dataGridViewFluxoFechamento = new DataGridView();
+            labelFluxoEncerrado = new Label();
             buttonFluxoCaixaFechar = new Button();
             labelFluxoUltimoCaixa = new Label();
             buttonFluxoInicio = new Button();
@@ -171,7 +173,6 @@
             labelPontoUltimos = new Label();
             label26 = new Label();
             Nome = new DataGridViewTextBoxColumn();
-            labelFluxoEncerrado = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -199,6 +200,7 @@
             groupBoxCadastroAssinantesTempoPlano.SuspendLayout();
             groupBoxCadastroAssinantesPlanoEscolhido.SuspendLayout();
             tabPageFluxoCaixa.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewFluxoFechamento).BeginInit();
             Ponto.SuspendLayout();
             groupBoxPontoGerarRelatorio.SuspendLayout();
             groupBoxPontoNovoPonto.SuspendLayout();
@@ -1591,6 +1593,7 @@
             // tabPageFluxoCaixa
             // 
             tabPageFluxoCaixa.BackColor = Color.DarkGray;
+            tabPageFluxoCaixa.Controls.Add(dataGridViewFluxoFechamento);
             tabPageFluxoCaixa.Controls.Add(labelFluxoEncerrado);
             tabPageFluxoCaixa.Controls.Add(buttonFluxoCaixaFechar);
             tabPageFluxoCaixa.Controls.Add(labelFluxoUltimoCaixa);
@@ -1602,10 +1605,34 @@
             tabPageFluxoCaixa.TabIndex = 3;
             tabPageFluxoCaixa.Text = "Fluxo de Caixa";
             // 
+            // dataGridViewFluxoFechamento
+            // 
+            dataGridViewFluxoFechamento.AllowUserToAddRows = false;
+            dataGridViewFluxoFechamento.AllowUserToDeleteRows = false;
+            dataGridViewFluxoFechamento.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewFluxoFechamento.Location = new Point(562, 73);
+            dataGridViewFluxoFechamento.Name = "dataGridViewFluxoFechamento";
+            dataGridViewFluxoFechamento.ReadOnly = true;
+            dataGridViewFluxoFechamento.RowTemplate.Height = 25;
+            dataGridViewFluxoFechamento.Size = new Size(836, 586);
+            dataGridViewFluxoFechamento.TabIndex = 52;
+            dataGridViewFluxoFechamento.Visible = false;
+            // 
+            // labelFluxoEncerrado
+            // 
+            labelFluxoEncerrado.AutoSize = true;
+            labelFluxoEncerrado.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelFluxoEncerrado.Location = new Point(300, 73);
+            labelFluxoEncerrado.Name = "labelFluxoEncerrado";
+            labelFluxoEncerrado.Size = new Size(148, 24);
+            labelFluxoEncerrado.TabIndex = 24;
+            labelFluxoEncerrado.Text = "Valor a ser pago";
+            labelFluxoEncerrado.Visible = false;
+            // 
             // buttonFluxoCaixaFechar
             // 
             buttonFluxoCaixaFechar.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonFluxoCaixaFechar.Location = new Point(355, 6);
+            buttonFluxoCaixaFechar.Location = new Point(300, 6);
             buttonFluxoCaixaFechar.Name = "buttonFluxoCaixaFechar";
             buttonFluxoCaixaFechar.Size = new Size(261, 53);
             buttonFluxoCaixaFechar.TabIndex = 23;
@@ -1852,17 +1879,6 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // labelFluxoEncerrado
-            // 
-            labelFluxoEncerrado.AutoSize = true;
-            labelFluxoEncerrado.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelFluxoEncerrado.Location = new Point(355, 73);
-            labelFluxoEncerrado.Name = "labelFluxoEncerrado";
-            labelFluxoEncerrado.Size = new Size(148, 24);
-            labelFluxoEncerrado.TabIndex = 24;
-            labelFluxoEncerrado.Text = "Valor a ser pago";
-            labelFluxoEncerrado.Visible = false;
-            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1911,6 +1927,7 @@
             groupBoxCadastroAssinantesPlanoEscolhido.PerformLayout();
             tabPageFluxoCaixa.ResumeLayout(false);
             tabPageFluxoCaixa.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewFluxoFechamento).EndInit();
             Ponto.ResumeLayout(false);
             Ponto.PerformLayout();
             groupBoxPontoGerarRelatorio.ResumeLayout(false);
@@ -2064,5 +2081,6 @@
         private Button buttonFluxoInicio;
         private Button buttonFluxoCaixaFechar;
         private Label labelFluxoEncerrado;
+        private DataGridView dataGridViewFluxoFechamento;
     }
 }

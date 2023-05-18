@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Caixa_Central
 {
@@ -28,6 +29,9 @@ namespace Caixa_Central
         [JsonProperty(PropertyName = "TotalPix")]
         public double TotalPix { get; set; }
 
+        [JsonProperty("PagamentoReport")]
+        public List<PagamentoReport>? PagamentoReports { get; set; }
+
         public static async Task<Caixa> GetLatestCaixa()
         {
             using HttpClient client = Auxiliar.CreateCustomHttpClient();
@@ -40,6 +44,11 @@ namespace Caixa_Central
                     Caixa? caixa = JsonConvert.DeserializeObject<Caixa>(responseContent);
                     if (caixa != null)
                     {
+                        if (DateTime.TryParseExact(caixa.Dia, "yyyy-MM-dd_HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                        {
+                            string newDateFormat = parsedDate.ToString("dd/MM/yy HH:mm");
+                            caixa.Dia = newDateFormat;
+                        }
                         return caixa;
                     }
                 }
