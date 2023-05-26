@@ -8,6 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>caixa.ico</ApplicationIcon>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,9 +21,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Syncfusion.GridHelperClasses.Windows" Version="21.2.3" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="21.2.3" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="21.2.3" />
+    <PackageReference Include="Syncfusion.GridHelperClasses.Windows" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WinForms" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.PdfViewer.Windows" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="21.2.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
 using System.Globalization;
 using System.Text;
+
+
+
 
 namespace Caixa_Central
 {
@@ -81,8 +86,9 @@ namespace Caixa_Central
             MessageBox.Show("Ponto enviado com sucesso!");
         }
 
-        public async void Report(string mes)
+        public async Task<PdfDocument> Report(string mes)
         {
+            PdfDocument document = new();
             string url = Auxiliar.urlPontoReport + Nome + "/" + mes;
             using HttpClient client = Auxiliar.CreateCustomHttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
@@ -93,12 +99,29 @@ namespace Caixa_Central
                 List<Ponto> pontos = JsonConvert.DeserializeObject<List<Ponto>>(responseContent)!;
                 if (pontos is not null)
                 {
-                    string HTML = GenerateHtmlFromList(pontos);
+                    // Create HTML to PDF converter with WebKit rendering engine
+                    HtmlToPdfConverter htmlToPDFConverter = new(HtmlRenderingEngine.WebKit);
+                    WebKitConverterSettings settings = new()
+                    {
+                        WebKitPath = Path.Combine(Application.StartupPath, "QtBinariesWindows")
+                    };
+                    htmlToPDFConverter.ConverterSettings = settings;
+
+                    // Convert the HTML string to PDF document
+                    string htmlString = GenerateHtmlFromList(pontos);
+                    document = htmlToPDFConverter.Convert(htmlString);
+                    return document;
+                }
+                else
+                {
+                    MessageBox.Show($"Erro gerar relatoriode pontos {response.StatusCode}");
+                    return document;
                 }
             }
             else
             {
-                MessageBox.Show($"Erro ao fazer login {response.StatusCode}");
+                MessageBox.Show($"Erro gerar relatoriode pontos {response.StatusCode}");
+                return document;
             }
         }
 

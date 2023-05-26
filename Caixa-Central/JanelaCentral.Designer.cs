@@ -29,7 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings2 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
+            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings2 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaCentral));
+            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings2 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
@@ -155,6 +158,7 @@
             labelFluxoUltimoCaixa = new Label();
             buttonFluxoInicio = new Button();
             Ponto = new TabPage();
+            pdfViewerControlPontos = new Syncfusion.Windows.Forms.PdfViewer.PdfViewerControl();
             buttonPontoNewRelatorio = new Button();
             groupBoxPontoGerarRelatorio = new GroupBox();
             buttonPontoGerarRelatorio = new Button();
@@ -1666,6 +1670,7 @@
             // Ponto
             // 
             Ponto.BackColor = Color.DarkGray;
+            Ponto.Controls.Add(pdfViewerControlPontos);
             Ponto.Controls.Add(buttonPontoNewRelatorio);
             Ponto.Controls.Add(groupBoxPontoGerarRelatorio);
             Ponto.Controls.Add(groupBoxPontoNovoPonto);
@@ -1679,6 +1684,46 @@
             Ponto.Size = new Size(1404, 672);
             Ponto.TabIndex = 4;
             Ponto.Text = "Ponto";
+            // 
+            // pdfViewerControlPontos
+            // 
+            pdfViewerControlPontos.CursorMode = Syncfusion.Windows.Forms.PdfViewer.PdfViewerCursorMode.SelectTool;
+            pdfViewerControlPontos.EnableContextMenu = true;
+            pdfViewerControlPontos.EnableNotificationBar = true;
+            pdfViewerControlPontos.HorizontalScrollOffset = 0;
+            pdfViewerControlPontos.IsBookmarkEnabled = true;
+            pdfViewerControlPontos.IsTextSearchEnabled = true;
+            pdfViewerControlPontos.IsTextSelectionEnabled = true;
+            pdfViewerControlPontos.Location = new Point(797, 6);
+            messageBoxSettings2.EnableNotification = true;
+            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings2;
+            pdfViewerControlPontos.MinimumZoomPercentage = 50;
+            pdfViewerControlPontos.Name = "pdfViewerControlPontos";
+            pdfViewerControlPontos.PageBorderThickness = 1;
+            pdfViewerPrinterSettings2.Copies = 1;
+            pdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
+            pdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
+            pdfViewerPrinterSettings2.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings2.PrintLocation");
+            pdfViewerPrinterSettings2.ShowPrintStatusDialog = true;
+            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings2;
+            pdfViewerControlPontos.ReferencePath = null;
+            pdfViewerControlPontos.ScrollDisplacementValue = 0;
+            pdfViewerControlPontos.ShowHorizontalScrollBar = true;
+            pdfViewerControlPontos.ShowToolBar = true;
+            pdfViewerControlPontos.ShowVerticalScrollBar = true;
+            pdfViewerControlPontos.Size = new Size(604, 653);
+            pdfViewerControlPontos.SpaceBetweenPages = 8;
+            pdfViewerControlPontos.TabIndex = 28;
+            pdfViewerControlPontos.Text = "pdfViewerControlPontos";
+            textSearchSettings2.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
+            textSearchSettings2.HighlightAllInstance = true;
+            textSearchSettings2.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
+            pdfViewerControlPontos.TextSearchSettings = textSearchSettings2;
+            pdfViewerControlPontos.ThemeName = "Default";
+            pdfViewerControlPontos.VerticalScrollOffset = 0;
+            pdfViewerControlPontos.Visible = false;
+            pdfViewerControlPontos.VisualStyle = Syncfusion.Windows.Forms.PdfViewer.VisualStyle.Default;
+            pdfViewerControlPontos.ZoomMode = Syncfusion.Windows.Forms.PdfViewer.ZoomMode.Default;
             // 
             // buttonPontoNewRelatorio
             // 
@@ -2082,5 +2127,6 @@
         private Button buttonFluxoCaixaFechar;
         private Label labelFluxoEncerrado;
         private DataGridView dataGridViewFluxoFechamento;
+        private Syncfusion.Windows.Forms.PdfViewer.PdfViewerControl pdfViewerControlPontos;
     }
 }

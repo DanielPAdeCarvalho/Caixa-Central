@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using Syncfusion.Pdf;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection.Metadata;
 using System.Text;
 
 namespace Caixa_Central
@@ -62,30 +64,9 @@ namespace Caixa_Central
             listViewCaixaPedidos.Columns.Add("ValorTotal", -2, HorizontalAlignment.Right);
 
             //Datagrid de fechar o caixa
-            dataGridViewFluxoFechamento.AutoSizeColumnsMode= DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewFluxoFechamento.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            //Tab de Pontos e WebBrowser
-            WebBrowser webBrowser = new()
-            {
-                // Set properties for the WebBrowser control
-                Dock = DockStyle.Fill,
-                Location = new Point(0, 0),
-                MinimumSize = new Size(20, 20),
-                Name = "webBrowser",
-                Size = new Size(800, 450),
-                TabIndex = 0
-            };
 
-            // Add the WebBrowser control to the form's Controls collection
-            this.Controls.Add(webBrowser);
-
-            // Set properties for the form
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(800, 450);
-            this.Name = "MainForm";
-            this.Text = "HTML Viewer";
-            webBrowser.DocumentText = this.Text;
         }
 
 
@@ -1012,7 +993,7 @@ namespace Caixa_Central
             groupBoxPontoGerarRelatorio.Visible = true;
         }
 
-        private void ButtonPontoEnviarRelatorio_Click(object sender, EventArgs e)
+        private async void ButtonPontoEnviarRelatorio_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             if (comboBoxPontoNome.SelectedIndex != -1)
@@ -1025,7 +1006,12 @@ namespace Caixa_Central
                     periodo = DateTime.Now.Month.ToString("d2");
                 }
                 Ponto p = new(comboBoxPontoNome.Text);
-                p.Report(periodo);
+                PdfDocument report = await p.Report(periodo);
+                using MemoryStream stream = new();
+                report.Save(stream);
+                stream.Position = 0;
+                pdfViewerControlPontos.Load(stream);
+                groupBoxPontoGerarRelatorio.Visible = true;
             }
             Cursor.Current = Cursors.Default;
         }
