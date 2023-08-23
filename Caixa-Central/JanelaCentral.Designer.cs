@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings2 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
-            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings2 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
+            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings3 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
+            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings3 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaCentral));
-            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings2 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
+            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings3 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
@@ -184,7 +184,8 @@
             labelPontoUltimos = new Label();
             label26 = new Label();
             Nome = new DataGridViewTextBoxColumn();
-            button1 = new Button();
+            pictureBox1 = new PictureBox();
+            label35 = new Label();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -216,6 +217,7 @@
             Ponto.SuspendLayout();
             groupBoxPontoGerarRelatorio.SuspendLayout();
             groupBoxPontoNovoPonto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -225,10 +227,10 @@
             tabControl1.Controls.Add(CadastroAssinantes);
             tabControl1.Controls.Add(tabPageFluxoCaixa);
             tabControl1.Controls.Add(Ponto);
-            tabControl1.Location = new Point(2, 1);
+            tabControl1.Location = new Point(2, -4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1333, 703);
+            tabControl1.Size = new Size(1333, 708);
             tabControl1.TabIndex = 0;
             // 
             // tabPageClientes
@@ -239,7 +241,7 @@
             tabPageClientes.Location = new Point(4, 24);
             tabPageClientes.Name = "tabPageClientes";
             tabPageClientes.Padding = new Padding(3);
-            tabPageClientes.Size = new Size(1325, 675);
+            tabPageClientes.Size = new Size(1325, 680);
             tabPageClientes.TabIndex = 0;
             tabPageClientes.Text = "Clientes";
             tabPageClientes.Enter += TabPageClientes_Enter;
@@ -1793,17 +1795,17 @@
             pdfViewerControlPontos.IsTextSearchEnabled = true;
             pdfViewerControlPontos.IsTextSelectionEnabled = true;
             pdfViewerControlPontos.Location = new Point(717, 5);
-            messageBoxSettings2.EnableNotification = true;
-            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings2;
+            messageBoxSettings3.EnableNotification = true;
+            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings3;
             pdfViewerControlPontos.MinimumZoomPercentage = 50;
             pdfViewerControlPontos.Name = "pdfViewerControlPontos";
             pdfViewerControlPontos.PageBorderThickness = 1;
-            pdfViewerPrinterSettings2.Copies = 1;
-            pdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
-            pdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
-            pdfViewerPrinterSettings2.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings2.PrintLocation");
-            pdfViewerPrinterSettings2.ShowPrintStatusDialog = true;
-            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings2;
+            pdfViewerPrinterSettings3.Copies = 1;
+            pdfViewerPrinterSettings3.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
+            pdfViewerPrinterSettings3.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
+            pdfViewerPrinterSettings3.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings3.PrintLocation");
+            pdfViewerPrinterSettings3.ShowPrintStatusDialog = true;
+            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings3;
             pdfViewerControlPontos.ReferencePath = null;
             pdfViewerControlPontos.ScrollDisplacementValue = 0;
             pdfViewerControlPontos.ShowHorizontalScrollBar = true;
@@ -1813,10 +1815,10 @@
             pdfViewerControlPontos.SpaceBetweenPages = 8;
             pdfViewerControlPontos.TabIndex = 28;
             pdfViewerControlPontos.Text = "pdfViewerControlPontos";
-            textSearchSettings2.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
-            textSearchSettings2.HighlightAllInstance = true;
-            textSearchSettings2.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
-            pdfViewerControlPontos.TextSearchSettings = textSearchSettings2;
+            textSearchSettings3.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
+            textSearchSettings3.HighlightAllInstance = true;
+            textSearchSettings3.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
+            pdfViewerControlPontos.TextSearchSettings = textSearchSettings3;
             pdfViewerControlPontos.ThemeName = "Default";
             pdfViewerControlPontos.VerticalScrollOffset = 0;
             pdfViewerControlPontos.Visible = false;
@@ -2022,16 +2024,25 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
-            // button1
+            // pictureBox1
             // 
-            button1.BackColor = SystemColors.ControlDarkDark;
-            button1.Font = new Font("Verdana", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(6, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(1323, 696);
-            button1.TabIndex = 1;
-            button1.Text = "INGUARDE UM MOMENTO!";
-            button1.UseVisualStyleBackColor = false;
+            pictureBox1.Image = Properties.Resources.aoi_inuyama_yuru_camp;
+            pictureBox1.Location = new Point(6, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1325, 692);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Font = new Font("Verdana", 27.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label35.Location = new Point(419, 66);
+            label35.Name = "label35";
+            label35.Size = new Size(538, 45);
+            label35.TabIndex = 2;
+            label35.Text = "INGUARDE UM MOMENTO...";
             // 
             // JanelaCentral
             // 
@@ -2039,7 +2050,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1331, 706);
             Controls.Add(tabControl1);
-            Controls.Add(button1);
+            Controls.Add(label35);
+            Controls.Add(pictureBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "JanelaCentral";
             Text = "JanelaCentral";
@@ -2089,7 +2101,9 @@
             groupBoxPontoGerarRelatorio.PerformLayout();
             groupBoxPontoNovoPonto.ResumeLayout(false);
             groupBoxPontoNovoPonto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -2245,6 +2259,7 @@
         private Label labelClienteComQuem;
         private ComboBox comboBoxClienteComQuem;
         private Label label34;
-        private Button button1;
+        private PictureBox pictureBox1;
+        private Label label35;
     }
 }

@@ -7,13 +7,16 @@ internal class Item
 
     [JsonProperty("preco")]
     public decimal Valor { get; set; }
+    [JsonProperty("cozinha")]
+    public bool Cozinha { get; set; }
 
-
+    [JsonIgnore]
     public bool Selected { get; set; }
 
-    public Item(string nome, decimal valor)
+    public Item(string nome, decimal valor, bool cozinha)
     {
         Nome = nome;
         Valor = valor;
+        Cozinha = cozinha;
     }
 }

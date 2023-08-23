@@ -63,6 +63,16 @@ namespace Caixa_Central.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap aoi_inuyama_yuru_camp {
+            get {
+                object obj = ResourceManager.GetObject("aoi-inuyama-yuru-camp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logo_Pawn {
             get {
                 object obj = ResourceManager.GetObject("Logo_Pawn", resourceCulture);

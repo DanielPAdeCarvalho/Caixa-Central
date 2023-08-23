@@ -12,7 +12,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\aoi-inuyama-yuru-camp1.gif" />
+	  <None Remove="Resources\Logo_Pawn.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="caixa.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\aoi-inuyama-yuru-camp1.gif">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="Resources\Logo_Pawn.png" />
 	</ItemGroup>
 
 	<ItemGroup>

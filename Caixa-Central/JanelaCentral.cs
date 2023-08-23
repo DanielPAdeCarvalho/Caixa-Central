@@ -353,7 +353,7 @@ namespace Caixa_Central
 
             //Criar um novo pedido com o valor da assinatura e enviar para a API 
             Dictionary<string, Pedido>? PedidosDictionary = new();
-            Pedido newPedido = new(plano, DeLabelParaDecimal(labelCadastroAssinantesValorTotal.Text), 1);
+            Pedido newPedido = new(plano, DeLabelParaDecimal(labelCadastroAssinantesValorTotal.Text), 1, false);
             PedidosDictionary.Add("Plano de Assinatura: " + plano, newPedido);
 
             //Gravar o pagamento da assinatura
@@ -416,7 +416,6 @@ namespace Caixa_Central
             labelCadastroAssinantesTotalSendoPago.Text = string.Empty;
             labelCadastroAssinantesTroco.Text = string.Empty;
             checkBoxCadastroAssinantesTrocoEmPersyCoins.Checked = false;
-
         }
 
         private void CalcularTotalAssinante()
@@ -871,7 +870,7 @@ namespace Caixa_Central
                     if (!checkBoxClienteUsarPassaporteAssinante.Checked)
                     {
                         //Adicionar o pedido passaporte na lista de pedidos da mesa
-                        Pedido pedido = new("Passaporte", 10, 1);
+                        Pedido pedido = new("Passaporte", 10, 1, false);
                         await pedido.AdicionarPedido(nrMesa);
                     }
                     tabControl1.Visible = true;
@@ -932,12 +931,10 @@ namespace Caixa_Central
                     //Botar o pedido na mesa
                     if (e.RowIndex >= 0 && e.RowIndex < dataGridClienteCardapio.Rows.Count)
                     {
-                        Item item = (Item)dataGridClienteCardapio.Rows[e.RowIndex].DataBoundItem;
+                        Item item = cardapio[e.RowIndex];
                         string nrMesa = labelClienteNrMesa.Text;
                         Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                        //Pegar no cardapio se o item vai ou nao para a cozinha
-
-                        Pedido pedido = new(item.Nome, item.Valor, 1);
+                        Pedido pedido = new(item.Nome, item.Valor, 1, item.Cozinha);
                         await pedido.AdicionarPedido(labelClienteNrMesa.Text);
                         await UpdatePedidos(labelClienteNrMesa.Text);
 
