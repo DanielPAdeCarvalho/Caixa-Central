@@ -56,10 +56,13 @@ namespace Caixa_Central
             await httpClient.PostAsync(Auxiliar.urlPagamentos, content);
 
             // Atualiza o saldo de PersyCoins do cliente no banco de dados
-            if ( Persycoins > 0)
+            if (Persycoins > 0)
             {
+                string nome = Cliente.Split(' ')[0];
+                string sobrenome = Cliente.Split(' ')[1];
+                string nomeSobrenome = nome + "%20" + sobrenome;
                 string PersycoinsStr = Persycoins.ToString("0.00", CultureInfo.InvariantCulture);
-                string url = Auxiliar.urlPersyCoins + Cliente+"/sub/"+ PersycoinsStr;
+                string url = Auxiliar.urlPersyCoins + nomeSobrenome + "/sub/" + PersycoinsStr;
                 await httpClient.PutAsync(url, content);
             }
         }

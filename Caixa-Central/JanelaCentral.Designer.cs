@@ -36,6 +36,9 @@
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
+            comboBoxClienteComQuem = new ComboBox();
+            labelClienteComQuem = new Label();
+            buttonClienteUnir = new Button();
             labelClienteTotalConta = new Label();
             label28 = new Label();
             dataGridClienteCardapio = new DataGridView();
@@ -81,6 +84,7 @@
             buttonCliente03 = new Button();
             buttonCliente02 = new Button();
             tabPageCaixa = new TabPage();
+            label34 = new Label();
             calculatorControl2 = new Syncfusion.Windows.Forms.Tools.CalculatorControl();
             labelCaixaFechaContaRetornoPercentBKP = new Label();
             labelCaixaFechaContaRetornoPersyCoins = new Label();
@@ -152,12 +156,15 @@
             label2 = new Label();
             label1 = new Label();
             tabPageFluxoCaixa = new TabPage();
-            dataGridViewFluxoFechamento = new DataGridView();
+            dataGridViewFluxoFechamento = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            label33 = new Label();
+            label32 = new Label();
             labelFluxoEncerrado = new Label();
             buttonFluxoCaixaFechar = new Button();
             labelFluxoUltimoCaixa = new Label();
             buttonFluxoInicio = new Button();
             Ponto = new TabPage();
+            labelAguarde = new Label();
             pdfViewerControlPontos = new Syncfusion.Windows.Forms.PdfViewer.PdfViewerControl();
             buttonPontoNewRelatorio = new Button();
             groupBoxPontoGerarRelatorio = new GroupBox();
@@ -177,6 +184,7 @@
             labelPontoUltimos = new Label();
             label26 = new Label();
             Nome = new DataGridViewTextBoxColumn();
+            button1 = new Button();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -217,10 +225,10 @@
             tabControl1.Controls.Add(CadastroAssinantes);
             tabControl1.Controls.Add(tabPageFluxoCaixa);
             tabControl1.Controls.Add(Ponto);
-            tabControl1.Location = new Point(2, 4);
+            tabControl1.Location = new Point(2, 1);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1412, 700);
+            tabControl1.Size = new Size(1333, 703);
             tabControl1.TabIndex = 0;
             // 
             // tabPageClientes
@@ -231,13 +239,16 @@
             tabPageClientes.Location = new Point(4, 24);
             tabPageClientes.Name = "tabPageClientes";
             tabPageClientes.Padding = new Padding(3);
-            tabPageClientes.Size = new Size(1404, 672);
+            tabPageClientes.Size = new Size(1325, 675);
             tabPageClientes.TabIndex = 0;
             tabPageClientes.Text = "Clientes";
             tabPageClientes.Enter += TabPageClientes_Enter;
             // 
             // groupBoxClientesMesaAddPedidos
             // 
+            groupBoxClientesMesaAddPedidos.Controls.Add(comboBoxClienteComQuem);
+            groupBoxClientesMesaAddPedidos.Controls.Add(labelClienteComQuem);
+            groupBoxClientesMesaAddPedidos.Controls.Add(buttonClienteUnir);
             groupBoxClientesMesaAddPedidos.Controls.Add(labelClienteTotalConta);
             groupBoxClientesMesaAddPedidos.Controls.Add(label28);
             groupBoxClientesMesaAddPedidos.Controls.Add(dataGridClienteCardapio);
@@ -246,13 +257,47 @@
             groupBoxClientesMesaAddPedidos.Controls.Add(textBoxClientesMesaAddPedidos);
             groupBoxClientesMesaAddPedidos.Controls.Add(label14);
             groupBoxClientesMesaAddPedidos.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBoxClientesMesaAddPedidos.Location = new Point(884, 3);
+            groupBoxClientesMesaAddPedidos.Location = new Point(795, 3);
             groupBoxClientesMesaAddPedidos.Name = "groupBoxClientesMesaAddPedidos";
             groupBoxClientesMesaAddPedidos.Size = new Size(514, 663);
             groupBoxClientesMesaAddPedidos.TabIndex = 22;
             groupBoxClientesMesaAddPedidos.TabStop = false;
             groupBoxClientesMesaAddPedidos.Text = "NOME CLIENTE";
             groupBoxClientesMesaAddPedidos.Visible = false;
+            // 
+            // comboBoxClienteComQuem
+            // 
+            comboBoxClienteComQuem.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxClienteComQuem.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBoxClienteComQuem.FormattingEnabled = true;
+            comboBoxClienteComQuem.Location = new Point(331, 474);
+            comboBoxClienteComQuem.Name = "comboBoxClienteComQuem";
+            comboBoxClienteComQuem.Size = new Size(177, 32);
+            comboBoxClienteComQuem.TabIndex = 52;
+            comboBoxClienteComQuem.Visible = false;
+            comboBoxClienteComQuem.SelectedIndexChanged += ComboBoxClienteComQuem_SelectedIndexChangedAsync;
+            // 
+            // labelClienteComQuem
+            // 
+            labelClienteComQuem.AutoSize = true;
+            labelClienteComQuem.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelClienteComQuem.Location = new Point(355, 436);
+            labelClienteComQuem.Name = "labelClienteComQuem";
+            labelClienteComQuem.Size = new Size(118, 24);
+            labelClienteComQuem.TabIndex = 56;
+            labelClienteComQuem.Text = "Com Quem?";
+            labelClienteComQuem.Visible = false;
+            // 
+            // buttonClienteUnir
+            // 
+            buttonClienteUnir.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonClienteUnir.Location = new Point(331, 394);
+            buttonClienteUnir.Name = "buttonClienteUnir";
+            buttonClienteUnir.Size = new Size(177, 29);
+            buttonClienteUnir.TabIndex = 55;
+            buttonClienteUnir.Text = "Juntar Contas";
+            buttonClienteUnir.UseVisualStyleBackColor = true;
+            buttonClienteUnir.Click += ButtonClienteUnir_Click;
             // 
             // labelClienteTotalConta
             // 
@@ -362,7 +407,7 @@
             groupBoxClientes.Controls.Add(buttonCliente02);
             groupBoxClientes.Location = new Point(6, 6);
             groupBoxClientes.Name = "groupBoxClientes";
-            groupBoxClientes.Size = new Size(872, 660);
+            groupBoxClientes.Size = new Size(783, 660);
             groupBoxClientes.TabIndex = 21;
             groupBoxClientes.TabStop = false;
             groupBoxClientes.Text = "Selecione o cliente";
@@ -373,9 +418,9 @@
             groupBoxClientesNovaMesaAssinante.Controls.Add(buttonClientesAddAssinante);
             groupBoxClientesNovaMesaAssinante.Controls.Add(label18);
             groupBoxClientesNovaMesaAssinante.Controls.Add(comboBoxClienteNovaMesaAssinanteNomeAssinante);
-            groupBoxClientesNovaMesaAssinante.Location = new Point(20, 508);
+            groupBoxClientesNovaMesaAssinante.Location = new Point(6, 508);
             groupBoxClientesNovaMesaAssinante.Name = "groupBoxClientesNovaMesaAssinante";
-            groupBoxClientesNovaMesaAssinante.Size = new Size(830, 145);
+            groupBoxClientesNovaMesaAssinante.Size = new Size(765, 145);
             groupBoxClientesNovaMesaAssinante.TabIndex = 47;
             groupBoxClientesNovaMesaAssinante.TabStop = false;
             groupBoxClientesNovaMesaAssinante.Text = "Nova Mesa Assinante";
@@ -422,9 +467,9 @@
             groupBoxClientesNovaMesa.Controls.Add(checkBoxClienteUsarPassaporteAssinante);
             groupBoxClientesNovaMesa.Controls.Add(textBoxClientesNovoNome);
             groupBoxClientesNovaMesa.Controls.Add(label13);
-            groupBoxClientesNovaMesa.Location = new Point(20, 486);
+            groupBoxClientesNovaMesa.Location = new Point(6, 486);
             groupBoxClientesNovaMesa.Name = "groupBoxClientesNovaMesa";
-            groupBoxClientesNovaMesa.Size = new Size(830, 131);
+            groupBoxClientesNovaMesa.Size = new Size(765, 131);
             groupBoxClientesNovaMesa.TabIndex = 46;
             groupBoxClientesNovaMesa.TabStop = false;
             groupBoxClientesNovaMesa.Text = "Abrir uma nova Mesa";
@@ -494,7 +539,7 @@
             // buttonCliente25
             // 
             buttonCliente25.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente25.Location = new Point(708, 391);
+            buttonCliente25.Location = new Point(629, 391);
             buttonCliente25.Name = "buttonCliente25";
             buttonCliente25.Size = new Size(142, 79);
             buttonCliente25.TabIndex = 45;
@@ -505,7 +550,7 @@
             // buttonCliente21
             // 
             buttonCliente21.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente21.Location = new Point(20, 391);
+            buttonCliente21.Location = new Point(6, 391);
             buttonCliente21.Name = "buttonCliente21";
             buttonCliente21.Size = new Size(142, 79);
             buttonCliente21.TabIndex = 41;
@@ -516,7 +561,7 @@
             // buttonCliente24
             // 
             buttonCliente24.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente24.Location = new Point(536, 391);
+            buttonCliente24.Location = new Point(472, 391);
             buttonCliente24.Name = "buttonCliente24";
             buttonCliente24.Size = new Size(142, 79);
             buttonCliente24.TabIndex = 44;
@@ -527,7 +572,7 @@
             // buttonCliente23
             // 
             buttonCliente23.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente23.Location = new Point(364, 391);
+            buttonCliente23.Location = new Point(315, 391);
             buttonCliente23.Name = "buttonCliente23";
             buttonCliente23.Size = new Size(142, 79);
             buttonCliente23.TabIndex = 43;
@@ -538,7 +583,7 @@
             // buttonCliente22
             // 
             buttonCliente22.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente22.Location = new Point(192, 391);
+            buttonCliente22.Location = new Point(160, 391);
             buttonCliente22.Name = "buttonCliente22";
             buttonCliente22.Size = new Size(142, 79);
             buttonCliente22.TabIndex = 42;
@@ -549,7 +594,7 @@
             // buttonCliente20
             // 
             buttonCliente20.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente20.Location = new Point(708, 299);
+            buttonCliente20.Location = new Point(629, 299);
             buttonCliente20.Name = "buttonCliente20";
             buttonCliente20.Size = new Size(142, 78);
             buttonCliente20.TabIndex = 40;
@@ -560,7 +605,7 @@
             // buttonCliente16
             // 
             buttonCliente16.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente16.Location = new Point(20, 299);
+            buttonCliente16.Location = new Point(6, 299);
             buttonCliente16.Name = "buttonCliente16";
             buttonCliente16.Size = new Size(142, 78);
             buttonCliente16.TabIndex = 36;
@@ -571,7 +616,7 @@
             // buttonCliente19
             // 
             buttonCliente19.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente19.Location = new Point(536, 299);
+            buttonCliente19.Location = new Point(472, 299);
             buttonCliente19.Name = "buttonCliente19";
             buttonCliente19.Size = new Size(142, 78);
             buttonCliente19.TabIndex = 39;
@@ -582,7 +627,7 @@
             // buttonCliente18
             // 
             buttonCliente18.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente18.Location = new Point(364, 299);
+            buttonCliente18.Location = new Point(315, 299);
             buttonCliente18.Name = "buttonCliente18";
             buttonCliente18.Size = new Size(142, 78);
             buttonCliente18.TabIndex = 38;
@@ -593,7 +638,7 @@
             // buttonCliente17
             // 
             buttonCliente17.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente17.Location = new Point(192, 299);
+            buttonCliente17.Location = new Point(160, 299);
             buttonCliente17.Name = "buttonCliente17";
             buttonCliente17.Size = new Size(142, 78);
             buttonCliente17.TabIndex = 37;
@@ -604,7 +649,7 @@
             // buttonCliente15
             // 
             buttonCliente15.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente15.Location = new Point(708, 208);
+            buttonCliente15.Location = new Point(629, 208);
             buttonCliente15.Name = "buttonCliente15";
             buttonCliente15.Size = new Size(142, 78);
             buttonCliente15.TabIndex = 35;
@@ -615,7 +660,7 @@
             // buttonCliente11
             // 
             buttonCliente11.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente11.Location = new Point(20, 208);
+            buttonCliente11.Location = new Point(6, 208);
             buttonCliente11.Name = "buttonCliente11";
             buttonCliente11.Size = new Size(142, 78);
             buttonCliente11.TabIndex = 31;
@@ -626,7 +671,7 @@
             // buttonCliente14
             // 
             buttonCliente14.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente14.Location = new Point(536, 208);
+            buttonCliente14.Location = new Point(472, 208);
             buttonCliente14.Name = "buttonCliente14";
             buttonCliente14.Size = new Size(142, 78);
             buttonCliente14.TabIndex = 34;
@@ -637,7 +682,7 @@
             // buttonCliente13
             // 
             buttonCliente13.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente13.Location = new Point(364, 208);
+            buttonCliente13.Location = new Point(315, 208);
             buttonCliente13.Name = "buttonCliente13";
             buttonCliente13.Size = new Size(142, 78);
             buttonCliente13.TabIndex = 33;
@@ -648,7 +693,7 @@
             // buttonCliente12
             // 
             buttonCliente12.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente12.Location = new Point(192, 208);
+            buttonCliente12.Location = new Point(160, 208);
             buttonCliente12.Name = "buttonCliente12";
             buttonCliente12.Size = new Size(142, 78);
             buttonCliente12.TabIndex = 32;
@@ -659,7 +704,7 @@
             // buttonCliente10
             // 
             buttonCliente10.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente10.Location = new Point(708, 118);
+            buttonCliente10.Location = new Point(629, 118);
             buttonCliente10.Name = "buttonCliente10";
             buttonCliente10.Size = new Size(142, 78);
             buttonCliente10.TabIndex = 30;
@@ -670,7 +715,7 @@
             // buttonCliente06
             // 
             buttonCliente06.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente06.Location = new Point(20, 118);
+            buttonCliente06.Location = new Point(6, 118);
             buttonCliente06.Name = "buttonCliente06";
             buttonCliente06.Size = new Size(142, 78);
             buttonCliente06.TabIndex = 26;
@@ -681,7 +726,7 @@
             // buttonCliente09
             // 
             buttonCliente09.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente09.Location = new Point(536, 118);
+            buttonCliente09.Location = new Point(472, 118);
             buttonCliente09.Name = "buttonCliente09";
             buttonCliente09.Size = new Size(142, 78);
             buttonCliente09.TabIndex = 29;
@@ -692,7 +737,7 @@
             // buttonCliente08
             // 
             buttonCliente08.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente08.Location = new Point(364, 118);
+            buttonCliente08.Location = new Point(315, 118);
             buttonCliente08.Name = "buttonCliente08";
             buttonCliente08.Size = new Size(142, 78);
             buttonCliente08.TabIndex = 28;
@@ -703,7 +748,7 @@
             // buttonCliente07
             // 
             buttonCliente07.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente07.Location = new Point(192, 118);
+            buttonCliente07.Location = new Point(160, 118);
             buttonCliente07.Name = "buttonCliente07";
             buttonCliente07.Size = new Size(142, 78);
             buttonCliente07.TabIndex = 27;
@@ -714,7 +759,7 @@
             // buttonCliente05
             // 
             buttonCliente05.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente05.Location = new Point(708, 27);
+            buttonCliente05.Location = new Point(629, 27);
             buttonCliente05.Name = "buttonCliente05";
             buttonCliente05.Size = new Size(142, 78);
             buttonCliente05.TabIndex = 25;
@@ -725,7 +770,7 @@
             // buttonCliente01
             // 
             buttonCliente01.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente01.Location = new Point(20, 27);
+            buttonCliente01.Location = new Point(6, 27);
             buttonCliente01.Name = "buttonCliente01";
             buttonCliente01.Size = new Size(142, 78);
             buttonCliente01.TabIndex = 0;
@@ -736,7 +781,7 @@
             // buttonCliente04
             // 
             buttonCliente04.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente04.Location = new Point(536, 27);
+            buttonCliente04.Location = new Point(472, 27);
             buttonCliente04.Name = "buttonCliente04";
             buttonCliente04.Size = new Size(142, 78);
             buttonCliente04.TabIndex = 24;
@@ -747,7 +792,7 @@
             // buttonCliente03
             // 
             buttonCliente03.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente03.Location = new Point(364, 27);
+            buttonCliente03.Location = new Point(315, 27);
             buttonCliente03.Name = "buttonCliente03";
             buttonCliente03.Size = new Size(142, 78);
             buttonCliente03.TabIndex = 23;
@@ -758,7 +803,7 @@
             // buttonCliente02
             // 
             buttonCliente02.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonCliente02.Location = new Point(192, 27);
+            buttonCliente02.Location = new Point(160, 27);
             buttonCliente02.Name = "buttonCliente02";
             buttonCliente02.Size = new Size(142, 78);
             buttonCliente02.TabIndex = 22;
@@ -769,6 +814,7 @@
             // tabPageCaixa
             // 
             tabPageCaixa.BackColor = Color.DarkGray;
+            tabPageCaixa.Controls.Add(label34);
             tabPageCaixa.Controls.Add(calculatorControl2);
             tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPercentBKP);
             tabPageCaixa.Controls.Add(labelCaixaFechaContaRetornoPersyCoins);
@@ -780,9 +826,19 @@
             tabPageCaixa.Location = new Point(4, 24);
             tabPageCaixa.Name = "tabPageCaixa";
             tabPageCaixa.Padding = new Padding(3);
-            tabPageCaixa.Size = new Size(1404, 672);
+            tabPageCaixa.Size = new Size(1325, 675);
             tabPageCaixa.TabIndex = 1;
             tabPageCaixa.Text = "Caixa";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label34.Location = new Point(815, 96);
+            label34.Name = "label34";
+            label34.Size = new Size(37, 24);
+            label34.TabIndex = 55;
+            label34.Text = "P¢:";
             // 
             // calculatorControl2
             // 
@@ -793,7 +849,7 @@
             calculatorControl2.DoubleValue = 0D;
             calculatorControl2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             calculatorControl2.ForeColor = SystemColors.ControlText;
-            calculatorControl2.Location = new Point(1028, 396);
+            calculatorControl2.Location = new Point(815, 380);
             calculatorControl2.MetroColor = SystemColors.Control;
             calculatorControl2.Name = "calculatorControl2";
             calculatorControl2.RightToLeft = RightToLeft.No;
@@ -815,11 +871,11 @@
             // 
             labelCaixaFechaContaRetornoPersyCoins.AutoSize = true;
             labelCaixaFechaContaRetornoPersyCoins.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelCaixaFechaContaRetornoPersyCoins.Location = new Point(815, 96);
+            labelCaixaFechaContaRetornoPersyCoins.Location = new Point(858, 96);
             labelCaixaFechaContaRetornoPersyCoins.Name = "labelCaixaFechaContaRetornoPersyCoins";
-            labelCaixaFechaContaRetornoPersyCoins.Size = new Size(52, 24);
+            labelCaixaFechaContaRetornoPersyCoins.Size = new Size(20, 24);
             labelCaixaFechaContaRetornoPersyCoins.TabIndex = 52;
-            labelCaixaFechaContaRetornoPersyCoins.Text = "P¢: 0";
+            labelCaixaFechaContaRetornoPersyCoins.Text = "0";
             // 
             // label29
             // 
@@ -827,9 +883,9 @@
             label29.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label29.Location = new Point(815, 58);
             label29.Name = "label29";
-            label29.Size = new Size(226, 24);
+            label29.Size = new Size(231, 24);
             label29.TabIndex = 51;
-            label29.Text = "Esse pagamento irá gerar";
+            label29.Text = "Esse pagamento irá gerar:";
             // 
             // listViewCaixaPedidos
             // 
@@ -1151,7 +1207,7 @@
             CadastroAssinantes.Location = new Point(4, 24);
             CadastroAssinantes.Name = "CadastroAssinantes";
             CadastroAssinantes.Padding = new Padding(3);
-            CadastroAssinantes.Size = new Size(1404, 672);
+            CadastroAssinantes.Size = new Size(1325, 675);
             CadastroAssinantes.TabIndex = 2;
             CadastroAssinantes.Text = "Cadastro Assinantes";
             // 
@@ -1164,7 +1220,7 @@
             calculatorControl1.DoubleValue = 0D;
             calculatorControl1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             calculatorControl1.ForeColor = SystemColors.ControlText;
-            calculatorControl1.Location = new Point(964, 258);
+            calculatorControl1.Location = new Point(866, 258);
             calculatorControl1.MetroColor = SystemColors.Control;
             calculatorControl1.Name = "calculatorControl1";
             calculatorControl1.RightToLeft = RightToLeft.No;
@@ -1598,6 +1654,8 @@
             // 
             tabPageFluxoCaixa.BackColor = Color.DarkGray;
             tabPageFluxoCaixa.Controls.Add(dataGridViewFluxoFechamento);
+            tabPageFluxoCaixa.Controls.Add(label33);
+            tabPageFluxoCaixa.Controls.Add(label32);
             tabPageFluxoCaixa.Controls.Add(labelFluxoEncerrado);
             tabPageFluxoCaixa.Controls.Add(buttonFluxoCaixaFechar);
             tabPageFluxoCaixa.Controls.Add(labelFluxoUltimoCaixa);
@@ -1605,28 +1663,54 @@
             tabPageFluxoCaixa.Location = new Point(4, 24);
             tabPageFluxoCaixa.Name = "tabPageFluxoCaixa";
             tabPageFluxoCaixa.Padding = new Padding(3);
-            tabPageFluxoCaixa.Size = new Size(1404, 672);
+            tabPageFluxoCaixa.Size = new Size(1325, 675);
             tabPageFluxoCaixa.TabIndex = 3;
             tabPageFluxoCaixa.Text = "Fluxo de Caixa";
             // 
             // dataGridViewFluxoFechamento
             // 
-            dataGridViewFluxoFechamento.AllowUserToAddRows = false;
-            dataGridViewFluxoFechamento.AllowUserToDeleteRows = false;
-            dataGridViewFluxoFechamento.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewFluxoFechamento.Location = new Point(562, 73);
+            dataGridViewFluxoFechamento.AccessibleName = "Table";
+            dataGridViewFluxoFechamento.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewFluxoFechamento.Location = new Point(549, 3);
             dataGridViewFluxoFechamento.Name = "dataGridViewFluxoFechamento";
-            dataGridViewFluxoFechamento.ReadOnly = true;
-            dataGridViewFluxoFechamento.RowTemplate.Height = 25;
-            dataGridViewFluxoFechamento.Size = new Size(836, 586);
-            dataGridViewFluxoFechamento.TabIndex = 52;
+            dataGridViewFluxoFechamento.Size = new Size(738, 660);
+            dataGridViewFluxoFechamento.Style.BorderColor = Color.FromArgb(100, 100, 100);
+            dataGridViewFluxoFechamento.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewFluxoFechamento.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
+            dataGridViewFluxoFechamento.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
+            dataGridViewFluxoFechamento.Style.HeaderStyle.FilterIconColor = Color.FromArgb(29, 29, 29);
+            dataGridViewFluxoFechamento.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
+            dataGridViewFluxoFechamento.TabIndex = 55;
+            dataGridViewFluxoFechamento.Text = "sfDataGrid1";
             dataGridViewFluxoFechamento.Visible = false;
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label33.Location = new Point(6, 66);
+            label33.Name = "label33";
+            label33.Size = new Size(133, 24);
+            label33.TabIndex = 54;
+            label33.Text = "Caixa Anterior:";
+            label33.Visible = false;
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label32.Location = new Point(6, 365);
+            label32.Name = "label32";
+            label32.Size = new Size(143, 24);
+            label32.TabIndex = 53;
+            label32.Text = "Caixa Fechado:";
+            label32.Visible = false;
             // 
             // labelFluxoEncerrado
             // 
             labelFluxoEncerrado.AutoSize = true;
             labelFluxoEncerrado.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelFluxoEncerrado.Location = new Point(300, 73);
+            labelFluxoEncerrado.Location = new Point(6, 398);
             labelFluxoEncerrado.Name = "labelFluxoEncerrado";
             labelFluxoEncerrado.Size = new Size(148, 24);
             labelFluxoEncerrado.TabIndex = 24;
@@ -1636,7 +1720,7 @@
             // buttonFluxoCaixaFechar
             // 
             buttonFluxoCaixaFechar.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonFluxoCaixaFechar.Location = new Point(300, 6);
+            buttonFluxoCaixaFechar.Location = new Point(282, 6);
             buttonFluxoCaixaFechar.Name = "buttonFluxoCaixaFechar";
             buttonFluxoCaixaFechar.Size = new Size(261, 53);
             buttonFluxoCaixaFechar.TabIndex = 23;
@@ -1649,7 +1733,7 @@
             // 
             labelFluxoUltimoCaixa.AutoSize = true;
             labelFluxoUltimoCaixa.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            labelFluxoUltimoCaixa.Location = new Point(6, 73);
+            labelFluxoUltimoCaixa.Location = new Point(6, 90);
             labelFluxoUltimoCaixa.Name = "labelFluxoUltimoCaixa";
             labelFluxoUltimoCaixa.Size = new Size(148, 24);
             labelFluxoUltimoCaixa.TabIndex = 22;
@@ -1670,6 +1754,7 @@
             // Ponto
             // 
             Ponto.BackColor = Color.DarkGray;
+            Ponto.Controls.Add(labelAguarde);
             Ponto.Controls.Add(pdfViewerControlPontos);
             Ponto.Controls.Add(buttonPontoNewRelatorio);
             Ponto.Controls.Add(groupBoxPontoGerarRelatorio);
@@ -1681,9 +1766,22 @@
             Ponto.Location = new Point(4, 24);
             Ponto.Name = "Ponto";
             Ponto.Padding = new Padding(3);
-            Ponto.Size = new Size(1404, 672);
+            Ponto.Size = new Size(1325, 675);
             Ponto.TabIndex = 4;
             Ponto.Text = "Ponto";
+            // 
+            // labelAguarde
+            // 
+            labelAguarde.AutoSize = true;
+            labelAguarde.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point);
+            labelAguarde.ForeColor = Color.Red;
+            labelAguarde.Location = new Point(79, 342);
+            labelAguarde.Margin = new Padding(5, 0, 5, 0);
+            labelAguarde.Name = "labelAguarde";
+            labelAguarde.Size = new Size(1086, 55);
+            labelAguarde.TabIndex = 28;
+            labelAguarde.Text = "ESPERE QUE DEMORA A GERAR O  ARQUIVO";
+            labelAguarde.Visible = false;
             // 
             // pdfViewerControlPontos
             // 
@@ -1694,7 +1792,7 @@
             pdfViewerControlPontos.IsBookmarkEnabled = true;
             pdfViewerControlPontos.IsTextSearchEnabled = true;
             pdfViewerControlPontos.IsTextSelectionEnabled = true;
-            pdfViewerControlPontos.Location = new Point(797, 6);
+            pdfViewerControlPontos.Location = new Point(717, 5);
             messageBoxSettings2.EnableNotification = true;
             pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings2;
             pdfViewerControlPontos.MinimumZoomPercentage = 50;
@@ -1711,7 +1809,7 @@
             pdfViewerControlPontos.ShowHorizontalScrollBar = true;
             pdfViewerControlPontos.ShowToolBar = true;
             pdfViewerControlPontos.ShowVerticalScrollBar = true;
-            pdfViewerControlPontos.Size = new Size(604, 653);
+            pdfViewerControlPontos.Size = new Size(573, 653);
             pdfViewerControlPontos.SpaceBetweenPages = 8;
             pdfViewerControlPontos.TabIndex = 28;
             pdfViewerControlPontos.Text = "pdfViewerControlPontos";
@@ -1728,7 +1826,7 @@
             // buttonPontoNewRelatorio
             // 
             buttonPontoNewRelatorio.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonPontoNewRelatorio.Location = new Point(436, 20);
+            buttonPontoNewRelatorio.Location = new Point(385, 19);
             buttonPontoNewRelatorio.Name = "buttonPontoNewRelatorio";
             buttonPontoNewRelatorio.Size = new Size(326, 53);
             buttonPontoNewRelatorio.TabIndex = 27;
@@ -1744,7 +1842,7 @@
             groupBoxPontoGerarRelatorio.Controls.Add(comboBoxPontoNome);
             groupBoxPontoGerarRelatorio.Controls.Add(label30);
             groupBoxPontoGerarRelatorio.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBoxPontoGerarRelatorio.Location = new Point(436, 97);
+            groupBoxPontoGerarRelatorio.Location = new Point(385, 96);
             groupBoxPontoGerarRelatorio.Name = "groupBoxPontoGerarRelatorio";
             groupBoxPontoGerarRelatorio.Size = new Size(326, 235);
             groupBoxPontoGerarRelatorio.TabIndex = 26;
@@ -1924,12 +2022,24 @@
             Nome.HeaderText = "Nome";
             Nome.Name = "Nome";
             // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlDarkDark;
+            button1.Font = new Font("Verdana", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(6, 6);
+            button1.Name = "button1";
+            button1.Size = new Size(1323, 696);
+            button1.TabIndex = 1;
+            button1.Text = "INGUARDE UM MOMENTO!";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1410, 699);
+            ClientSize = new Size(1331, 706);
             Controls.Add(tabControl1);
+            Controls.Add(button1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "JanelaCentral";
             Text = "JanelaCentral";
@@ -2126,7 +2236,15 @@
         private Button buttonFluxoInicio;
         private Button buttonFluxoCaixaFechar;
         private Label labelFluxoEncerrado;
-        private DataGridView dataGridViewFluxoFechamento;
         private Syncfusion.Windows.Forms.PdfViewer.PdfViewerControl pdfViewerControlPontos;
+        private Label labelAguarde;
+        private Label label33;
+        private Label label32;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid dataGridViewFluxoFechamento;
+        private Button buttonClienteUnir;
+        private Label labelClienteComQuem;
+        private ComboBox comboBoxClienteComQuem;
+        private Label label34;
+        private Button button1;
     }
 }

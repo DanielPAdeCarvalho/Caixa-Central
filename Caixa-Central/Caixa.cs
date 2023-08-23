@@ -53,6 +53,7 @@ namespace Caixa_Central
                     }
                 }
             }
+            MessageBox.Show("Erro ao pegar o ultimo caixa",response.ReasonPhrase);
             return new Caixa();
         }
 
@@ -64,7 +65,7 @@ namespace Caixa_Central
             {
                 return;
             }
-            MessageBox.Show(responseMessage.ReasonPhrase);
+            MessageBox.Show("Erro ao iniciar o fechamento do caixa",responseMessage.ReasonPhrase);
         }
     }
 }
