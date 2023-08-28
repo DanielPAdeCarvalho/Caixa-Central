@@ -70,6 +70,10 @@ namespace Caixa_Central
                         //atualizar a lista de pedidos
                         Pedidos = new BindingList<Pedido>(PedidosDictionary.Values.ToList());
                     }
+                    else
+                    {
+                        Pedidos = new BindingList<Pedido>();
+                    }
                 }
             }
         }
@@ -82,7 +86,7 @@ namespace Caixa_Central
             HttpClient httpClient = new();
             string json = JsonConvert.SerializeObject(this);
             StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
-            await httpClient.PutAsync(Auxiliar.urlPedido, content);
+            await httpClient.PutAsync(Auxiliar.urlMesa, content);
         }
 
         internal async Task UnirMesa(Mesa mesa2)
@@ -116,7 +120,7 @@ namespace Caixa_Central
                 HttpClient httpClient = new();
                 string json = JsonConvert.SerializeObject(mesaNova);
                 StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
-                await httpClient.PutAsync(Auxiliar.urlPedido, content);
+                await httpClient.PutAsync(Auxiliar.urlMesa, content);
 
                 // end mesa 2
                 await mesa2.EncerraMesa();

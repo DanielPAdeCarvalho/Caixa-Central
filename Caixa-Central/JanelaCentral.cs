@@ -848,7 +848,7 @@ namespace Caixa_Central
 
         private async void ButtonClientesAdd_ClickAsync(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
+            tabControl1.Visible = false;
             string nrMesa = labelClienteNrMesa.Text;
             Mesa mesa = new(nrMesa, textBoxClientesNovoNome.Text);
             string cliente = textBoxClientesNovoNome.Text.ToLower();
@@ -858,12 +858,11 @@ namespace Caixa_Central
                 IEnumerable<Mesa> mesas = mesasOcupadas.Where(mesa => mesa.Cliente.ToLower() == cliente);
                 if (!mesas.Any())
                 {
-                    tabControl1.Visible = false;
                     //Gravar que a mesa está ocupada
                     HttpClient httpClient = new();
                     string json = JsonConvert.SerializeObject(mesa);
-                    StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
-                    await httpClient.PutAsync(Auxiliar.urlPedido, content);
+                    StringContent content = new(json, Encoding.UTF8, "application/json");
+                    await httpClient.PutAsync(Auxiliar.urlMesa, content);
                     await GetAllMesasAsync();
                     groupBoxClientesMesaAddPedidos.Visible = true;
 
@@ -873,19 +872,22 @@ namespace Caixa_Central
                         Pedido pedido = new("Passaporte", 10, 1, false);
                         await pedido.AdicionarPedido(nrMesa);
                     }
-                    tabControl1.Visible = true;
                     //Limpar os campos
                     groupBoxClientesNovaMesa.Visible = false;
                     textBoxClientesNovoNome.Text = string.Empty;
                     comboBoxClienteNovaMesaNomeAssinante.Text = string.Empty;
+                    checkBoxClienteUsarPassaporteAssinante.Checked = false;
+
+                    // Mostrar os pedidos do cliente no dataGridClientePedidos
                     groupBoxClientesMesaAddPedidos.Text = $"Mesa {nrMesa} - {mesa.Cliente}";
+                    await UpdatePedidos(nrMesa);
                 }
                 else
                 {
                     MessageBox.Show("Já existe uma mesa com esse nome");
                 }
             }
-            Cursor.Current = Cursors.Default;
+            tabControl1.Visible = true;
         }
 
         private async void ButtonClientesAddAssinante_Click(object sender, EventArgs e)
@@ -904,7 +906,7 @@ namespace Caixa_Central
                     var httpClient = new HttpClient();
                     var json = JsonConvert.SerializeObject(mesa);
                     var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    await httpClient.PutAsync(Auxiliar.urlPedido, content);
+                    await httpClient.PutAsync(Auxiliar.urlMesa, content);
                     await GetAllMesasAsync();
                     groupBoxClientesMesaAddPedidos.Visible = true;
 
@@ -922,7 +924,7 @@ namespace Caixa_Central
             }
         }
 
-        private async void SfDataGridClienteCardapio_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridClienteCardapio_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridClienteCardapio.SelectedCells.Count > 0)
             {
@@ -931,20 +933,27 @@ namespace Caixa_Central
                     //Botar o pedido na mesa
                     if (e.RowIndex >= 0 && e.RowIndex < dataGridClienteCardapio.Rows.Count)
                     {
-                        Item item = cardapio[e.RowIndex];
-                        string nrMesa = labelClienteNrMesa.Text;
-                        Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
-                        Pedido pedido = new(item.Nome, item.Valor, 1, item.Cozinha);
-                        await pedido.AdicionarPedido(labelClienteNrMesa.Text);
-                        await UpdatePedidos(labelClienteNrMesa.Text);
+                        DataGridViewRow clickedRow = dataGridClienteCardapio.Rows[e.RowIndex];
 
-                        //Limpar o campo de pesquisa e atualizar o datagrid
-                        textBoxClientesMesaAddPedidos.Text = string.Empty;
-                        dataGridClienteCardapio.DataSource = cardapio;
+                        // Get the data bound to the clicked row.
+                        if (clickedRow.DataBoundItem is Item item)
+                        {
+                            // Removed the redundant line.
+                            string nrMesa = labelClienteNrMesa.Text;
+                            Mesa? mesa = mesasOcupadas.Find(x => x.Id == nrMesa);
+                            Pedido pedido = new(item.Nome, item.Valor, 1, item.Cozinha);
+                            await pedido.AdicionarPedido(labelClienteNrMesa.Text);
+                            await UpdatePedidos(labelClienteNrMesa.Text);
+
+                            //Limpar o campo de pesquisa e atualizar o datagrid
+                            textBoxClientesMesaAddPedidos.Text = string.Empty;
+                            dataGridClienteCardapio.DataSource = cardapio;
+                        }
                     }
                 }
             }
         }
+
 
         private async void DataGridClientePedidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {

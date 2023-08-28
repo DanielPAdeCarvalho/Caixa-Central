@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings3 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
-            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings3 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
+            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings2 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
+            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings2 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaCentral));
-            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings3 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
+            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings2 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
@@ -47,10 +47,6 @@
             textBoxClientesMesaAddPedidos = new TextBox();
             label14 = new Label();
             groupBoxClientes = new GroupBox();
-            groupBoxClientesNovaMesaAssinante = new GroupBox();
-            buttonClientesAddAssinante = new Button();
-            label18 = new Label();
-            comboBoxClienteNovaMesaAssinanteNomeAssinante = new ComboBox();
             groupBoxClientesNovaMesa = new GroupBox();
             labelClienteNrMesa = new Label();
             buttonClientesAdd = new Button();
@@ -58,6 +54,10 @@
             checkBoxClienteUsarPassaporteAssinante = new CheckBox();
             textBoxClientesNovoNome = new TextBox();
             label13 = new Label();
+            groupBoxClientesNovaMesaAssinante = new GroupBox();
+            buttonClientesAddAssinante = new Button();
+            label18 = new Label();
+            comboBoxClienteNovaMesaAssinanteNomeAssinante = new ComboBox();
             buttonCliente25 = new Button();
             buttonCliente21 = new Button();
             buttonCliente24 = new Button();
@@ -186,14 +186,18 @@
             Nome = new DataGridViewTextBoxColumn();
             pictureBox1 = new PictureBox();
             label35 = new Label();
+            Pendencias = new TabPage();
+            sfDataGrid1 = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            label36 = new Label();
+            buttonPenciaNovaPendencia = new Button();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridClienteCardapio).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridClientePedidos).BeginInit();
             groupBoxClientes.SuspendLayout();
-            groupBoxClientesNovaMesaAssinante.SuspendLayout();
             groupBoxClientesNovaMesa.SuspendLayout();
+            groupBoxClientesNovaMesaAssinante.SuspendLayout();
             tabPageCaixa.SuspendLayout();
             groupBoxCaixaFechaConta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)textBoxCaixaFechaContaPicpay).BeginInit();
@@ -218,6 +222,8 @@
             groupBoxPontoGerarRelatorio.SuspendLayout();
             groupBoxPontoNovoPonto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            Pendencias.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)sfDataGrid1).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -227,7 +233,8 @@
             tabControl1.Controls.Add(CadastroAssinantes);
             tabControl1.Controls.Add(tabPageFluxoCaixa);
             tabControl1.Controls.Add(Ponto);
-            tabControl1.Location = new Point(2, -4);
+            tabControl1.Controls.Add(Pendencias);
+            tabControl1.Location = new Point(-3, 1);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1333, 708);
@@ -332,7 +339,7 @@
             dataGridClienteCardapio.RowTemplate.Height = 25;
             dataGridClienteCardapio.Size = new Size(310, 326);
             dataGridClienteCardapio.TabIndex = 52;
-            dataGridClienteCardapio.CellDoubleClick += SfDataGridClienteCardapio_CellDoubleClick;
+            dataGridClienteCardapio.CellDoubleClick += DataGridClienteCardapio_CellDoubleClick;
             // 
             // dataGridClientePedidos
             // 
@@ -380,8 +387,8 @@
             // groupBoxClientes
             // 
             groupBoxClientes.BackColor = Color.DarkGray;
-            groupBoxClientes.Controls.Add(groupBoxClientesNovaMesaAssinante);
             groupBoxClientes.Controls.Add(groupBoxClientesNovaMesa);
+            groupBoxClientes.Controls.Add(groupBoxClientesNovaMesaAssinante);
             groupBoxClientes.Controls.Add(buttonCliente25);
             groupBoxClientes.Controls.Add(buttonCliente21);
             groupBoxClientes.Controls.Add(buttonCliente24);
@@ -413,52 +420,6 @@
             groupBoxClientes.TabIndex = 21;
             groupBoxClientes.TabStop = false;
             groupBoxClientes.Text = "Selecione o cliente";
-            // 
-            // groupBoxClientesNovaMesaAssinante
-            // 
-            groupBoxClientesNovaMesaAssinante.BackColor = Color.MediumTurquoise;
-            groupBoxClientesNovaMesaAssinante.Controls.Add(buttonClientesAddAssinante);
-            groupBoxClientesNovaMesaAssinante.Controls.Add(label18);
-            groupBoxClientesNovaMesaAssinante.Controls.Add(comboBoxClienteNovaMesaAssinanteNomeAssinante);
-            groupBoxClientesNovaMesaAssinante.Location = new Point(6, 508);
-            groupBoxClientesNovaMesaAssinante.Name = "groupBoxClientesNovaMesaAssinante";
-            groupBoxClientesNovaMesaAssinante.Size = new Size(765, 145);
-            groupBoxClientesNovaMesaAssinante.TabIndex = 47;
-            groupBoxClientesNovaMesaAssinante.TabStop = false;
-            groupBoxClientesNovaMesaAssinante.Text = "Nova Mesa Assinante";
-            groupBoxClientesNovaMesaAssinante.Visible = false;
-            // 
-            // buttonClientesAddAssinante
-            // 
-            buttonClientesAddAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonClientesAddAssinante.Location = new Point(307, 22);
-            buttonClientesAddAssinante.Name = "buttonClientesAddAssinante";
-            buttonClientesAddAssinante.Size = new Size(142, 30);
-            buttonClientesAddAssinante.TabIndex = 51;
-            buttonClientesAddAssinante.Text = "Adicionar";
-            buttonClientesAddAssinante.UseVisualStyleBackColor = true;
-            buttonClientesAddAssinante.Click += ButtonClientesAddAssinante_Click;
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label18.Location = new Point(15, 22);
-            label18.Name = "label18";
-            label18.Size = new Size(67, 24);
-            label18.TabIndex = 50;
-            label18.Text = "Nome:";
-            // 
-            // comboBoxClienteNovaMesaAssinanteNomeAssinante
-            // 
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.FormattingEnabled = true;
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Location = new Point(88, 22);
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Name = "comboBoxClienteNovaMesaAssinanteNomeAssinante";
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Size = new Size(200, 32);
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.TabIndex = 49;
-            comboBoxClienteNovaMesaAssinanteNomeAssinante.Visible = false;
             // 
             // groupBoxClientesNovaMesa
             // 
@@ -537,6 +498,52 @@
             label13.Size = new Size(67, 24);
             label13.TabIndex = 2;
             label13.Text = "Nome:";
+            // 
+            // groupBoxClientesNovaMesaAssinante
+            // 
+            groupBoxClientesNovaMesaAssinante.BackColor = Color.MediumTurquoise;
+            groupBoxClientesNovaMesaAssinante.Controls.Add(buttonClientesAddAssinante);
+            groupBoxClientesNovaMesaAssinante.Controls.Add(label18);
+            groupBoxClientesNovaMesaAssinante.Controls.Add(comboBoxClienteNovaMesaAssinanteNomeAssinante);
+            groupBoxClientesNovaMesaAssinante.Location = new Point(6, 508);
+            groupBoxClientesNovaMesaAssinante.Name = "groupBoxClientesNovaMesaAssinante";
+            groupBoxClientesNovaMesaAssinante.Size = new Size(765, 145);
+            groupBoxClientesNovaMesaAssinante.TabIndex = 47;
+            groupBoxClientesNovaMesaAssinante.TabStop = false;
+            groupBoxClientesNovaMesaAssinante.Text = "Nova Mesa Assinante";
+            groupBoxClientesNovaMesaAssinante.Visible = false;
+            // 
+            // buttonClientesAddAssinante
+            // 
+            buttonClientesAddAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonClientesAddAssinante.Location = new Point(307, 22);
+            buttonClientesAddAssinante.Name = "buttonClientesAddAssinante";
+            buttonClientesAddAssinante.Size = new Size(142, 30);
+            buttonClientesAddAssinante.TabIndex = 51;
+            buttonClientesAddAssinante.Text = "Adicionar";
+            buttonClientesAddAssinante.UseVisualStyleBackColor = true;
+            buttonClientesAddAssinante.Click += ButtonClientesAddAssinante_Click;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.Location = new Point(15, 22);
+            label18.Name = "label18";
+            label18.Size = new Size(67, 24);
+            label18.TabIndex = 50;
+            label18.Text = "Nome:";
+            // 
+            // comboBoxClienteNovaMesaAssinanteNomeAssinante
+            // 
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.FormattingEnabled = true;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Location = new Point(88, 22);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Name = "comboBoxClienteNovaMesaAssinanteNomeAssinante";
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Size = new Size(200, 32);
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.TabIndex = 49;
+            comboBoxClienteNovaMesaAssinanteNomeAssinante.Visible = false;
             // 
             // buttonCliente25
             // 
@@ -828,7 +835,7 @@
             tabPageCaixa.Location = new Point(4, 24);
             tabPageCaixa.Name = "tabPageCaixa";
             tabPageCaixa.Padding = new Padding(3);
-            tabPageCaixa.Size = new Size(1325, 675);
+            tabPageCaixa.Size = new Size(1325, 680);
             tabPageCaixa.TabIndex = 1;
             tabPageCaixa.Text = "Caixa";
             // 
@@ -1209,7 +1216,7 @@
             CadastroAssinantes.Location = new Point(4, 24);
             CadastroAssinantes.Name = "CadastroAssinantes";
             CadastroAssinantes.Padding = new Padding(3);
-            CadastroAssinantes.Size = new Size(1325, 675);
+            CadastroAssinantes.Size = new Size(1325, 680);
             CadastroAssinantes.TabIndex = 2;
             CadastroAssinantes.Text = "Cadastro Assinantes";
             // 
@@ -1665,7 +1672,7 @@
             tabPageFluxoCaixa.Location = new Point(4, 24);
             tabPageFluxoCaixa.Name = "tabPageFluxoCaixa";
             tabPageFluxoCaixa.Padding = new Padding(3);
-            tabPageFluxoCaixa.Size = new Size(1325, 675);
+            tabPageFluxoCaixa.Size = new Size(1325, 680);
             tabPageFluxoCaixa.TabIndex = 3;
             tabPageFluxoCaixa.Text = "Fluxo de Caixa";
             // 
@@ -1768,7 +1775,7 @@
             Ponto.Location = new Point(4, 24);
             Ponto.Name = "Ponto";
             Ponto.Padding = new Padding(3);
-            Ponto.Size = new Size(1325, 675);
+            Ponto.Size = new Size(1325, 680);
             Ponto.TabIndex = 4;
             Ponto.Text = "Ponto";
             // 
@@ -1795,17 +1802,17 @@
             pdfViewerControlPontos.IsTextSearchEnabled = true;
             pdfViewerControlPontos.IsTextSelectionEnabled = true;
             pdfViewerControlPontos.Location = new Point(717, 5);
-            messageBoxSettings3.EnableNotification = true;
-            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings3;
+            messageBoxSettings2.EnableNotification = true;
+            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings2;
             pdfViewerControlPontos.MinimumZoomPercentage = 50;
             pdfViewerControlPontos.Name = "pdfViewerControlPontos";
             pdfViewerControlPontos.PageBorderThickness = 1;
-            pdfViewerPrinterSettings3.Copies = 1;
-            pdfViewerPrinterSettings3.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
-            pdfViewerPrinterSettings3.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
-            pdfViewerPrinterSettings3.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings3.PrintLocation");
-            pdfViewerPrinterSettings3.ShowPrintStatusDialog = true;
-            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings3;
+            pdfViewerPrinterSettings2.Copies = 1;
+            pdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
+            pdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
+            pdfViewerPrinterSettings2.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings2.PrintLocation");
+            pdfViewerPrinterSettings2.ShowPrintStatusDialog = true;
+            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings2;
             pdfViewerControlPontos.ReferencePath = null;
             pdfViewerControlPontos.ScrollDisplacementValue = 0;
             pdfViewerControlPontos.ShowHorizontalScrollBar = true;
@@ -1815,10 +1822,10 @@
             pdfViewerControlPontos.SpaceBetweenPages = 8;
             pdfViewerControlPontos.TabIndex = 28;
             pdfViewerControlPontos.Text = "pdfViewerControlPontos";
-            textSearchSettings3.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
-            textSearchSettings3.HighlightAllInstance = true;
-            textSearchSettings3.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
-            pdfViewerControlPontos.TextSearchSettings = textSearchSettings3;
+            textSearchSettings2.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
+            textSearchSettings2.HighlightAllInstance = true;
+            textSearchSettings2.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
+            pdfViewerControlPontos.TextSearchSettings = textSearchSettings2;
             pdfViewerControlPontos.ThemeName = "Default";
             pdfViewerControlPontos.VerticalScrollOffset = 0;
             pdfViewerControlPontos.Visible = false;
@@ -2044,6 +2051,57 @@
             label35.TabIndex = 2;
             label35.Text = "INGUARDE UM MOMENTO...";
             // 
+            // Pendencias
+            // 
+            Pendencias.BackColor = Color.DarkGray;
+            Pendencias.Controls.Add(buttonPenciaNovaPendencia);
+            Pendencias.Controls.Add(label36);
+            Pendencias.Controls.Add(sfDataGrid1);
+            Pendencias.Location = new Point(4, 24);
+            Pendencias.Name = "Pendencias";
+            Pendencias.Padding = new Padding(3);
+            Pendencias.Size = new Size(1325, 680);
+            Pendencias.TabIndex = 5;
+            Pendencias.Text = "Pendências";
+            // 
+            // sfDataGrid1
+            // 
+            sfDataGrid1.AccessibleName = "Table";
+            sfDataGrid1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            sfDataGrid1.Location = new Point(580, 41);
+            sfDataGrid1.Name = "sfDataGrid1";
+            sfDataGrid1.Size = new Size(738, 636);
+            sfDataGrid1.Style.BorderColor = Color.FromArgb(100, 100, 100);
+            sfDataGrid1.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
+            sfDataGrid1.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGrid1.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGrid1.Style.HeaderStyle.FilterIconColor = Color.FromArgb(29, 29, 29);
+            sfDataGrid1.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
+            sfDataGrid1.TabIndex = 56;
+            sfDataGrid1.Text = "sfDataGrid1";
+            sfDataGrid1.Visible = false;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label36.Location = new Point(583, 13);
+            label36.Margin = new Padding(5, 0, 5, 0);
+            label36.Name = "label36";
+            label36.Size = new Size(309, 26);
+            label36.TabIndex = 57;
+            label36.Text = "Lista de pendencias em aberto";
+            // 
+            // buttonPenciaNovaPendencia
+            // 
+            buttonPenciaNovaPendencia.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPenciaNovaPendencia.Location = new Point(11, 13);
+            buttonPenciaNovaPendencia.Name = "buttonPenciaNovaPendencia";
+            buttonPenciaNovaPendencia.Size = new Size(214, 38);
+            buttonPenciaNovaPendencia.TabIndex = 58;
+            buttonPenciaNovaPendencia.Text = "Criar Nova Pendencia";
+            buttonPenciaNovaPendencia.UseVisualStyleBackColor = true;
+            // 
             // JanelaCentral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2064,10 +2122,10 @@
             ((System.ComponentModel.ISupportInitialize)dataGridClienteCardapio).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridClientePedidos).EndInit();
             groupBoxClientes.ResumeLayout(false);
-            groupBoxClientesNovaMesaAssinante.ResumeLayout(false);
-            groupBoxClientesNovaMesaAssinante.PerformLayout();
             groupBoxClientesNovaMesa.ResumeLayout(false);
             groupBoxClientesNovaMesa.PerformLayout();
+            groupBoxClientesNovaMesaAssinante.ResumeLayout(false);
+            groupBoxClientesNovaMesaAssinante.PerformLayout();
             tabPageCaixa.ResumeLayout(false);
             tabPageCaixa.PerformLayout();
             groupBoxCaixaFechaConta.ResumeLayout(false);
@@ -2102,6 +2160,9 @@
             groupBoxPontoNovoPonto.ResumeLayout(false);
             groupBoxPontoNovoPonto.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            Pendencias.ResumeLayout(false);
+            Pendencias.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)sfDataGrid1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2261,5 +2322,9 @@
         private Label label34;
         private PictureBox pictureBox1;
         private Label label35;
+        private TabPage Pendencias;
+        private Label label36;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGrid1;
+        private Button buttonPenciaNovaPendencia;
     }
 }
