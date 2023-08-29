@@ -183,13 +183,22 @@
             buttonPontoRefresh = new Button();
             labelPontoUltimos = new Label();
             label26 = new Label();
+            Pendencias = new TabPage();
+            buttonPendenciasLista = new Button();
+            groupBoxPendenciasCriarNova = new GroupBox();
+            buttonPendenciaGravarNova = new Button();
+            textBoxPendenciaNovaDescription = new TextBox();
+            label39 = new Label();
+            label38 = new Label();
+            currencyTextBoxPendenciaNovaValor = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            comboBoxPendenciaNome = new ComboBox();
+            label37 = new Label();
+            buttonPenciaNovaPendencia = new Button();
+            label36 = new Label();
+            sfDataGridPendencias = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             Nome = new DataGridViewTextBoxColumn();
             pictureBox1 = new PictureBox();
             label35 = new Label();
-            Pendencias = new TabPage();
-            sfDataGrid1 = new Syncfusion.WinForms.DataGrid.SfDataGrid();
-            label36 = new Label();
-            buttonPenciaNovaPendencia = new Button();
             tabControl1.SuspendLayout();
             tabPageClientes.SuspendLayout();
             groupBoxClientesMesaAddPedidos.SuspendLayout();
@@ -221,9 +230,11 @@
             Ponto.SuspendLayout();
             groupBoxPontoGerarRelatorio.SuspendLayout();
             groupBoxPontoNovoPonto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Pendencias.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGrid1).BeginInit();
+            groupBoxPendenciasCriarNova.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)currencyTextBoxPendenciaNovaValor).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridPendencias).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -432,7 +443,7 @@
             groupBoxClientesNovaMesa.Controls.Add(label13);
             groupBoxClientesNovaMesa.Location = new Point(6, 486);
             groupBoxClientesNovaMesa.Name = "groupBoxClientesNovaMesa";
-            groupBoxClientesNovaMesa.Size = new Size(765, 131);
+            groupBoxClientesNovaMesa.Size = new Size(765, 133);
             groupBoxClientesNovaMesa.TabIndex = 46;
             groupBoxClientesNovaMesa.TabStop = false;
             groupBoxClientesNovaMesa.Text = "Abrir uma nova Mesa";
@@ -1055,7 +1066,7 @@
             // 
             // textBoxCaixaFechaContaPicpay
             // 
-            textBoxCaixaFechaContaPicpay.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaPicpay.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaPicpay.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaPicpay.Location = new Point(159, 348);
             textBoxCaixaFechaContaPicpay.Name = "textBoxCaixaFechaContaPicpay";
@@ -1076,7 +1087,7 @@
             // 
             // textBoxCaixaFechaContaDebito
             // 
-            textBoxCaixaFechaContaDebito.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaDebito.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaDebito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaDebito.Location = new Point(159, 290);
             textBoxCaixaFechaContaDebito.Name = "textBoxCaixaFechaContaDebito";
@@ -1097,7 +1108,7 @@
             // 
             // textBoxCaixaFechaContaCredito
             // 
-            textBoxCaixaFechaContaCredito.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaCredito.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaCredito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaCredito.Location = new Point(159, 232);
             textBoxCaixaFechaContaCredito.Name = "textBoxCaixaFechaContaCredito";
@@ -1118,7 +1129,7 @@
             // 
             // textBoxCaixaFechaContaDinheiro
             // 
-            textBoxCaixaFechaContaDinheiro.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaDinheiro.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaDinheiro.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaDinheiro.Location = new Point(159, 406);
             textBoxCaixaFechaContaDinheiro.Name = "textBoxCaixaFechaContaDinheiro";
@@ -1139,7 +1150,7 @@
             // 
             // textBoxCaixaFechaContaPix
             // 
-            textBoxCaixaFechaContaPix.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaPix.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaPix.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaPix.Location = new Point(159, 174);
             textBoxCaixaFechaContaPix.Name = "textBoxCaixaFechaContaPix";
@@ -1180,7 +1191,7 @@
             // 
             // textBoxCaixaFechaContaPersyCoins
             // 
-            textBoxCaixaFechaContaPersyCoins.BeforeTouchSize = new Size(100, 29);
+            textBoxCaixaFechaContaPersyCoins.BeforeTouchSize = new Size(100, 32);
             textBoxCaixaFechaContaPersyCoins.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             textBoxCaixaFechaContaPersyCoins.Location = new Point(159, 116);
             textBoxCaixaFechaContaPersyCoins.Name = "textBoxCaixaFechaContaPersyCoins";
@@ -1365,7 +1376,7 @@
             // 
             // currencyTextBoxCadastroAssinantePicpay
             // 
-            currencyTextBoxCadastroAssinantePicpay.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinantePicpay.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinantePicpay.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinantePicpay.Location = new Point(159, 348);
             currencyTextBoxCadastroAssinantePicpay.Name = "currencyTextBoxCadastroAssinantePicpay";
@@ -1386,7 +1397,7 @@
             // 
             // currencyTextBoxCadastroAssinanteDebito
             // 
-            currencyTextBoxCadastroAssinanteDebito.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinanteDebito.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinanteDebito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinanteDebito.Location = new Point(159, 290);
             currencyTextBoxCadastroAssinanteDebito.Name = "currencyTextBoxCadastroAssinanteDebito";
@@ -1407,7 +1418,7 @@
             // 
             // currencyTextBoxCadastroAssinanteCredito
             // 
-            currencyTextBoxCadastroAssinanteCredito.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinanteCredito.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinanteCredito.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinanteCredito.Location = new Point(159, 232);
             currencyTextBoxCadastroAssinanteCredito.Name = "currencyTextBoxCadastroAssinanteCredito";
@@ -1428,7 +1439,7 @@
             // 
             // currencyTextBoxCadastroAssinanteDinheiro
             // 
-            currencyTextBoxCadastroAssinanteDinheiro.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinanteDinheiro.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinanteDinheiro.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinanteDinheiro.Location = new Point(159, 406);
             currencyTextBoxCadastroAssinanteDinheiro.Name = "currencyTextBoxCadastroAssinanteDinheiro";
@@ -1449,7 +1460,7 @@
             // 
             // currencyTextBoxCadastroAssinantePix
             // 
-            currencyTextBoxCadastroAssinantePix.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinantePix.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinantePix.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinantePix.Location = new Point(159, 174);
             currencyTextBoxCadastroAssinantePix.Name = "currencyTextBoxCadastroAssinantePix";
@@ -1490,7 +1501,7 @@
             // 
             // currencyTextBoxCadastroAssinantePersyCoins
             // 
-            currencyTextBoxCadastroAssinantePersyCoins.BeforeTouchSize = new Size(100, 29);
+            currencyTextBoxCadastroAssinantePersyCoins.BeforeTouchSize = new Size(100, 32);
             currencyTextBoxCadastroAssinantePersyCoins.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
             currencyTextBoxCadastroAssinantePersyCoins.Location = new Point(159, 116);
             currencyTextBoxCadastroAssinantePersyCoins.Name = "currencyTextBoxCadastroAssinantePersyCoins";
@@ -1784,7 +1795,7 @@
             labelAguarde.AutoSize = true;
             labelAguarde.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point);
             labelAguarde.ForeColor = Color.Red;
-            labelAguarde.Location = new Point(79, 342);
+            labelAguarde.Location = new Point(87, 334);
             labelAguarde.Margin = new Padding(5, 0, 5, 0);
             labelAguarde.Name = "labelAguarde";
             labelAguarde.Size = new Size(1086, 55);
@@ -2026,6 +2037,161 @@
             label26.TabIndex = 10;
             label26.Visible = false;
             // 
+            // Pendencias
+            // 
+            Pendencias.BackColor = Color.DarkGray;
+            Pendencias.Controls.Add(buttonPendenciasLista);
+            Pendencias.Controls.Add(groupBoxPendenciasCriarNova);
+            Pendencias.Controls.Add(buttonPenciaNovaPendencia);
+            Pendencias.Controls.Add(label36);
+            Pendencias.Controls.Add(sfDataGridPendencias);
+            Pendencias.Location = new Point(4, 24);
+            Pendencias.Name = "Pendencias";
+            Pendencias.Padding = new Padding(3);
+            Pendencias.Size = new Size(1325, 680);
+            Pendencias.TabIndex = 5;
+            Pendencias.Text = "Pendências";
+            // 
+            // buttonPendenciasLista
+            // 
+            buttonPendenciasLista.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPendenciasLista.Location = new Point(11, 338);
+            buttonPendenciasLista.Name = "buttonPendenciasLista";
+            buttonPendenciasLista.Size = new Size(214, 38);
+            buttonPendenciasLista.TabIndex = 60;
+            buttonPendenciasLista.Text = "Listar Pendencia Ativas";
+            buttonPendenciasLista.UseVisualStyleBackColor = true;
+            buttonPendenciasLista.Click += ButtonPendenciasLista_Click;
+            // 
+            // groupBoxPendenciasCriarNova
+            // 
+            groupBoxPendenciasCriarNova.Controls.Add(buttonPendenciaGravarNova);
+            groupBoxPendenciasCriarNova.Controls.Add(textBoxPendenciaNovaDescription);
+            groupBoxPendenciasCriarNova.Controls.Add(label39);
+            groupBoxPendenciasCriarNova.Controls.Add(label38);
+            groupBoxPendenciasCriarNova.Controls.Add(currencyTextBoxPendenciaNovaValor);
+            groupBoxPendenciasCriarNova.Controls.Add(comboBoxPendenciaNome);
+            groupBoxPendenciasCriarNova.Controls.Add(label37);
+            groupBoxPendenciasCriarNova.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            groupBoxPendenciasCriarNova.Location = new Point(11, 57);
+            groupBoxPendenciasCriarNova.Name = "groupBoxPendenciasCriarNova";
+            groupBoxPendenciasCriarNova.Size = new Size(360, 234);
+            groupBoxPendenciasCriarNova.TabIndex = 59;
+            groupBoxPendenciasCriarNova.TabStop = false;
+            groupBoxPendenciasCriarNova.Text = "Nova Pendencia";
+            // 
+            // buttonPendenciaGravarNova
+            // 
+            buttonPendenciaGravarNova.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPendenciaGravarNova.Location = new Point(131, 175);
+            buttonPendenciaGravarNova.Name = "buttonPendenciaGravarNova";
+            buttonPendenciaGravarNova.Size = new Size(205, 38);
+            buttonPendenciaGravarNova.TabIndex = 60;
+            buttonPendenciaGravarNova.Text = "Gravar Pendencia";
+            buttonPendenciaGravarNova.UseVisualStyleBackColor = true;
+            buttonPendenciaGravarNova.Click += ButtonPendenciaGravarNova_Click;
+            // 
+            // textBoxPendenciaNovaDescription
+            // 
+            textBoxPendenciaNovaDescription.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxPendenciaNovaDescription.Location = new Point(131, 140);
+            textBoxPendenciaNovaDescription.Name = "textBoxPendenciaNovaDescription";
+            textBoxPendenciaNovaDescription.Size = new Size(205, 29);
+            textBoxPendenciaNovaDescription.TabIndex = 65;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label39.Location = new Point(8, 140);
+            label39.Margin = new Padding(5, 0, 5, 0);
+            label39.Name = "label39";
+            label39.Size = new Size(109, 26);
+            label39.TabIndex = 64;
+            label39.Text = "Descrição";
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label38.Location = new Point(8, 91);
+            label38.Name = "label38";
+            label38.Size = new Size(68, 25);
+            label38.TabIndex = 63;
+            label38.Text = "Valor:";
+            // 
+            // currencyTextBoxPendenciaNovaValor
+            // 
+            currencyTextBoxPendenciaNovaValor.BeforeTouchSize = new Size(100, 32);
+            currencyTextBoxPendenciaNovaValor.DecimalValue = new decimal(new int[] { 0, 0, 0, 131072 });
+            currencyTextBoxPendenciaNovaValor.Location = new Point(131, 87);
+            currencyTextBoxPendenciaNovaValor.Name = "currencyTextBoxPendenciaNovaValor";
+            currencyTextBoxPendenciaNovaValor.Size = new Size(100, 32);
+            currencyTextBoxPendenciaNovaValor.TabIndex = 62;
+            currencyTextBoxPendenciaNovaValor.Text = "R$ 0,00";
+            // 
+            // comboBoxPendenciaNome
+            // 
+            comboBoxPendenciaNome.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPendenciaNome.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBoxPendenciaNome.FormattingEnabled = true;
+            comboBoxPendenciaNome.Items.AddRange(new object[] { "Bianca", "Danilo", "Patricia" });
+            comboBoxPendenciaNome.Location = new Point(131, 39);
+            comboBoxPendenciaNome.Margin = new Padding(5);
+            comboBoxPendenciaNome.Name = "comboBoxPendenciaNome";
+            comboBoxPendenciaNome.Size = new Size(205, 33);
+            comboBoxPendenciaNome.TabIndex = 61;
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label37.Location = new Point(8, 42);
+            label37.Margin = new Padding(5, 0, 5, 0);
+            label37.Name = "label37";
+            label37.Size = new Size(71, 26);
+            label37.TabIndex = 60;
+            label37.Text = "Nome";
+            // 
+            // buttonPenciaNovaPendencia
+            // 
+            buttonPenciaNovaPendencia.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPenciaNovaPendencia.Location = new Point(11, 13);
+            buttonPenciaNovaPendencia.Name = "buttonPenciaNovaPendencia";
+            buttonPenciaNovaPendencia.Size = new Size(214, 38);
+            buttonPenciaNovaPendencia.TabIndex = 58;
+            buttonPenciaNovaPendencia.Text = "Criar Nova Pendencia";
+            buttonPenciaNovaPendencia.UseVisualStyleBackColor = true;
+            buttonPenciaNovaPendencia.Click += ButtonPenciaNovaPendencia_Click;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label36.Location = new Point(583, 13);
+            label36.Margin = new Padding(5, 0, 5, 0);
+            label36.Name = "label36";
+            label36.Size = new Size(309, 26);
+            label36.TabIndex = 57;
+            label36.Text = "Lista de pendencias em aberto";
+            // 
+            // sfDataGridPendencias
+            // 
+            sfDataGridPendencias.AccessibleName = "Table";
+            sfDataGridPendencias.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            sfDataGridPendencias.Location = new Point(580, 41);
+            sfDataGridPendencias.Name = "sfDataGridPendencias";
+            sfDataGridPendencias.Size = new Size(738, 636);
+            sfDataGridPendencias.Style.BorderColor = Color.FromArgb(100, 100, 100);
+            sfDataGridPendencias.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
+            sfDataGridPendencias.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridPendencias.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
+            sfDataGridPendencias.Style.HeaderStyle.FilterIconColor = Color.FromArgb(29, 29, 29);
+            sfDataGridPendencias.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
+            sfDataGridPendencias.TabIndex = 56;
+            sfDataGridPendencias.Text = "sfDataGrid1";
+            sfDataGridPendencias.Visible = false;
+            // 
             // Nome
             // 
             Nome.HeaderText = "Nome";
@@ -2050,57 +2216,6 @@
             label35.Size = new Size(538, 45);
             label35.TabIndex = 2;
             label35.Text = "INGUARDE UM MOMENTO...";
-            // 
-            // Pendencias
-            // 
-            Pendencias.BackColor = Color.DarkGray;
-            Pendencias.Controls.Add(buttonPenciaNovaPendencia);
-            Pendencias.Controls.Add(label36);
-            Pendencias.Controls.Add(sfDataGrid1);
-            Pendencias.Location = new Point(4, 24);
-            Pendencias.Name = "Pendencias";
-            Pendencias.Padding = new Padding(3);
-            Pendencias.Size = new Size(1325, 680);
-            Pendencias.TabIndex = 5;
-            Pendencias.Text = "Pendências";
-            // 
-            // sfDataGrid1
-            // 
-            sfDataGrid1.AccessibleName = "Table";
-            sfDataGrid1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            sfDataGrid1.Location = new Point(580, 41);
-            sfDataGrid1.Name = "sfDataGrid1";
-            sfDataGrid1.Size = new Size(738, 636);
-            sfDataGrid1.Style.BorderColor = Color.FromArgb(100, 100, 100);
-            sfDataGrid1.Style.CheckBoxStyle.CheckedBackColor = Color.FromArgb(0, 120, 215);
-            sfDataGrid1.Style.CheckBoxStyle.CheckedBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGrid1.Style.CheckBoxStyle.IndeterminateBorderColor = Color.FromArgb(0, 120, 215);
-            sfDataGrid1.Style.HeaderStyle.FilterIconColor = Color.FromArgb(29, 29, 29);
-            sfDataGrid1.Style.HyperlinkStyle.DefaultLinkColor = Color.FromArgb(0, 120, 215);
-            sfDataGrid1.TabIndex = 56;
-            sfDataGrid1.Text = "sfDataGrid1";
-            sfDataGrid1.Visible = false;
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            label36.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label36.Location = new Point(583, 13);
-            label36.Margin = new Padding(5, 0, 5, 0);
-            label36.Name = "label36";
-            label36.Size = new Size(309, 26);
-            label36.TabIndex = 57;
-            label36.Text = "Lista de pendencias em aberto";
-            // 
-            // buttonPenciaNovaPendencia
-            // 
-            buttonPenciaNovaPendencia.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonPenciaNovaPendencia.Location = new Point(11, 13);
-            buttonPenciaNovaPendencia.Name = "buttonPenciaNovaPendencia";
-            buttonPenciaNovaPendencia.Size = new Size(214, 38);
-            buttonPenciaNovaPendencia.TabIndex = 58;
-            buttonPenciaNovaPendencia.Text = "Criar Nova Pendencia";
-            buttonPenciaNovaPendencia.UseVisualStyleBackColor = true;
             // 
             // JanelaCentral
             // 
@@ -2159,10 +2274,13 @@
             groupBoxPontoGerarRelatorio.PerformLayout();
             groupBoxPontoNovoPonto.ResumeLayout(false);
             groupBoxPontoNovoPonto.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Pendencias.ResumeLayout(false);
             Pendencias.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)sfDataGrid1).EndInit();
+            groupBoxPendenciasCriarNova.ResumeLayout(false);
+            groupBoxPendenciasCriarNova.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)currencyTextBoxPendenciaNovaValor).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sfDataGridPendencias).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2324,7 +2442,16 @@
         private Label label35;
         private TabPage Pendencias;
         private Label label36;
-        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGrid1;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDataGridPendencias;
         private Button buttonPenciaNovaPendencia;
+        private GroupBox groupBoxPendenciasCriarNova;
+        private Label label37;
+        private ComboBox comboBoxPendenciaNome;
+        private Label label38;
+        private Syncfusion.Windows.Forms.Tools.CurrencyTextBox currencyTextBoxPendenciaNovaValor;
+        private TextBox textBoxPendenciaNovaDescription;
+        private Label label39;
+        private Button buttonPendenciaGravarNova;
+        private Button buttonPendenciasLista;
     }
 }

@@ -79,10 +79,12 @@ namespace Caixa_Central
                 tabControl1.Visible = false;
                 // Send GET request to API
                 HttpResponseMessage response = await httpClient.GetAsync(Auxiliar.urlCardapio);
-                // Check if response is successful
-                response.EnsureSuccessStatusCode();
                 // Read response content
-                string responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show($"Failed to send Pendencia. Status code: {response.StatusCode}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 // Parse response content
                 cardapio = JsonConvert.DeserializeObject<BindingList<Item>>(responseContent);
                 tabControl1.Visible = true;
@@ -109,7 +111,11 @@ namespace Caixa_Central
                 // Check if response is successful
                 response.EnsureSuccessStatusCode();
                 // Read response content
-                string responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show($"Failed to send Pendencia. Status code: {response.StatusCode}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 // Parse response content
                 mesasOcupadas = JsonConvert.DeserializeObject<List<Mesa>>(responseContent);
                 tabControl1.Visible = true;
@@ -273,12 +279,12 @@ namespace Caixa_Central
                 tabControl1.Visible = false;
                 // Send GET request to API
                 HttpResponseMessage response = await httpClient.GetAsync(url);
-
-                // Check if response is successful
-                response.EnsureSuccessStatusCode();
-
                 // Read response content
                 responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show($"Failed to send Pendencia. Status code: {response.StatusCode}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 tabControl1.Visible = true;
             }
             catch (Exception ex)
@@ -330,7 +336,7 @@ namespace Caixa_Central
                     // An Assinante with the given name and surname was found
                     foundAssinante.Validade = validade;
                     foundAssinante.Plano = plano;
-                    string responseContent = await PostNewAssinante(foundAssinante);
+                    var responseContent = await PostNewAssinante(foundAssinante);
                 }
                 else
                 {
@@ -1097,7 +1103,6 @@ namespace Caixa_Central
                 tabControl1.Visible = false;
                 await Caixa.FecharCaixa();
                 Caixa caixa = await Caixa.GetLatestCaixa();
-                tabControl1.Visible = true;
                 if (caixa != null)
                 {
                     // Set the SfDataGrid DataSource
@@ -1136,6 +1141,7 @@ namespace Caixa_Central
                     labelFluxoEncerrado.Visible = true;
                     dataGridViewFluxoFechamento.Visible = true;
                 }
+                tabControl1.Visible = true;
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -1190,6 +1196,36 @@ namespace Caixa_Central
             else if (dialogResult == DialogResult.No)
             {
                 return;
+            }
+        }
+
+        private void ButtonPenciaNovaPendencia_Click(object sender, EventArgs e)
+        {
+            groupBoxPendenciasCriarNova.Visible = false;
+        }
+
+        private async void ButtonPendenciaGravarNova_Click(object sender, EventArgs e)
+        {
+            tabControl1.Visible = false;
+            Pendencia pendencia = new(comboBoxPendenciaNome.SelectedText, textBoxPendenciaNovaDescription.Text, currencyTextBoxPendenciaNovaValor.DecimalValue);
+            var response = await pendencia.SendPendencia();
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show($"Failed to send Pendencia. Status code: {response.StatusCode}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            tabControl1.Visible = true;
+        }
+
+        private async void ButtonPendenciasLista_Click(object sender, EventArgs e)
+        {
+            List<Pendencia>? pendencias = await Pendencia.FetchPendencias();
+            if (pendencias != null)
+            {
+                sfDataGridPendencias.DataSource = pendencias;
+            }
+            else
+            {
+                // Handle the null case, perhaps showing an error message to the user
             }
         }
     }
