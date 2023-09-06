@@ -1,5 +1,6 @@
 ﻿using Caixa_Central;
 using Newtonsoft.Json;
+using System.Security.Policy;
 using System.Text;
 
 internal class Pendencia
@@ -20,21 +21,22 @@ internal class Pendencia
 
     public async Task<HttpResponseMessage> SendPendencia()
     {
+        string url = Auxiliar.urlPendencia;
         using var client = new HttpClient();
         var json = JsonConvert.SerializeObject(this);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync("http://ximbas.com", content);
+        var response = await client.PostAsync(url, content);
         return response;
     }
 
-    public static async Task<List<Pendencia>?> FetchPendencias()
+    public static async Task<List<Pendencia>?> FetchPendencias(string nome)
     {
         List<Pendencia>? pendencias = new();
-
+        string url = Auxiliar.urlPendencia + "/" + nome;
         using (var client = new HttpClient())
         {
-            var response = await client.GetAsync(Auxiliar.urlPendencias);
+            var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings2 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
-            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings2 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
+            Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings messageBoxSettings1 = new Syncfusion.Windows.Forms.PdfViewer.MessageBoxSettings();
+            Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings pdfViewerPrinterSettings1 = new Syncfusion.Windows.PdfViewer.PdfViewerPrinterSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaCentral));
-            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings2 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
+            Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings textSearchSettings1 = new Syncfusion.Windows.Forms.PdfViewer.TextSearchSettings();
             tabControl1 = new TabControl();
             tabPageClientes = new TabPage();
             groupBoxClientesMesaAddPedidos = new GroupBox();
@@ -184,6 +184,7 @@
             labelPontoUltimos = new Label();
             label26 = new Label();
             Pendencias = new TabPage();
+            comboBoxPendenciaLista = new ComboBox();
             buttonPendenciasLista = new Button();
             groupBoxPendenciasCriarNova = new GroupBox();
             buttonPendenciaGravarNova = new Button();
@@ -1813,17 +1814,17 @@
             pdfViewerControlPontos.IsTextSearchEnabled = true;
             pdfViewerControlPontos.IsTextSelectionEnabled = true;
             pdfViewerControlPontos.Location = new Point(717, 5);
-            messageBoxSettings2.EnableNotification = true;
-            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings2;
+            messageBoxSettings1.EnableNotification = true;
+            pdfViewerControlPontos.MessageBoxSettings = messageBoxSettings1;
             pdfViewerControlPontos.MinimumZoomPercentage = 50;
             pdfViewerControlPontos.Name = "pdfViewerControlPontos";
             pdfViewerControlPontos.PageBorderThickness = 1;
-            pdfViewerPrinterSettings2.Copies = 1;
-            pdfViewerPrinterSettings2.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
-            pdfViewerPrinterSettings2.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
-            pdfViewerPrinterSettings2.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings2.PrintLocation");
-            pdfViewerPrinterSettings2.ShowPrintStatusDialog = true;
-            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings2;
+            pdfViewerPrinterSettings1.Copies = 1;
+            pdfViewerPrinterSettings1.PageOrientation = Syncfusion.Windows.PdfViewer.PdfViewerPrintOrientation.Auto;
+            pdfViewerPrinterSettings1.PageSize = Syncfusion.Windows.PdfViewer.PdfViewerPrintSize.ActualSize;
+            pdfViewerPrinterSettings1.PrintLocation = (PointF)resources.GetObject("pdfViewerPrinterSettings1.PrintLocation");
+            pdfViewerPrinterSettings1.ShowPrintStatusDialog = true;
+            pdfViewerControlPontos.PrinterSettings = pdfViewerPrinterSettings1;
             pdfViewerControlPontos.ReferencePath = null;
             pdfViewerControlPontos.ScrollDisplacementValue = 0;
             pdfViewerControlPontos.ShowHorizontalScrollBar = true;
@@ -1833,10 +1834,10 @@
             pdfViewerControlPontos.SpaceBetweenPages = 8;
             pdfViewerControlPontos.TabIndex = 28;
             pdfViewerControlPontos.Text = "pdfViewerControlPontos";
-            textSearchSettings2.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
-            textSearchSettings2.HighlightAllInstance = true;
-            textSearchSettings2.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
-            pdfViewerControlPontos.TextSearchSettings = textSearchSettings2;
+            textSearchSettings1.CurrentInstanceColor = Color.FromArgb(127, 255, 171, 64);
+            textSearchSettings1.HighlightAllInstance = true;
+            textSearchSettings1.OtherInstanceColor = Color.FromArgb(127, 254, 255, 0);
+            pdfViewerControlPontos.TextSearchSettings = textSearchSettings1;
             pdfViewerControlPontos.ThemeName = "Default";
             pdfViewerControlPontos.VerticalScrollOffset = 0;
             pdfViewerControlPontos.Visible = false;
@@ -2040,6 +2041,7 @@
             // Pendencias
             // 
             Pendencias.BackColor = Color.DarkGray;
+            Pendencias.Controls.Add(comboBoxPendenciaLista);
             Pendencias.Controls.Add(buttonPendenciasLista);
             Pendencias.Controls.Add(groupBoxPendenciasCriarNova);
             Pendencias.Controls.Add(buttonPenciaNovaPendencia);
@@ -2051,11 +2053,24 @@
             Pendencias.Size = new Size(1325, 680);
             Pendencias.TabIndex = 5;
             Pendencias.Text = "Pendências";
+            Pendencias.Leave += Pendencias_Leave;
+            // 
+            // comboBoxPendenciaLista
+            // 
+            comboBoxPendenciaLista.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPendenciaLista.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBoxPendenciaLista.FormattingEnabled = true;
+            comboBoxPendenciaLista.Items.AddRange(new object[] { "Bianca", "Danilo", "Patricia" });
+            comboBoxPendenciaLista.Location = new Point(11, 332);
+            comboBoxPendenciaLista.Margin = new Padding(5);
+            comboBoxPendenciaLista.Name = "comboBoxPendenciaLista";
+            comboBoxPendenciaLista.Size = new Size(214, 33);
+            comboBoxPendenciaLista.TabIndex = 62;
             // 
             // buttonPendenciasLista
             // 
             buttonPendenciasLista.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonPendenciasLista.Location = new Point(11, 338);
+            buttonPendenciasLista.Location = new Point(11, 373);
             buttonPendenciasLista.Name = "buttonPendenciasLista";
             buttonPendenciasLista.Size = new Size(214, 38);
             buttonPendenciasLista.TabIndex = 60;
@@ -2085,7 +2100,7 @@
             buttonPendenciaGravarNova.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             buttonPendenciaGravarNova.Location = new Point(131, 175);
             buttonPendenciaGravarNova.Name = "buttonPendenciaGravarNova";
-            buttonPendenciaGravarNova.Size = new Size(205, 38);
+            buttonPendenciaGravarNova.Size = new Size(221, 38);
             buttonPendenciaGravarNova.TabIndex = 60;
             buttonPendenciaGravarNova.Text = "Gravar Pendencia";
             buttonPendenciaGravarNova.UseVisualStyleBackColor = true;
@@ -2096,7 +2111,7 @@
             textBoxPendenciaNovaDescription.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             textBoxPendenciaNovaDescription.Location = new Point(131, 140);
             textBoxPendenciaNovaDescription.Name = "textBoxPendenciaNovaDescription";
-            textBoxPendenciaNovaDescription.Size = new Size(205, 29);
+            textBoxPendenciaNovaDescription.Size = new Size(221, 29);
             textBoxPendenciaNovaDescription.TabIndex = 65;
             // 
             // label39
@@ -2139,7 +2154,7 @@
             comboBoxPendenciaNome.Location = new Point(131, 39);
             comboBoxPendenciaNome.Margin = new Padding(5);
             comboBoxPendenciaNome.Name = "comboBoxPendenciaNome";
-            comboBoxPendenciaNome.Size = new Size(205, 33);
+            comboBoxPendenciaNome.Size = new Size(221, 33);
             comboBoxPendenciaNome.TabIndex = 61;
             // 
             // label37
@@ -2168,7 +2183,7 @@
             // 
             label36.AutoSize = true;
             label36.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label36.Location = new Point(583, 13);
+            label36.Location = new Point(580, 12);
             label36.Margin = new Padding(5, 0, 5, 0);
             label36.Name = "label36";
             label36.Size = new Size(309, 26);
@@ -2453,5 +2468,6 @@
         private Label label39;
         private Button buttonPendenciaGravarNova;
         private Button buttonPendenciasLista;
+        private ComboBox comboBoxPendenciaLista;
     }
 }

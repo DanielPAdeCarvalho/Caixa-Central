@@ -1207,26 +1207,38 @@ namespace Caixa_Central
         private async void ButtonPendenciaGravarNova_Click(object sender, EventArgs e)
         {
             tabControl1.Visible = false;
-            Pendencia pendencia = new(comboBoxPendenciaNome.SelectedText, textBoxPendenciaNovaDescription.Text, currencyTextBoxPendenciaNovaValor.DecimalValue);
+            Pendencia pendencia = new(comboBoxPendenciaNome.Text, textBoxPendenciaNovaDescription.Text, currencyTextBoxPendenciaNovaValor.DecimalValue);
             var response = await pendencia.SendPendencia();
             if (!response.IsSuccessStatusCode)
             {
                 MessageBox.Show($"Failed to send Pendencia. Status code: {response.StatusCode}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                comboBoxPendenciaNome.SelectedIndex = -1;
+                currencyTextBoxPendenciaNovaValor.Text = string.Empty;
+                textBoxPendenciaNovaDescription.Text = string.Empty;
             }
             tabControl1.Visible = true;
         }
 
         private async void ButtonPendenciasLista_Click(object sender, EventArgs e)
         {
-            List<Pendencia>? pendencias = await Pendencia.FetchPendencias();
+            List<Pendencia>? pendencias = await Pendencia.FetchPendencias(comboBoxPendenciaLista.Text);
             if (pendencias != null)
             {
                 sfDataGridPendencias.DataSource = pendencias;
+                sfDataGridPendencias.Visible = true;
             }
             else
             {
-                // Handle the null case, perhaps showing an error message to the user
+                MessageBox.Show("Nenhuma pendencia encontrada para essa pessoa");
             }
+        }
+
+        private void Pendencias_Leave(object sender, EventArgs e)
+        {
+            sfDataGridPendencias.Visible = false;
         }
     }
 }
